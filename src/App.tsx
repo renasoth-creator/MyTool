@@ -12,14 +12,14 @@ const App: React.FC = () => {
     <Routes>
 
       {/* DASHBOARD - ALWAYS ACCESSIBLE */}
-      <Route path="/" element={<DashboardPage onLogout={() => {}} />} />
+      <Route path="/" element={<DashboardPage />} />
 
       {/* TOOL PAGES - ALWAYS ACCESSIBLE */}
       {tools.map((tool) => (
         <Route
           key={tool.id}
           path={tool.route}
-          element={<ToolPage toolId={tool.id} onLogout={() => {}} />}
+          element={<ToolPage toolId={tool.id} />}
         />
       ))}
 

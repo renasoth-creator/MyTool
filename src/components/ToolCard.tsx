@@ -1,6 +1,6 @@
 ﻿﻿import React from "react";
 import { Link } from "react-router-dom";
-import type { ToolConfig } from "../config/tools";
+import type { ToolConfig } from "../config/pdfToolsConfig";
 
 interface ToolCardProps {
   tool: ToolConfig;
