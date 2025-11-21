@@ -1,8 +1,5 @@
-﻿
-import React from "react";
+﻿import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-
-
 import DashboardPage from "./pages/DashboardPage";
 import ToolPage from "./pages/ToolPage";
 import { tools } from "./config/pdfToolsConfig";
@@ -10,11 +7,10 @@ import { tools } from "./config/pdfToolsConfig";
 const App: React.FC = () => {
   return (
     <Routes>
-
-      {/* DASHBOARD - ALWAYS ACCESSIBLE */}
+      {/* DASHBOARD */}
       <Route path="/" element={<DashboardPage />} />
 
-      {/* TOOL PAGES - ALWAYS ACCESSIBLE */}
+      {/* TOOL ROUTES */}
       {tools.map((tool) => (
         <Route
           key={tool.id}
