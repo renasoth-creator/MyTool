@@ -11,7 +11,7 @@ const DashboardPage: React.FC = () => {
           All PDF & document tools
         </h1>
         <p className="mt-1 max-w-2xl text-sm text-slate-500">
-          Convert, compress, merge, split, protect and more — all for free.
+          Convert, compress, merge, split, protect and more all for free.
           Click a tool below to get started.
         </p>
       </section>
