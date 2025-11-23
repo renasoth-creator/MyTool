@@ -8,7 +8,9 @@
   | "xlsx-to-pdf"
   | "pptx-to-pdf"
   | "html-to-pdf"
-  | "protect-pdf";
+  | "protect-pdf"
+  | "pdf-spreadsheet";
+
 
 export interface ToolConfig {
   id: ToolId;
@@ -79,4 +81,11 @@ export const tools: ToolConfig[] = [
     description: "Lock your PDF with a secure password.",
     route: "/protect-pdf",
   },
+  {
+  id: "pdf-spreadsheet",
+  name: "PDF Spreadsheet",
+  description: "Create a PDF that contains multiple images arranged in a grid layout.",
+  route: "/pdf-spreadsheet",
+},
+
 ];

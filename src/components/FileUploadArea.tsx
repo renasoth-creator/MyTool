@@ -33,6 +33,8 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   const [links, setLinks] = useState<ResultLink[]>([]);
   const [extractedText, setExtractedText] = useState<string | null>(null);
   const [password, setPassword] = useState<string>(""); // for protect-pdf
+  
+
 
   const handleClick = () => {
     inputRef.current?.click();
@@ -179,6 +181,18 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         ]);
         break;
       }
+      case "pdf-spreadsheet": {
+        const data = await postJson("/image/to-pdf", { files: fileKeys });
+        setLinks([
+          {
+            label: "Download PDF Spreadsheet",
+            url: data.pdfUrl,
+            },
+            ]);
+            break
+
+      }
+      
 
       default:
         throw new Error("This tool is not wired to the backend yet.");
