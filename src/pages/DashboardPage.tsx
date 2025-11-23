@@ -6,23 +6,6 @@ import { tools } from "../config/pdfToolsConfig";
 const DashboardPage: React.FC = () => {
   return (
     <Layout>
-
-      {/* TERMS OF USE */}
-      <section className="mb-6 rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">Terms of Use</h2>
-        <p className="mt-2">
-          By using our tools, you agree that you are fully responsible for how you
-          use the converted files. These tools must only be used for educational
-          and ethical purposes. You may not use this service for harmful, illegal,
-          exploitative, or abusive activities.
-        </p>
-        <p className="mt-2">
-          We may collect anonymous cookie data for analytics, ads, and traffic
-          optimization. By continuing to use this website, you agree to these
-          terms.
-        </p>
-      </section>
-
       {/* HEADER */}
       <section className="mb-6">
         <h1 className="text-2xl font-semibold text-slate-900">

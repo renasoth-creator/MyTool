@@ -5,7 +5,7 @@ import CookiePopup from "./CookiePopup";
 interface LayoutProps {
   children: React.ReactNode;
 }
-<CookiePopup />
+
 
 const Layout: React.FC<LayoutProps>  = ({ children }) => {
   return (
@@ -20,9 +20,10 @@ const Layout: React.FC<LayoutProps>  = ({ children }) => {
         
       </header>
 
+<CookiePopup />
 
       <footer className="mt-12 pb-8 text-center text-xs text-slate-400">
-         © 2025 Nox — All rights reserved.
+         © 2025 Nox - All rights reserved.
       </footer>
 
 
