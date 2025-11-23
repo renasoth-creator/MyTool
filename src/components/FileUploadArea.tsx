@@ -1,14 +1,20 @@
-﻿import React, { useRef, useState } from "react";
+﻿// src/components/FileUploadArea.tsx
+import React, { useRef, useState } from "react";
 import type { ToolId } from "../config/pdfToolsConfig";
 import { BACKEND_URL } from "../config/backend";
 
 interface FileUploadAreaProps {
+  toolId: ToolId;
   accept?: string;
   multiple?: boolean;
-  toolId: ToolId;
 }
 
 type Status = "idle" | "uploading" | "processing" | "done" | "error";
+
+interface UploadedFileInfo {
+  key: string;
+  url: string;
+}
 
 interface ResultLink {
   label: string;
@@ -16,9 +22,9 @@ interface ResultLink {
 }
 
 const FileUploadArea: React.FC<FileUploadAreaProps> = ({
+  toolId,
   accept,
   multiple = false,
-  toolId,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[] | null>(null);
@@ -35,14 +41,15 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const fileList = e.target.files;
     if (!fileList) return;
-    setFiles(Array.from(fileList));
+    const arr = Array.from(fileList);
+    setFiles(arr);
     setLinks([]);
     setExtractedText(null);
     setError(null);
     setStatus("idle");
   };
 
-  async function uploadSingleFile(file: File): Promise<{ key: string; url: string }> {
+  async function uploadSingleFile(file: File): Promise<UploadedFileInfo> {
     const formData = new FormData();
     formData.append("file", file);
 
@@ -55,33 +62,42 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       throw new Error("Upload failed");
     }
 
-    return await res.json();
+    const data = await res.json();
+    return { key: data.key, url: data.url };
   }
 
-  async function uploadAllFiles(files: File[]): Promise<{ key: string; url: string }[]> {
-    const uploaded: { key: string; url: string }[] = [];
+  async function uploadAllFiles(files: File[]): Promise<UploadedFileInfo[]> {
+    const out: UploadedFileInfo[] = [];
     for (const f of files) {
-      const result = await uploadSingleFile(f);
-      uploaded.push(result);
+      const info = await uploadSingleFile(f);
+      out.push(info);
     }
-    return uploaded;
+    return out;
   }
 
-  async function callToolEndpoint(fileKeys: string[]) {
-    // Clear previous
+  async function callToolEndpoint(fileKeys: string[]): Promise<void> {
     setLinks([]);
     setExtractedText(null);
     setError(null);
 
+    // Helper for JSON calls
+    async function postJson(path: string, body: unknown) {
+      const res = await fetch(`${BACKEND_URL}${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.error("Backend error:", data);
+        throw new Error(data.error || "Request failed");
+      }
+      return data;
+    }
+
     switch (toolId) {
       case "merge": {
-        const res = await fetch(`${BACKEND_URL}/pdf/merge`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ files: fileKeys }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Merge failed");
+        const data = await postJson("/pdf/merge", { files: fileKeys });
         setLinks([
           {
             label: "Download merged PDF",
@@ -92,13 +108,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       }
 
       case "split": {
-        const res = await fetch(`${BACKEND_URL}/pdf/split`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ file: fileKeys[0] }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Split failed");
+        const data = await postJson("/pdf/split", { file: fileKeys[0] });
         const resultLinks: ResultLink[] =
           (data.pages || []).map((p: any) => ({
             label: `Page ${p.page}`,
@@ -109,13 +119,10 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       }
 
       case "compress": {
-        const res = await fetch(`${BACKEND_URL}/pdf/compress`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ file: fileKeys[0], level: "medium" }),
+        const data = await postJson("/pdf/compress", {
+          file: fileKeys[0],
+          level: "medium",
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Compress failed");
         setLinks([
           {
             label: "Download compressed PDF",
@@ -126,13 +133,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       }
 
       case "image-to-pdf": {
-        const res = await fetch(`${BACKEND_URL}/image/to-pdf`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ files: fileKeys }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Image to PDF failed");
+        const data = await postJson("/image/to-pdf", { files: fileKeys });
         setLinks([
           {
             label: "Download converted PDF",
@@ -143,13 +144,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       }
 
       case "pdf-to-text": {
-        const res = await fetch(`${BACKEND_URL}/pdf/to-text`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ file: fileKeys[0] }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "PDF to text failed");
+        const data = await postJson("/pdf/to-text", { file: fileKeys[0] });
         setExtractedText(data.text || "");
         break;
       }
@@ -158,13 +153,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       case "xlsx-to-pdf":
       case "pptx-to-pdf":
       case "html-to-pdf": {
-        const res = await fetch(`${BACKEND_URL}/office/to-pdf`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ file: fileKeys[0] }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Office to PDF failed");
+        const data = await postJson("/office/to-pdf", { file: fileKeys[0] });
         setLinks([
           {
             label: "Download converted PDF",
@@ -176,15 +165,12 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
 
       case "protect-pdf": {
         if (!password) {
-          throw new Error("Password is required for protection");
+          throw new Error("Password is required to protect the PDF");
         }
-        const res = await fetch(`${BACKEND_URL}/pdf/encrypt`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ file: fileKeys[0], password }),
+        const data = await postJson("/pdf/encrypt", {
+          file: fileKeys[0],
+          password,
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Encrypt failed");
         setLinks([
           {
             label: "Download protected PDF",
@@ -195,7 +181,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       }
 
       default:
-        throw new Error("Tool not implemented in frontend");
+        throw new Error("This tool is not wired to the backend yet.");
     }
   }
 
@@ -205,8 +191,8 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
     setError(null);
 
     try {
-      const uploads = await uploadAllFiles(files);
-      const keys = uploads.map((u) => u.key);
+      const uploaded = await uploadAllFiles(files);
+      const keys = uploaded.map((u) => u.key);
 
       setStatus("processing");
       await callToolEndpoint(keys);
@@ -219,33 +205,35 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
     }
   };
 
+  const hasResult = links.length > 0 || !!extractedText;
+
   return (
     <div className="space-y-4">
-      {/* Upload Box */}
+      {/* Upload area */}
       <div
         onClick={handleClick}
         className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-white px-6 py-10 text-center transition hover:border-sky-300 hover:bg-sky-50/40"
       >
         <input
-          type="file"
           ref={inputRef}
+          type="file"
           className="hidden"
-          accept={accept}
           multiple={multiple}
+          accept={accept}
           onChange={handleChange}
         />
-        <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 text-sky-500 text-2xl">
+        <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 text-2xl text-white shadow-md">
           ⬆️
         </div>
-        <p className="text-sm font-medium text-slate-800">
+        <p className="text-sm font-semibold text-slate-800">
           Click to upload or drag &amp; drop
         </p>
         <p className="mt-1 text-xs text-slate-500">
-          {accept ? `Supported: ${accept}` : "Any file type for now"}
+          {accept ? `Supported: ${accept}` : "Upload your file(s) to get started"}
         </p>
       </div>
 
-      {/* Password for protect-pdf */}
+      {/* Password field for protect-pdf */}
       {toolId === "protect-pdf" && (
         <div className="flex flex-col gap-1 text-sm">
           <label className="text-xs font-medium text-slate-700">
@@ -261,7 +249,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         </div>
       )}
 
-      {/* Selected files */}
+      {/* Selected files list */}
       {files && files.length > 0 && (
         <div className="rounded-xl border border-slate-100 bg-white p-3 text-xs text-left">
           <p className="mb-1 font-semibold text-slate-700">Selected files:</p>
@@ -281,10 +269,10 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       {/* Action button */}
       {files && files.length > 0 && (
         <button
-          className="inline-flex items-center justify-center rounded-xl bg-sky-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-600 disabled:opacity-60"
           type="button"
           onClick={handleProcess}
           disabled={status === "uploading" || status === "processing"}
+          className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:from-sky-600 hover:to-indigo-600 disabled:opacity-60"
         >
           {status === "uploading"
             ? "Uploading..."
@@ -294,17 +282,73 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         </button>
       )}
 
-      {/* Error */}
+      {/* Error message */}
       {error && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700">
           {error}
         </div>
       )}
 
-      {/* Download links */}
-      {links.length > 0 && (
-        <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-3 text-xs text-emerald-900">
-          <p className="mb-2 font-semibold">Your file(s) are ready:</p>
+      {/* Premium-style result card */}
+      {hasResult && (
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 p-[1px] shadow-lg">
+          <div className="flex flex-col gap-3 rounded-[14px] bg-slate-950/95 p-4 text-xs text-slate-100 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-400/10 text-lg">
+                ✅
+              </div>
+              <div>
+                <p className="text-sm font-semibold">Your file is ready</p>
+                {links.length > 0 && (
+                  <p className="mt-1 text-[11px] text-slate-300">
+                    We’ve processed your file. Click the button to download your
+                    result.
+                  </p>
+                )}
+                {extractedText && (
+                  <p className="mt-1 text-[11px] text-slate-300">
+                    Text extracted successfully. Scroll below to view it.
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {links.length > 0 && (
+              <div className="flex flex-col items-stretch gap-2 sm:items-end">
+                {/* Main download (first link) */}
+                <a
+                  href={links[0].url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-xl bg-emerald-400 px-4 py-2 text-xs font-semibold text-emerald-950 shadow hover:bg-emerald-300"
+                >
+                  Download file
+                </a>
+
+                {/* Extra links if split, etc */}
+                {links.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      window.alert(
+                        "Multiple files created. Scroll below to see all links."
+                      )
+                    }
+                    className="text-[11px] text-slate-300 underline"
+                  >
+                    Show all parts
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* All result links (for split, etc.) */}
+      {links.length > 1 && (
+        <div className="rounded-xl border border-slate-200 bg-white p-3 text-xs text-slate-800">
+          <p className="mb-2 font-semibold">All generated files:</p>
           <ul className="space-y-1">
             {links.map((l) => (
               <li key={l.url}>
@@ -322,9 +366,9 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         </div>
       )}
 
-      {/* Extracted text */}
+      {/* Extracted text block */}
       {extractedText && (
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-xs text-slate-800 max-h-64 overflow-auto whitespace-pre-wrap">
+        <div className="max-h-80 overflow-auto rounded-xl border border-slate-200 bg-white p-3 text-xs text-slate-800 whitespace-pre-wrap">
           {extractedText}
         </div>
       )}
