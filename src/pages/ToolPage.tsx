@@ -26,13 +26,14 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     split: "application/pdf",
     compress: "application/pdf",
     "image-to-pdf": "image/*",
+    "pdf-spreadsheet": "image/*",
     "pdf-to-text": "application/pdf",
     "docx-to-pdf": ".doc,.docx",
     "xlsx-to-pdf": ".xls,.xlsx",
     "pptx-to-pdf": ".ppt,.pptx",
     "html-to-pdf": ".html,.htm,text/html",
     "protect-pdf": "application/pdf",
-    "pdf-spreadsheet": "image/*",
+    
 
   };
 
@@ -61,7 +62,9 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
             <FileUploadArea
               toolId={toolId}
               accept={accept}
-              multiple={toolId === "merge" || toolId === "image-to-pdf"}
+              multiple={toolId === "merge" ||
+                        toolId === "image-to-pdf" ||
+                        toolId === "pdf-spreadsheet"}
             />
           </div>
         </div>
