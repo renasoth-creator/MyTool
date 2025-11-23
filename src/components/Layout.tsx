@@ -38,18 +38,17 @@ const Layout: React.FC<LayoutProps>  = ({ children }) => {
 
 <CookiePopup />
 
-      <footer className="mt-10 w-full border-t border-slate-200 bg-white py-4">
-        <div className="mx-auto max-w-6xl px-4 text-right text-xs text-slate-500">
-          © 2025 Nox — All rights reserved.
-        </div>
-     </footer>
-
-
-
       <main className="mx-auto max-w-5xl px-4 py-6">
         {children}
       </main>
+
+      {/* FOOTER — always at bottom */}
+      <footer className="mt-auto border-t bg-white py-4 text-center text-xs text-slate-500">
+         © 2025 Nox — All rights reserved.
+      </footer>
 </div>
+
+
   );
 };
 
