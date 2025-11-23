@@ -13,27 +13,32 @@ const Layout: React.FC<LayoutProps>  = ({ children }) => {
   return (
     
   <div className="min-h-screen bg-slate-50">
-      <header className="w-full border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-         {/* Left side - Logo */}
-          <div className="text-lg font-bold text-slate-800">
-              PDFConvert.tech
-          </div>
+     <header className="border-b bg-white px-6 py-4 shadow-sm">
+  <div className="mx-auto flex max-w-5xl items-center justify-between">
+    <Link
+      to="/"
+      className="text-xl font-semibold text-slate-800 hover:text-sky-600"
+    >
+      PDFConvert.tech
+    </Link>
 
-        {/* Middle spacer */}  
-        <div className="flex-1"></div>
-
-        {/* Terms button (between middle and right) */}
-       <div className="mr-10">
-         <Link
-          to="/terms"
-           className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-200 hover:text-slate-900"
-      >
-              Terms of Use
-         </Link>
-      </div>
+    <nav className="flex items-center gap-3 text-sm text-slate-700">
+      <Link to="/blog" className="hover:text-sky-600">
+        Blog
+      </Link>
+      <Link to="/faq" className="hover:text-sky-600">
+        FAQ
+      </Link>
+      <Link to="/terms" className="hover:text-sky-600">
+        Terms
+      </Link>
+      <Link to="/privacy" className="hover:text-sky-600">
+        Privacy
+      </Link>
+    </nav>
   </div>
-    </header>
+</header>
+
 
 
 <CookiePopup />
