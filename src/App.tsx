@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
 import ToolPage from "./pages/ToolPage";
 import { tools } from "./config/pdfToolsConfig";
+import TermsPage from "./pages/TermsPage";
+
 
 const App: React.FC = () => {
   return (
@@ -21,7 +23,10 @@ const App: React.FC = () => {
 
       {/* FALLBACK */}
       <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/terms" element={<TermsPage />} />
+
     </Routes>
+    
   );
 };
 

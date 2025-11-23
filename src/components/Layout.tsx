@@ -1,5 +1,7 @@
 import React from "react";
 import CookiePopup from "./CookiePopup";
+import { Link } from "react-router-dom";
+
 
 
 interface LayoutProps {
@@ -12,6 +14,12 @@ const Layout: React.FC<LayoutProps>  = ({ children }) => {
     
     <div className="min-h-screen bg-slate-50">
       <header className="border-b bg-white">
+        <Link
+          to="/terms"
+          className="text-sm text-slate-600 hover:text-sky-600 hover:underline"
+          >
+            Terms of Use
+          </Link>
         <div className="mx-auto max-w-5xl px-4 py-4">
           <h1 className="text-xl font-bold text-slate-800">
             PDF Utility Hub
