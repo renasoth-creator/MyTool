@@ -12,33 +12,44 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps>  = ({ children }) => {
   return (
     
-    <div className="min-h-screen bg-slate-50">
-      <header className="border-b bg-white">
-        <Link
+  <div className="min-h-screen bg-slate-50">
+      <header className="w-full border-b border-slate-200 bg-white">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+         {/* Left side - Logo */}
+          <div className="text-lg font-bold text-slate-800">
+              PDFConvert.tech
+          </div>
+
+        {/* Middle spacer */}  
+        <div className="flex-1"></div>
+
+        {/* Terms button (between middle and right) */}
+       <div className="mr-10">
+         <Link
           to="/terms"
-          className="text-sm text-slate-600 hover:text-sky-600 hover:underline"
-          >
-            Terms of Use
-          </Link>
-        <div className="mx-auto max-w-5xl px-4 py-4">
-          <h1 className="text-xl font-bold text-slate-800">
-            PDF Utility Hub
-          </h1>
-        </div>
-        
-      </header>
+           className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-200 hover:text-slate-900"
+      >
+              Terms of Use
+         </Link>
+      </div>
+  </div>
+    </header>
+
 
 <CookiePopup />
 
-      <footer className="mt-12 pb-8 text-center text-xs text-slate-400">
-         © 2025 Nox - All rights reserved.
-      </footer>
+      <footer className="mt-10 w-full border-t border-slate-200 bg-white py-4">
+        <div className="mx-auto max-w-6xl px-4 text-right text-xs text-slate-500">
+          © 2025 Nox — All rights reserved.
+        </div>
+     </footer>
+
 
 
       <main className="mx-auto max-w-5xl px-4 py-6">
         {children}
       </main>
-    </div>
+</div>
   );
 };
 
