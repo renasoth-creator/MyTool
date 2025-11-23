@@ -73,7 +73,7 @@ const DashboardPage: React.FC = () => {
             <h3 className="font-semibold text-slate-900 text-lg">⚡ Automatic deletion</h3>
             <p className="text-sm text-slate-600 mt-1">
               All uploaded files are auto-deleted after 24 to keep your
-              data private and secure. You can contact uu for faster removal via internal@pdfconvert.tech
+              data private and secure. You can contact us for faster removal via internal@pdfconvert.tech
             </p>
           </div>
 
