@@ -10,7 +10,7 @@ const DashboardPage: React.FC = () => {
       {/* HEADER */}
       <section className="mb-6">
         <h1 className="text-2xl font-semibold text-slate-900">
-          All PDF & Document Tools
+          All PDF & Document Tools For Free Unlimited Uploads & Converts 
         </h1>
         <p className="mt-1 max-w-2xl text-sm text-slate-500">
           Convert, compress, merge, split, protect and more — all for free.
