@@ -8,28 +8,27 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#D6D6D6] text-slate-900">
       {/* HEADER */}
-      <header className="border-b bg-white/90 backdrop-blur">
+      <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          {/* Logo / Brand */}
+          {/* Logo / brand */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary-orange text-white text-xs font-bold shadow-sm">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#ff7a1a] text-white text-sm font-bold shadow">
               PDF
-            </span>
-            <span className="text-sm font-semibold text-primary-dark">
+            </div>
+            <span className="text-sm font-semibold tracking-tight text-slate-900">
               PDFConvert.tech
             </span>
           </Link>
 
-          {/* NAVIGATION */}
-          <nav className="flex items-center gap-4 text-xs font-medium text-slate-600">
+          {/* Nav */}
+          <nav className="flex items-center gap-6 text-xs md:text-sm text-slate-600">
             <NavLink
               to="/"
+              end
               className={({ isActive }) =>
-                `hover:text-primary-orange ${
-                  isActive ? "text-primary-orange" : ""
-                }`
+                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
               }
             >
               Tools
@@ -37,9 +36,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <NavLink
               to="/faq"
               className={({ isActive }) =>
-                `hover:text-primary-orange ${
-                  isActive ? "text-primary-orange" : ""
-                }`
+                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
               }
             >
               FAQ
@@ -47,9 +44,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <NavLink
               to="/blog"
               className={({ isActive }) =>
-                `hover:text-primary-orange ${
-                  isActive ? "text-primary-orange" : ""
-                }`
+                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
               }
             >
               Blog
@@ -57,9 +52,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <NavLink
               to="/terms"
               className={({ isActive }) =>
-                `hover:text-primary-orange ${
-                  isActive ? "text-primary-orange" : ""
-                }`
+                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
               }
             >
               Terms
@@ -67,9 +60,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <NavLink
               to="/privacy"
               className={({ isActive }) =>
-                `hover:text-primary-orange ${
-                  isActive ? "text-primary-orange" : ""
-                }`
+                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
               }
             >
               Privacy
@@ -78,17 +69,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
       </header>
 
-      {/* MAIN CONTENT */}
-      <main className="flex-1 px-4 py-8">
-        <div className="mx-auto max-w-6xl">{children}</div>
+      {/* PAGE CONTENT */}
+      <main className="flex-1">
+        <div className="mx-auto max-w-6xl px-4 py-10">{children}</div>
       </main>
 
       {/* FOOTER */}
-      <footer className="border-t bg-white py-4 text-center text-xs text-slate-500">
-        © 2025 Nox — All rights reserved.
+      <footer className="border-t border-slate-200 bg-white/90">
+        <div className="mx-auto max-w-6xl px-4 py-3 text-center text-xs text-slate-500">
+          © 2025 Nox — All rights reserved.
+        </div>
       </footer>
 
-      {/* Cookies notice */}
+      {/* Cookie notice */}
       <CookiePopup />
     </div>
   );
