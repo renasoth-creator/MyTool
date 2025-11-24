@@ -7,121 +7,140 @@ const DashboardPage: React.FC = () => {
   return (
     <Layout>
 
-      {/* HEADER */}
-      <section className="mb-6">
-        <h1 className="text-2xl font-semibold text-slate-900">
-          All PDF & Document Tools For Free Unlimited Uploads & Converts 
+      {/* ================================
+          HERO HEADER
+      ================================= */}
+      <header className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-primary-dark tracking-tight">
+          The Ultimate <span className="text-primary-orange">Tools</span> Suite
         </h1>
-        <p className="mt-1 max-w-2xl text-sm text-slate-500">
-          Convert, compress, merge, split, protect and more — all for free.
-          Click a tool below to get started.
+
+        <p className="mt-3 text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+          Fast, secure and 100% free. No signup required. Files auto-delete after 24 hours.
         </p>
-      </section>
+      </header>
 
-      {/* TOOLS GRID */}
-      <section>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {tools.map((tool) => (
-            <ToolCard key={tool.id} tool={tool} />
-          ))}
-        </div>
-      </section>
+      {/* ================================
+          TOOLS GRID (Orange hover cards)
+      ================================= */}
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {tools.map((tool) => (
+          <div
+            key={tool.id}
+            className="tool-card bg-white p-6 rounded-xl shadow-lg border-b-4 border-orange-500 cursor-pointer transition duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-xl"
+          >
+            <ToolCard tool={tool} />
+          </div>
+        ))}
+      </div>
 
-      {/* ==========================
-          ARTICLES & FEATURES SECTION
-      =========================== */}
-      <section className="mt-12 space-y-10">
+      {/* ================================
+          HOW IT WORKS
+      ================================= */}
+      <section className="mt-16 max-w-5xl mx-auto text-center space-y-10">
+        <h2 className="text-3xl font-bold text-primary-dark">How It Works</h2>
 
-        {/* HOW IT WORKS */}
         <div className="grid gap-6 md:grid-cols-3 text-center">
           <div>
-            <div className="text-3xl mb-3">1️⃣</div>
-            <h3 className="font-semibold text-slate-900">Upload</h3>
-            <p className="text-sm text-slate-600 mt-1">
-              Select your PDF, Word, Excel, PowerPoint or image files.
+            <div className="text-4xl mb-3 text-primary-orange">1️⃣</div>
+            <h3 className="font-semibold text-primary-dark">Upload</h3>
+            <p className="text-sm text-gray-700 mt-1">
+              Choose a PDF, Office file, or image from your device.
             </p>
           </div>
 
           <div>
-            <div className="text-3xl mb-3">2️⃣</div>
-            <h3 className="font-semibold text-slate-900">Processing</h3>
-            <p className="text-sm text-slate-600 mt-1">
-              Our converter processes your files securely on our servers.
+            <div className="text-4xl mb-3 text-primary-orange">2️⃣</div>
+            <h3 className="font-semibold text-primary-dark">Process</h3>
+            <p className="text-sm text-gray-700 mt-1">
+              Our server converts your file quickly and securely.
             </p>
           </div>
 
           <div>
-            <div className="text-3xl mb-3">3️⃣</div>
-            <h3 className="font-semibold text-slate-900">Download</h3>
-            <p className="text-sm text-slate-600 mt-1">
-              Download your converted or optimized files instantly.
+            <div className="text-4xl mb-3 text-primary-orange">3️⃣</div>
+            <h3 className="font-semibold text-primary-dark">Download</h3>
+            <p className="text-sm text-gray-700 mt-1">
+              Get your finished document instantly.
             </p>
           </div>
         </div>
-
-        {/* FEATURES */}
-        <div className="grid gap-8 md:grid-cols-2">
-          <div>
-            <h3 className="font-semibold text-slate-900 text-lg">🔐 Encrypted files</h3>
-            <p className="text-sm text-slate-600 mt-1">
-              All file transfers use 256-bit SSL encryption. Files are never stored permanently.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-slate-900 text-lg">⚡ Auto-deletion</h3>
-            <p className="text-sm text-slate-600 mt-1">
-              All uploaded files are deleted after 24 hours for maximum privacy.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-slate-900 text-lg">🌍 Works everywhere</h3>
-            <p className="text-sm text-slate-600 mt-1">
-              Supports Windows, Mac, Linux, iOS, Android — all modern browsers.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-slate-900 text-lg">🧰 Full toolkit</h3>
-            <p className="text-sm text-slate-600 mt-1">
-              Merge, split, compress, convert, extract — everything you need.
-            </p>
-          </div>
-        </div>
-
       </section>
 
-      {/* WHY CHOOSE US */}
-      <section className="mt-12 space-y-6 text-slate-700">
-        <h2 className="text-xl font-semibold text-slate-900">
+      {/* ================================
+          FEATURES GRID
+      ================================= */}
+      <section className="mt-16 max-w-5xl mx-auto grid gap-10 md:grid-cols-2">
+        <div>
+          <h3 className="text-xl font-bold text-primary-dark">🔒 Encrypted & Secure</h3>
+          <p className="text-sm text-gray-700 mt-1">
+            All transfers use 256-bit SSL encryption. We never store files permanently.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xl font-bold text-primary-dark">⚡ Auto Deletion</h3>
+          <p className="text-sm text-gray-700 mt-1">
+            Uploaded files are removed after 24 hours. Need earlier removal? Email us.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xl font-bold text-primary-dark">🌍 Works Everywhere</h3>
+          <p className="text-sm text-gray-700 mt-1">
+            Windows, macOS, Linux, iOS, Android — no installation required.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xl font-bold text-primary-dark">🧰 Powerful Tools</h3>
+          <p className="text-sm text-gray-700 mt-1">
+            Merge, split, compress, extract text, convert formats and more.
+          </p>
+        </div>
+      </section>
+
+      {/* ================================
+          WHY CHOOSE US
+      ================================= */}
+      <section className="mt-16 max-w-5xl mx-auto space-y-4 text-gray-800">
+        <h2 className="text-3xl font-bold text-primary-dark">
           Why Choose PDFConvert.tech?
         </h2>
+
         <p className="text-sm">
-          PDFConvert.tech offers a complete suite of fast, secure, and free PDF tools.
-          Convert documents instantly without installing software or creating an account.
-          Your files remain private and are automatically removed from our servers.
+          PDFConvert.tech offers fast, secure and free file tools. Convert, merge,
+          compress and extract files instantly without installing anything.
         </p>
 
-        <h2 className="text-xl font-semibold text-slate-900">Most Popular Tools</h2>
-        <ul className="list-disc pl-5 space-y-1 text-sm">
-          <li>Merge multiple PDF files into one</li>
-          <li>Compress PDF files while keeping high quality</li>
-          <li>Convert JPG, PNG & WebP images into PDF</li>
-          <li>Convert Word, Excel, PPT & HTML to PDF</li>
-          <li>Extract text from scanned PDFs</li>
-          <li>Password-protect your PDF documents</li>
+        <h3 className="text-xl font-semibold text-primary-dark">Most Popular Tools</h3>
+        <ul className="list-disc ml-6 space-y-1 text-sm">
+          <li>Merge multiple PDF files</li>
+          <li>Compress PDFs while keeping quality</li>
+          <li>Create one PDF from many images</li>
+          <li>Convert Word, Excel, PPT or HTML to PDF</li>
+          <li>Extract text using PDF-to-text</li>
+          <li>Password-protect your PDF</li>
         </ul>
 
-        <h2 className="text-xl font-semibold text-slate-900">
+        <h3 className="text-xl font-semibold text-primary-dark">
           100% Free · No Watermark · No Signup Required
-        </h2>
+        </h3>
+
         <p className="text-sm">
-          Whether on mobile or desktop, PDFConvert.tech gives you fast processing,
-          clean output, and strong privacy — always free.
+          Whether you’re on mobile or desktop, we offer the fastest and simplest tools
+          with full privacy protection.
         </p>
       </section>
 
+      {/* ================================
+          FOOTER
+      ================================= */}
+      <footer className="mt-16 w-full max-w-3xl mx-auto text-center p-6 bg-white rounded-lg border border-gray-300 shadow-lg">
+        <p className="text-sm text-gray-500">
+          © 2025 Nox — All Rights Reserved.
+        </p>
+      </footer>
     </Layout>
   );
 };
