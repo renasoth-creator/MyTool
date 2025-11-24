@@ -28,7 +28,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
           border border-orange-400
           text-orange-500 text-xl font-bold
           mb-4
-        "
+        
       >
         {tool.icon}
       </div>
