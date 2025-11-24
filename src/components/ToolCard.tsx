@@ -23,13 +23,13 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       <div
         className="
           flex items-center justify-center
-          h- w-12 rounded-xl
+          h-1 w-1 rounded-xl
           border border-orange-400
           text-orange-500 text-xl font-bold
           mb-4
         "
       >
-        {tool.icon}
+        
       </div>
 
       {/* TITLE */}
