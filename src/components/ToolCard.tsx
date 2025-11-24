@@ -13,22 +13,21 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       className="
         block rounded-2xl bg-white
         border border-gray-200
-        p-8 shadow-s
-
-        /* Hover animation */
-        hover:shadow-lg hover:-translate-y-1 hover:border-orange-500
+        p-6
+        shadow-sm
         transition-all duration-300
+        hover:shadow-lg hover:-translate-y-1 hover:border-orange-500
       "
     >
       {/* ICON BOX */}
       <div
         className="
           flex items-center justify-center
-          h-2 w-12 rounded-xl
+          h- w-12 rounded-xl
           border border-orange-400
           text-orange-500 text-xl font-bold
           mb-4
-        
+        "
       >
         {tool.icon}
       </div>
@@ -43,7 +42,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         {tool.description}
       </p>
 
-      {/* EXPLORE LINK */}
+      {/* CTA */}
       <span className="text-orange-600 font-semibold text-sm">
         Explore the product →
       </span>
