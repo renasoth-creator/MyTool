@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="min-h-screen flex flex-col bg-[#D6D6D6] text-slate-900">
       {/* HEADER */}
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-6">
           {/* Logo / brand */}
           <Link to="/" className="flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#ff7a1a] text-white text-sm font-bold shadow">
@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Link>
 
           {/* Nav */}
-          <nav className="flex items-center gap-6 text-xs md:text-sm text-slate-600">
+          <nav className="flex items-center gap-9 text-xs md:text-sm text-slate-600">
             <NavLink
               to="/"
               end
@@ -70,8 +70,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </header>
 
       {/* PAGE CONTENT */}
-      <main className="flex-1">
-        <div className="mx-auto max-w-6xl px-4 py-10">{children}</div>
+      <main className="flex-1 px-4 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-6x1 px-4 py-10">{children}</div>
       </main>
 
       {/* FOOTER */}

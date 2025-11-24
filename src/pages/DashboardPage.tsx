@@ -15,7 +15,7 @@ const DashboardPage: React.FC = () => {
           The Ultimate <span className="text-primary-orange">Tools</span> Suite
         </h1>
 
-        <p className="mt-3 text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+        <p className="mt- text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
           Fast, secure and 100% free. No signup required. Files auto-delete after 24 hours.
         </p>
       </header>
@@ -23,16 +23,15 @@ const DashboardPage: React.FC = () => {
       {/* ================================
           TOOLS GRID (Orange hover cards)
       ================================= */}
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="mt-10">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {tools.map((tool) => (
-          <div
-            key={tool.id}
-            className="tool-card bg-white p-6 rounded-xl shadow-lg border-b-4 border-orange-500 cursor-pointer transition duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-xl"
-          >
-            <ToolCard tool={tool} />
-          </div>
-        ))}
-      </div>
+            <ToolCard key={tool.id} tool={tool} />
+          ))}
+          
+         </div>
+       
+      </section>
 
       {/* ================================
           HOW IT WORKS
@@ -133,14 +132,6 @@ const DashboardPage: React.FC = () => {
         </p>
       </section>
 
-      {/* ================================
-          FOOTER
-      ================================= */}
-      <footer className="mt-16 w-full max-w-3xl mx-auto text-center p-6 bg-white rounded-lg border border-gray-300 shadow-lg">
-        <p className="text-sm text-gray-500">
-          © 2025 Nox — All Rights Reserved.
-        </p>
-      </footer>
     </Layout>
   );
 };
