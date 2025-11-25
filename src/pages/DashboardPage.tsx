@@ -80,35 +80,78 @@ const DashboardPage: React.FC = () => {
       {/* ================================
           FEATURES GRID
       ================================= */}
-      <section className="mt-16 max-w-5xl mx-auto grid gap-10 md:grid-cols-2">
-        <div>
-          <h3 className="text-xl font-bold text-primary-dark">🔒 Encrypted & Secure</h3>
-          <p className="text-sm text-gray-700 mt-1">
-            All transfers use 256-bit SSL encryption. We never store files permanently.
-          </p>
-        </div>
+      {/* ================================
+    FEATURE GRID + WHY CHOOSE US
+================================= */}
+<section className="mt-20 max-w-5xl mx-auto px-4">
+  <div className="rounded-2xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200 space-y-10">
 
-        <div>
-          <h3 className="text-xl font-bold text-primary-dark">⚡ Auto Deletion</h3>
-          <p className="text-sm text-gray-700 mt-1">
-            Uploaded files are removed after 24 hours. Need earlier removal? Email us.
-          </p>
-        </div>
+    {/* FEATURE GRID */}
+    <div className="grid gap-10 md:grid-cols-2">
 
-        <div>
-          <h3 className="text-xl font-bold text-primary-dark">🌍 Works Everywhere</h3>
-          <p className="text-sm text-gray-700 mt-1">
-            Windows, macOS, Linux, iOS, Android — no installation required.
-          </p>
-        </div>
+      <div>
+        <h3 className="text-xl font-bold text-primary-dark">🔒 Encrypted & Secure</h3>
+        <p className="text-sm text-gray-700 mt-1">
+          All transfers use 256-bit SSL encryption. Files are never stored permanently.
+        </p>
+      </div>
 
-        <div>
-          <h3 className="text-xl font-bold text-primary-dark">🧰 Powerful Tools</h3>
-          <p className="text-sm text-gray-700 mt-1">
-            Merge, split, compress, extract text, convert formats and more.
-          </p>
-        </div>
-      </section>
+      <div>
+        <h3 className="text-xl font-bold text-primary-dark">⚡ Auto Deletion</h3>
+        <p className="text-sm text-gray-700 mt-1">
+          Uploaded files are automatically removed after 24 hours.
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-xl font-bold text-primary-dark">🌍 Works Everywhere</h3>
+        <p className="text-sm text-gray-700 mt-1">
+          Works on Windows, macOS, Linux, iOS, Android—no installation needed.
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-xl font-bold text-primary-dark">🧰 Powerful Tools</h3>
+        <p className="text-sm text-gray-700 mt-1">
+          Merge, split, compress, extract text, convert formats, and more.
+        </p>
+      </div>
+
+    </div>
+
+    {/* WHY CHOOSE US */}
+    <div>
+      <h2 className="text-3xl font-bold text-primary-dark mb-4">
+        Why Choose PDFConvert.tech?
+      </h2>
+
+      <p className="text-sm text-gray-700 leading-relaxed mb-6">
+        PDFConvert.tech provides fast, secure, and easy-to-use PDF tools. Convert, merge,
+        compress, extract text, and transform files instantly—no installation required.
+      </p>
+
+      <h3 className="text-xl font-semibold text-primary-dark mb-3">Most Popular Tools</h3>
+
+      <ul className="list-disc ml-6 space-y-1 text-sm text-gray-700 mb-8">
+        <li>Merge multiple PDF files</li>
+        <li>Compress PDFs while maintaining quality</li>
+        <li>Create one PDF from many images</li>
+        <li>Convert Word, Excel, PPT, or HTML to PDF</li>
+        <li>Extract text using PDF-to-Text</li>
+        <li>Password-protect your PDF</li>
+      </ul>
+
+      <h3 className="text-xl font-semibold text-primary-dark mb-2">
+        100% Free · No Watermark · No Signup Required
+      </h3>
+
+      <p className="text-sm text-gray-700 leading-relaxed">
+        Whether on mobile or desktop, enjoy fast and simple tools with complete privacy protection.
+      </p>
+    </div>
+
+  </div>
+</section>
 
       {/* ================================
           WHY CHOOSE US
