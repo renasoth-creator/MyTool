@@ -75,12 +75,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="mx-auto max-w-6x1 px-4 py-10">{children}</div>
       </main>
 
-      {/* FOOTER */}
-     <footer className="border-t border-slate-200 bg-white/90">
-       <div className="max-w-6xl mx-auto px-4 py-3 text-center text-xs text-slate-500">
-         © 2025 Nox — All rights reserved.
-       </div>
-     </footer>
+     <footer className="mt-auto border-t border-slate-200 bg-white/90">
+        <div className="max-w-6xl mx-auto px-4 py-3 text-center text-xs text-slate-500">
+          © 2025 Nox — All rights reserved.
+        </div>
+      </footer>
 
 
       {/* Cookie notice */}
