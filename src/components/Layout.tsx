@@ -24,49 +24,65 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Link>
 
           {/* Nav */}
-          <nav className="flex items-center gap-9 text-xs md:text-sm text-slate-600">
-            <NavLink
-              to="/"
-              end
-              className={({ isActive }) =>
-                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
-              }
-            >
-              Tools
-            </NavLink>
-            <NavLink
-              to="/faq"
-              className={({ isActive }) =>
-                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
-              }
-            >
-              FAQ
-            </NavLink>
-            <NavLink
-              to="/blog"
-              className={({ isActive }) =>
-                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
-              }
-            >
-              Blog
-            </NavLink>
-            <NavLink
-              to="/terms"
-              className={({ isActive }) =>
-                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
-              }
-            >
-              Terms
-            </NavLink>
-            <NavLink
-              to="/privacy"
-              className={({ isActive }) =>
-                `hover:text-[#ff7a1a] ${isActive ? "text-[#ff7a1a]" : ""}`
-              }
-            >
-              Privacy
-            </NavLink>
-          </nav>
+          {/* NAVIGATION */}
+<nav className="px-6 py-3 rounded-xl bg-[#F9F9F9] border border-slate-200 shadow-sm flex items-center gap-8 text-sm text-slate-700">
+  <NavLink
+    to="/"
+    end
+    className={({ isActive }) =>
+      `hover:text-[#ff7a1a] transition ${
+        isActive ? "text-[#ff7a1a] font-semibold" : ""
+      }`
+    }
+  >
+    Tools
+  </NavLink>
+
+  <NavLink
+    to="/faq"
+    className={({ isActive }) =>
+      `hover:text-[#ff7a1a] transition ${
+        isActive ? "text-[#ff7a1a] font-semibold" : ""
+      }`
+    }
+  >
+    FAQ
+  </NavLink>
+
+  <NavLink
+    to="/blog"
+    className={({ isActive }) =>
+      `hover:text-[#ff7a1a] transition ${
+        isActive ? "text-[#ff7a1a] font-semibold" : ""
+      }`
+    }
+  >
+    Blog
+  </NavLink>
+
+  <NavLink
+    to="/terms"
+    className={({ isActive }) =>
+      `hover:text-[#ff7a1a] transition ${
+        isActive ? "text-[#ff7a1a] font-semibold" : ""
+      }`
+    }
+  >
+    Terms
+  </NavLink>
+
+  <NavLink
+    to="/privacy"
+    className={({ isActive }) =>
+      `hover:text-[#ff7a1a] transition ${
+        isActive ? "text-[#ff7a1a] font-semibold" : ""
+      }`
+    }
+  >
+    Privacy
+  </NavLink>
+</nav>
+
         </div>
       </header>
 
@@ -75,11 +91,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="mx-auto max-w-6x1 px-4 py-10">{children}</div>
       </main>
 
-     <footer className="mt-auto border-t border-slate-200 bg-white/90">
-        <div className="max-w-6xl mx-auto px-4 py-3 text-center text-xs text-slate-500">
-          © 2025 Nox — All rights reserved.
-        </div>
-      </footer>
+      {/* FOOTER */}
+     <footer className="border-t border-slate-200 bg-white/90">
+       <div className="max-w-6xl mx-auto px-4 py-3 text-center text-xs text-slate-500">
+         © 2025 Nox — All rights reserved.
+       </div>
+     </footer>
 
 
       {/* Cookie notice */}
