@@ -151,7 +151,7 @@ const DashboardPage: React.FC = () => {
     </div>
 
   </div>
-
+</section>
 
     </Layout>
   );
