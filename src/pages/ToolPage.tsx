@@ -68,6 +68,9 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
                 multiple={allowMultiple}
               />
             </div>
+            {/* BANNER AD */}
+            <div id="container-e3c7de1a3d73afa16c42563899da41ee" className="my-8"></div>
+            <div id="container-e3c7de1a3d73afa16c42563899da41ee"></div>
           </div>
 
           <div className="rounded-2xl bg-white p-5 shadow-sm border border-slate-200 text-sm text-slate-700">
