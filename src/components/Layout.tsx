@@ -75,12 +75,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="mx-auto max-w-6x1 px-4 py-10">{children}</div>
       </main>
 
-      {/* FOOTER */}
-      <footer className="border-t border-slate-200 bg-white/90">
+      const Layout = ({ children }) => {
+  return (
+    <div className="min-h-screen flex flex-col bg-white">
+
+      {/* NAVBAR */}
+      <Navbar />
+
+      {/* PAGE CONTENT */}
+      <main className="flex-grow">
+        {children}
+      </main>
+
+      {/* FOOTER ALWAYS AT THE BOTTOM */}
+      <footer className="mt-auto border-t border-slate-200 bg-white/90">
         <div className="mx-auto max-w-6xl px-4 py-3 text-center text-xs text-slate-500">
-          © 2025 Nox — All rights reserved.
+          © 2025 PDFConvert.tech — All rights reserved.
         </div>
       </footer>
+      
+    </div>
+  );
+};
 
       {/* Cookie notice */}
       <CookiePopup />
