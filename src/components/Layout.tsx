@@ -77,7 +77,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* FOOTER */}
       <footer className="border-t border-slate-200 bg-white/90">
-        <div className="mx-auto max-w-6xl px-4 py-3 text-center text-xs text-slate-500"></div>
+        <div className="max-w-6xl px-4 py-3 text-center text-xs text-slate-500"></div>
           <div className="min-h-screen flex flex-col bg-white">
           © 2025 Nox All rights reserved.
         </div>
