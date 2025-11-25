@@ -151,40 +151,7 @@ const DashboardPage: React.FC = () => {
     </div>
 
   </div>
-</section>
 
-      {/* ================================
-          WHY CHOOSE US
-      ================================= */}
-      <section className="mt-16 max-w-5xl mx-auto space-y-4 text-gray-800">
-        <h2 className="text-3xl font-bold text-primary-dark">
-          Why Choose PDFConvert.tech?
-        </h2>
-
-        <p className="text-sm">
-          PDFConvert.tech offers fast, secure and free file tools. Convert, merge,
-          compress and extract files instantly without installing anything.
-        </p>
-
-        <h3 className="text-xl font-semibold text-primary-dark">Most Popular Tools</h3>
-        <ul className="list-disc ml-6 space-y-1 text-sm">
-          <li>Merge multiple PDF files</li>
-          <li>Compress PDFs while keeping quality</li>
-          <li>Create one PDF from many images</li>
-          <li>Convert Word, Excel, PPT or HTML to PDF</li>
-          <li>Extract text using PDF-to-text</li>
-          <li>Password-protect your PDF</li>
-        </ul>
-
-        <h3 className="text-xl font-semibold text-primary-dark">
-          100% Free · No Watermark · No Signup Required
-        </h3>
-
-        <p className="text-sm">
-          Whether you’re on mobile or desktop, we offer the fastest and simplest tools
-          with full privacy protection.
-        </p>
-      </section>
 
     </Layout>
   );
