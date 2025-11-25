@@ -36,35 +36,46 @@ const DashboardPage: React.FC = () => {
       {/* ================================
           HOW IT WORKS
       ================================= */}
-      <section className="mt-16 max-w-5xl mx-auto text-center space-y-10">
-        <h2 className="text-3xl font-bold text-primary-dark">How It Works</h2>
+      {/* ================================
+    HOW IT WORKS (Modern Block)
+================================= */}
+<section className="mt-20 max-w-5xl mx-auto px-4">
+  <div className="rounded-2xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200">
 
-        <div className="grid gap-6 md:grid-cols-3 text-center">
-          <div>
-            <div className="text-4xl mb-3 text-primary-orange">1️⃣</div>
-            <h3 className="font-semibold text-primary-dark">Upload</h3>
-            <p className="text-sm text-gray-700 mt-1">
-              Choose a PDF, Office file, or image from your device.
-            </p>
-          </div>
+    <h2 className="text-3xl font-bold text-primary-dark text-center mb-10">
+      How It Works
+    </h2>
 
-          <div>
-            <div className="text-4xl mb-3 text-primary-orange">2️⃣</div>
-            <h3 className="font-semibold text-primary-dark">Process</h3>
-            <p className="text-sm text-gray-700 mt-1">
-              Our server converts your file quickly and securely.
-            </p>
-          </div>
+    <div className="grid gap-10 md:grid-cols-3 text-center">
 
-          <div>
-            <div className="text-4xl mb-3 text-primary-orange">3️⃣</div>
-            <h3 className="font-semibold text-primary-dark">Download</h3>
-            <p className="text-sm text-gray-700 mt-1">
-              Get your finished document instantly.
-            </p>
-          </div>
-        </div>
-      </section>
+      <div>
+        <div className="text-4xl mb-3">📄</div>
+        <h3 className="font-semibold text-primary-dark text-lg">1. Upload</h3>
+        <p className="text-sm text-gray-600 mt-1">
+          Choose a PDF, Office file, or image directly from your device.
+        </p>
+      </div>
+
+      <div>
+        <div className="text-4xl mb-3">⚙️</div>
+        <h3 className="font-semibold text-primary-dark text-lg">2. Process</h3>
+        <p className="text-sm text-gray-600 mt-1">
+          Our server processes your file securely and quickly.
+        </p>
+      </div>
+
+      <div>
+        <div className="text-4xl mb-3">⬇️</div>
+        <h3 className="font-semibold text-primary-dark text-lg">3. Download</h3>
+        <p className="text-sm text-gray-600 mt-1">
+          Your finished file is ready instantly—no signup required.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
       {/* ================================
           FEATURES GRID
