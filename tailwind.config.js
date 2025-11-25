@@ -8,7 +8,7 @@ export default {
         extend: {
            colors: {
              "primary-orange": "#F97316",
-             "primary-dark": "#ffffff",
+             "primary-dark": "#1E293B",
   },
   fontFamily: {
       sans: ["Inter", "sans-serif"],
