@@ -11,7 +11,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
     <Link
       to={tool.route}
       className="
-        block rounded-2xl bg-white
+        block rounded-2xl bg-[#F9F9F9]
         border border-gray-200
         p-6
         shadow-sm
