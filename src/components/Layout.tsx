@@ -75,7 +75,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="mx-auto max-w-6x1 px-4 py-10">{children}</div>
       </main>
 
-      const Layout = ({ children }) => {
+const Layout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col bg-white">
 
