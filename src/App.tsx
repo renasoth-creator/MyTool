@@ -33,7 +33,7 @@ const App: React.FC = () => {
       <Route path="/faq" element={<FaqPage />} />
       <Route path="/blog" element={<BlogPage />} />
 
-      {/* Fallback – send unknown routes to home */}
+      {/* Fallback send unknown routes to home */}
       <Route path="*" element={<DashboardPage />} />
     </Routes>
   );

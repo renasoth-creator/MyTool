@@ -7,18 +7,20 @@ const DashboardPage: React.FC = () => {
   return (
     <Layout>
 
-      {/* ================================
-          HERO HEADER
-      ================================= */}
-      <header className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-primary-dark tracking-tight">
-          The Ultimate <span className="text-primary-orange">Tools</span> Suite
-        </h1>
+      <header className="mb-16">
+  <div className="max-w-5xl mx-auto rounded-2xl border border-slate-200 p-10 text-center">
 
-        <p className="mt- text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
-          Fast, secure and 100% free. No signup required. Files auto-delete after 24 hours.
-        </p>
-      </header>
+    <h1 className="text-4xl md:text-5xl font-extrabold text-primary-dark tracking-tight">
+      The Ultimate <span className="text-primary-orange">Tools</span> Suite
+    </h1>
+
+    <p className="mt-4 text-lg text-gray-700 max-w-3xl mx-auto">
+      Fast, secure and 100% free. No signup required. Files auto-delete after 24 hours.
+    </p>
+
+  </div>
+</header>
+
 
       {/* ================================
           TOOLS GRID (Orange hover cards)
