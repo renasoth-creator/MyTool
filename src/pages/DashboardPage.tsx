@@ -87,7 +87,7 @@ const DashboardPage: React.FC = () => {
   <div className="rounded-2xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200 space-y-10">
 
     {/* FEATURE GRID */}
-    <div className="grid gap-16 md:grid-cols-2">
+    <div className="grid gap-10 md:grid-cols-2">
 
       <div>
         <h3 className="text-xl font-bold text-primary-dark">🔒 Encrypted & Secure</h3>
