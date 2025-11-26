@@ -7,7 +7,7 @@ interface ToolCardProps {
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
-  const isComingSoon = tool.id === "coming-soon";
+  const isComingSoon = tool.id === "coming-soon";   /* This makes the tool unclickable  */
 
   // -----------------------------
   // COMING SOON CARD (NOT CLICKABLE)
