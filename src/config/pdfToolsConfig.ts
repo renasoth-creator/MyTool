@@ -11,7 +11,7 @@
   | "protect-pdf"  
   | "pdf-spreadsheet"
   |  "coming-soon"
-  |  "PDF-PSD";
+  {/*|  "PDF-PSD";*/}
 
 
 export interface ToolConfig {
