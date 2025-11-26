@@ -92,7 +92,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <main className="flex-1 px-4 sm:px-8 lg:px-16">
         <div className="mx-auto max-w-6x1 px-4 py-10">{children}</div>
       </main>
-      <div id="container-e3c7de1a3d73afa16c42563899da41ee" className="my-10"></div>
+      {/* <div id="container-e3c7de1a3d73afa16c42563899da41ee" className="my-10"></div> */}
       
 
 

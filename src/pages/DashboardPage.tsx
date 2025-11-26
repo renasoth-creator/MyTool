@@ -30,7 +30,7 @@ const DashboardPage: React.FC = () => {
           ))}
           
          </div>
-         <div id="container-e3c7de1a3d73afa16c42563899da41ee" className="my-10"></div>
+         {/*<div id="container-e3c7de1a3d73afa16c42563899da41ee" className="my-10"></div>*/}
        
       </section>
 

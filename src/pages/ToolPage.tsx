@@ -69,7 +69,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
               />
             </div>
             {/* BANNER AD */}
-            <div id="container-e3c7de1a3d73afa16c42563899da41ee" className="my-8"></div>
+            {/*<div id="container-e3c7de1a3d73afa16c42563899da41ee" className="my-8"></div>*/}
             
           </div>
 
