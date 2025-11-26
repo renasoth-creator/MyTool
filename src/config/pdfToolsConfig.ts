@@ -10,7 +10,7 @@
   | "html-to-pdf"
   | "protect-pdf"  
   | "pdf-spreadsheet"
-    "cooming-soon";
+    "coming-soon";
 
 
 export interface ToolConfig {
@@ -87,11 +87,11 @@ export const tools: ToolConfig[] = [
   name: "PDF Spreadsheet",
   description: "Create a PDF that contains multiple images arranged in a grid layout.",
   route: "/pdf-spreadsheet",
-},
-{
-  -id: "Cooming-Soon",
-  name: "Soon",
+  },
+  {
+  id: "coming-soon",
+  name: "soon",
   description: "in this tol, you can upload and ues this tool for as loong as you wa",
   route: "/cooming-soon",
-},
+  },
 ];
