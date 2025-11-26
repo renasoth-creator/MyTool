@@ -97,11 +97,11 @@ export const tools: ToolConfig[] = [
   route: "/cooming-soon",
   },
 
-  {/*}
+  /*
   {***THIS CN BE USED FOR OTHER TOOLS***
   id: "PDF-PSD",
   name: "PSD",
   description: "in this tol, you can upload and ues this tool for as loong as you want",
-  route: "/pdf-psd",*/}
+  route: "/pdf-psd",*/
   
 ];
