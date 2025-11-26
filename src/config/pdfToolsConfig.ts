@@ -10,7 +10,8 @@
   | "html-to-pdf"
   | "protect-pdf"  
   | "pdf-spreadsheet"
-  |  "coming-soon";
+  |  "coming-soon"
+  |  "PDF-PSD";
 
 
 export interface ToolConfig {
@@ -92,7 +93,13 @@ export const tools: ToolConfig[] = [
   {
   id: "coming-soon",
   name: "soon",
-  description: "in this tol, you can upload and ues this tool for as loong as you wa",
+  description: "in this tol, you can upload and ues this tool for as loong as you want",
   route: "/cooming-soon",
+  },
+  {
+  id: "PDF-PSD",
+  name: "PSD",
+  description: "in this tol, you can upload and ues this tool for as loong as you want",
+  route: "/pdf-psd",
   },
 ];
