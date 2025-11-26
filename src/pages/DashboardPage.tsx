@@ -38,7 +38,7 @@ const DashboardPage: React.FC = () => {
       {/*================================
             HOW IT WORKS (Modern Block)
         =================================*/}
-<section className="w-full">
+<section className="mt-20 w-full">
   <div className="rounded-3xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200">
 
     <h2 className="text-3xl font-bold text-primary-dark text-center mb-10">
@@ -79,7 +79,7 @@ const DashboardPage: React.FC = () => {
       {/* ================================
     FEATURE GRID + WHY CHOOSE US : <section className="mt-20 w-full"> this makes the the block be strench
 ================================= */}
-<section className="w-full">
+<section className="mt-20 w-full">
   <div className="rounded-2xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200 space-y-10">
 
     {/* FEATURE GRID */}
