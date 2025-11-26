@@ -19,6 +19,7 @@ export interface ToolConfig {
   description: string;
   route: string;
   badge?: string;
+  icon?:string;
 }
 
 export const tools: ToolConfig[] = [

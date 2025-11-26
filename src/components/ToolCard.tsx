@@ -32,7 +32,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
             mb-4
           "
         >
-      
+          
         </div>
 
         {/* TITLE */}
