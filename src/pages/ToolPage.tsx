@@ -33,6 +33,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     "pptx-to-pdf": ".ppt,.pptx",
     "html-to-pdf": ".html,.htm,text/html",
     "protect-pdf": "application/pdf",
+    "cooming-soon": "application/pdf",
   };
 
   const accept = acceptByTool[toolId] ?? undefined;

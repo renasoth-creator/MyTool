@@ -8,8 +8,9 @@
   | "xlsx-to-pdf"
   | "pptx-to-pdf"
   | "html-to-pdf"
-  | "protect-pdf"
-  | "pdf-spreadsheet";
+  | "protect-pdf"  
+  | "pdf-spreadsheet"
+    "cooming-soon";
 
 
 export interface ToolConfig {
@@ -88,9 +89,9 @@ export const tools: ToolConfig[] = [
   route: "/pdf-spreadsheet",
 },
 {
-  id: "Cooming Soon",
-  name: "",
+  -id: "Cooming-Soon",
+  name: "Soon",
   description: "in this tol, you can upload and ues this tool for as loong as you wa",
-  route: "/pdf-spreadsheet",
+  route: "/cooming-soon",
 },
 ];
