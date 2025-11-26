@@ -10,7 +10,7 @@
   | "html-to-pdf"
   | "protect-pdf"  
   | "pdf-spreadsheet"
-    "coming-soon";
+  |  "coming-soon";
 
 
 export interface ToolConfig {
