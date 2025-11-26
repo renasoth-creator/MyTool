@@ -34,14 +34,12 @@ const DashboardPage: React.FC = () => {
        
       </section>
 
-      {/* ================================
-          HOW IT WORKS
-      ================================= */}
-      {/* ================================
-    HOW IT WORKS (Modern Block)
-================================= */}
+      
+      {/*================================
+            HOW IT WORKS (Modern Block)
+        =================================*/}
 <section className="mt-20 max-w-5xl mx-auto px-4">
-  <div className="rounded-2xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200">
+  <div className="rounded-3xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200">
 
     <h2 className="text-3xl font-bold text-primary-dark text-center mb-10">
       How It Works
