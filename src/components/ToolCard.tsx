@@ -72,8 +72,8 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       <div
         className="
           flex items-center justify-center
-          h-12 w-12 rounded-xl
-          bg-orange-50 text-orange-500 text-2xl font-bold
+          h-1 w-1 rounded-xl
+          bg-orange-400 text-orange-500 text-2xl font-bold
           mb-4
         "
       >
