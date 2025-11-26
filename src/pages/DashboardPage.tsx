@@ -82,7 +82,7 @@ const DashboardPage: React.FC = () => {
       {/* ================================
     FEATURE GRID + WHY CHOOSE US
 ================================= */}
-<section className="mt-20 max-w-5xl mx-auto px-4">
+<section className="mt-20 w-full">
   <div className="rounded-2xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200 space-y-10">
 
     {/* FEATURE GRID */}
