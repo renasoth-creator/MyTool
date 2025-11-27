@@ -92,7 +92,7 @@ export const tools: ToolConfig[] = [
   },
   {
   id: "coming-soon",
-  name: "soon",
+  name: "Soon",
   description: "in this tol, you can upload and ues this tool for as loong as you want",
   route: "/cooming-soon",
   },

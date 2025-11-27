@@ -11,7 +11,7 @@ const DashboardPage: React.FC = () => {
           HERO HEADER
       ================================= */}
       <header className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-primary-dark tracking-tight">
+        <h1 className="text-4x1 md:text-5xl font-extrabold text-primary-dark tracking-tight">
           The Ultimate <span className="text-primary-orange">Tools</span> Suite
         </h1>
 
@@ -24,7 +24,7 @@ const DashboardPage: React.FC = () => {
           TOOLS GRID (Orange hover cards)
       ================================= */}
       <section className="mt-10">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-fr">
         {tools.map((tool) => (
             <ToolCard key={tool.id} tool={tool} />
           ))}

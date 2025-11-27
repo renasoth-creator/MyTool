@@ -7,10 +7,10 @@ interface ToolCardProps {
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
-  const isComingSoon = tool.id === "coming-soon";   /* This makes the tool unclickable  */
+  const isComingSoon = tool.id === "coming-soon";
 
   // -----------------------------
-  // COMING SOON CARD (NOT CLICKABLE)
+  // COMING SOON CARD
   // -----------------------------
   if (isComingSoon) {
     return (
@@ -18,9 +18,10 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         className="
           block rounded-2xl bg-[#F9F9F9]
           border border-gray-200
-          p-6
+          p-6 h-full
           shadow-sm opacity-60
           cursor-not-allowed select-none
+          flex flex-col justify-between
         "
       >
         {/* ICON BOX */}
@@ -28,24 +29,26 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
           className="
             flex items-center justify-center
             h-12 w-12 rounded-xl
-            bg-gray-100 text-gray-400 text-2xl font-bold
+            bg-[#F9F9F9] border border-gray-200
+            text-gray-400 text-2xl font-bold
             mb-4
           "
         >
-          
+          🚧
         </div>
 
-        {/* TITLE */}
-        <h3 className="text-lg font-semibold text-slate-500 mb-1">
-          {tool.name}
-        </h3>
+        {/* TEXT */}
+        <div>
+          <h3 className="text-lg font-semibold text-slate-500 mb-1">
+            {tool.name}
+          </h3>
 
-        {/* DESCRIPTION */}
-        <p className="text-sm text-slate-500 mb-4">
-          {tool.description}
-        </p>
+          <p className="text-sm text-slate-500 mb-4">
+            {tool.description}
+          </p>
+        </div>
 
-        {/* COMING SOON BADGE */}
+        {/* BADGE */}
         <span className="text-xs px-2 py-1 rounded bg-gray-300 text-gray-700 font-semibold">
           Coming Soon
         </span>
@@ -54,7 +57,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
   }
 
   // -----------------------------
-  // NORMAL CLICKABLE CARD
+  // NORMAL CARD
   // -----------------------------
   return (
     <Link
@@ -62,8 +65,8 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       className="
         block rounded-2xl bg-[#F9F9F9]
         border border-gray-200
-        p-6
-        shadow-sm
+        p-6 h-full
+        shadow-sm flex flex-col justify-between
         transition-all duration-300
         hover:shadow-lg hover:-translate-y-1 hover:border-orange-500
       "
@@ -72,23 +75,25 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       <div
         className="
           flex items-center justify-center
-          h-1 w-1 rounded-xl
-          bg-orange-400 text-orange-500 text-2xl font-bold
+          h-12 w-12 rounded-xl
+          bg-[#F9F9F9] border border-gray-200
+          text-orange-500 text-2xl font-bold
           mb-4
         "
       >
         {tool.icon}
       </div>
 
-      {/* TITLE */}
-      <h3 className="text-lg font-semibold text-slate-900 mb-1">
-        {tool.name}
-      </h3>
+      {/* TEXT */}
+      <div>
+        <h3 className="text-lg font-semibold text-slate-900 mb-1">
+          {tool.name}
+        </h3>
 
-      {/* DESCRIPTION */}
-      <p className="text-sm text-slate-600 mb-4">
-        {tool.description}
-      </p>
+        <p className="text-sm text-slate-600 mb-4">
+          {tool.description}
+        </p>
+      </div>
 
       {/* CTA */}
       <span className="text-orange-600 font-semibold text-sm">
