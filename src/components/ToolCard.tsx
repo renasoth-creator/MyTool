@@ -29,12 +29,12 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
           className="
             flex items-center justify-center
             h-12 w-12 rounded-xl
-            bg-[#F9F9F9] border border-gray-200
+            bg-[#F9F9F9f] border border-gray-200
             text-gray-400 text-2xl font-bold
             mb-4
           "
         >
-          🚧
+          
         </div>
 
         {/* TEXT */}
