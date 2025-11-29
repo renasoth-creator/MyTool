@@ -34,6 +34,19 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     "html-to-pdf": ".html,.htm,text/html",
     "protect-pdf": "application/pdf",
     "pdf-docx": "application/pdf",
+    
+    //More_File_Acept_Rules_Are_Below
+
+    "pdf-to-image": "application/pdf",
+    "extract-images": "application/pdf",
+    "pdf-to-pptx": "application/pdf",
+    "pdf-to-excel": "application/pdf",
+    "pdf-remove-pages": "application/pdf",
+    "pdf-reorder-pages": "application/pdf",
+    "pdf-watermark": "application/pdf",
+    "pdf-ocr": "application/pdf",
+    "pdf-to-html": "application/pdf",
+
   };
 
   const accept = acceptByTool[toolId] ?? undefined;

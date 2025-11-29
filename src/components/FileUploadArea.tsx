@@ -33,6 +33,11 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   const [links, setLinks] = useState<ResultLink[]>([]);
   const [extractedText, setExtractedText] = useState<string | null>(null);
   const [password, setPassword] = useState<string>(""); // for protect-pdf
+  //Set_Rules_For_TheUpload_Example_Choose_Apage_Toberemoved
+  const [removePages, setRemovePages] = useState("");
+  const [reorderPages, setReorderPages] = useState("");
+  const [watermarkText, setWatermarkText] = useState("");
+
   
 
 
@@ -121,6 +126,95 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
        ]);
        break;
       }
+      case "pdf-to-image": {
+        const data = await postJson("/pdf-to-images", { file: fileKeys[0] });
+        setLinks([{ label: "Download ZIP", url: data.url }]);
+        break;
+      }
+
+      case "extract-images": {
+       const data = await postJson("/extract-images", { file: fileKeys[0] });
+       setLinks([{ label: "Download Images ZIP", url: data.url }]);
+       break;
+      }
+
+
+      case "pdf-to-pptx": {
+  const data = await postJson("/pdf-to-pptx", { file: fileKeys[0] });
+  setLinks([{ label: "Download PPTX", url: data.url }]);
+  break;
+}
+
+
+
+case "pdf-to-excel": {
+  const data = await postJson("/pdf-to-excel", { file: fileKeys[0] });
+  setLinks([{ label: "Download XLSX", url: data.url }]);
+  break;
+}
+
+
+           
+case "pdf-remove-pages": {
+  if (!removePages) throw new Error("Enter pages to remove first.");
+  const data = await postJson("/pdf/remove-pages", {
+    file: fileKeys[0],
+    pages: removePages,
+  });
+  setLinks([{ label: "Download PDF", url: data.url }]);
+  break;
+}
+
+
+
+
+case "pdf-reorder-pages": {
+  if (!reorderPages) throw new Error("Enter the new page order.");
+  const data = await postJson("/pdf/reorder-pages", {
+    file: fileKeys[0],
+    order: reorderPages,
+  });
+  setLinks([{ label: "Download PDF", url: data.url }]);
+  break;
+}
+
+
+
+
+case "pdf-watermark": {
+  if (!watermarkText) throw new Error("Enter watermark text.");
+  const data = await postJson("/pdf/watermark", {
+    file: fileKeys[0],
+    text: watermarkText,
+  });
+  setLinks([{ label: "Download PDF", url: data.url }]);
+  break;
+}
+
+
+
+
+case "pdf-ocr": {
+  const data = await postJson("/pdf/ocr", { file: fileKeys[0] });
+  setExtractedText(data.text || "");
+  break;
+}
+
+
+
+
+case "pdf-to-html": {
+  const data = await postJson("/pdf-to-html", { file: fileKeys[0] });
+  setLinks([{ label: "Download HTML", url: data.url }]);
+  break;
+}
+
+
+
+
+
+
+
 
 
       case "split": {
@@ -263,6 +357,50 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
           />
         </div>
       )}
+
+
+      {toolId === "pdf-remove-pages" && (
+       <div className="flex flex-col gap-1 text-sm">
+        <label className="text-xs font-medium text-slate-700">Pages to remove (example: 2,4,7)</label>
+    <input
+      type="text"
+      className="w-full rounded-xl border border-slate-200 px-3 py-2"
+      value={removePages}
+      onChange={(e) => setRemovePages(e.target.value)}
+      placeholder="Enter page numbers"
+    />
+  </div>
+)}
+
+{toolId === "pdf-reorder-pages" && (
+  <div className="flex flex-col gap-1 text-sm">
+    <label className="text-xs font-medium text-slate-700">New page order (example: 3,1,2)</label>
+    <input
+      type="text"
+      className="w-full rounded-xl border border-slate-200 px-3 py-2"
+      value={reorderPages}
+      onChange={(e) => setReorderPages(e.target.value)}
+      placeholder="Enter reordered page sequence"
+    />
+  </div>
+)}
+
+{toolId === "pdf-watermark" && (
+  <div className="flex flex-col gap-1 text-sm">
+    <label className="text-xs font-medium text-slate-700">Watermark text</label>
+    <input
+      type="text"
+      className="w-full rounded-xl border border-slate-200 px-3 py-2"
+      value={watermarkText}
+      onChange={(e) => setWatermarkText(e.target.value)}
+      placeholder="Enter watermark text"
+    />
+  </div>
+)}
+
+        
+
+
 
       {/* Selected files list */}
       {files && files.length > 0 && (

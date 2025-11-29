@@ -11,6 +11,17 @@
   | "protect-pdf"  
   | "pdf-spreadsheet"
   | "pdf-docx"
+  //More_Tools_below
+  | "pdf-to-image"
+  | "extract-images"
+  | "pdf-to-pptx"
+  | "pdf-to-excel"
+  | "pdf-remove-pages"
+  | "pdf-reorder-pages"
+  | "pdf-watermark"
+  | "pdf-ocr"
+  | "pdf-to-html"
+
 
 
 export interface ToolConfig {
@@ -96,11 +107,74 @@ export const tools: ToolConfig[] = [
   route: "/pdf-docx",
   },
 
+
+
   /*
   {***THIS CN BE USED FOR OTHER TOOLS***
   id: "PDF-PSD",
   name: "PSD",
   description: "in this tol, you can upload and ues this tool for as loong as you want",
   route: "/pdf-psd",*/
+
+
+
+
+
+  {
+  id: "pdf-to-image",
+  name: "PDF → Images",
+  description: "Convert each PDF page into PNG/JPG images.",
+  route: "/pdf-to-image",
+},
+{
+  id: "extract-images",
+  name: "Extract Images",
+  description: "Extract all embedded images from a PDF.",
+  route: "/extract-images",
+},
+{
+  id: "pdf-to-pptx",
+  name: "PDF → PowerPoint",
+  description: "Convert PDF pages into PPTX slides.",
+  route: "/pdf-to-pptx",
+},
+{
+  id: "pdf-to-excel",
+  name: "PDF → Excel",
+  description: "Convert PDF tables into XLSX spreadsheets.",
+  route: "/pdf-to-excel",
+},
+{
+  id: "pdf-remove-pages",
+  name: "Remove PDF Pages",
+  description: "Remove specific pages from your PDF.",
+  route: "/pdf-remove-pages",
+},
+{
+  id: "pdf-reorder-pages",
+  name: "Reorder PDF Pages",
+  description: "Change the order of pages in a PDF.",
+  route: "/pdf-reorder-pages",
+},
+{
+  id: "pdf-watermark",
+  name: "Add Watermark",
+  description: "Add a text watermark to each page of your PDF.",
+  route: "/pdf-watermark",
+},
+{
+  id: "pdf-ocr",
+  name: "PDF OCR (Scan to Text)",
+  description: "Recognize text from scanned PDFs using OCR.",
+  route: "/pdf-ocr",
+},
+{
+  id: "pdf-to-html",
+  name: "PDF → HTML",
+  description: "Convert PDF to clean HTML.",
+  route: "/pdf-to-html",
+},
+
+
   
 ];
