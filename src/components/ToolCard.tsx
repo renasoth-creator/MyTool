@@ -7,7 +7,7 @@ interface ToolCardProps {
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
-  const isComingSoon = tool.id === "coming-soon";
+  
 
   // -----------------------------
   // COMING SOON CARD
