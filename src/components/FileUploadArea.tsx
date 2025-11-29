@@ -153,8 +153,8 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         break;
       }
 
-      case "pdf-to-image": {
-        const data = await smartFetch("/pdf-to-images", { file: fileKeys[0] }, FILE);
+      case "pdf/to-image": {
+        const data = await smartFetch("/pdf/to-images", { file: fileKeys[0] }, FILE);
         setLinks([{ label: "Download ZIP", url: data.url }]);
         break;
       }

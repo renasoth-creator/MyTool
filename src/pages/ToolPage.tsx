@@ -39,7 +39,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     "pdf-docx": "application/pdf",
 
     // New tools
-    "pdf-to-image": "application/pdf",
+    "pdf/to-image": "application/pdf",
     "extract-images": "application/pdf",
     "pdf-to-pptx": "application/pdf",
     "pdf-to-excel": "application/pdf",
