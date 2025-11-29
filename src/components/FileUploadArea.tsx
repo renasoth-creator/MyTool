@@ -138,10 +138,22 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         return setLinks([{ label: "Download ZIP", url: data.url }]);
       }
 
-      case "extract-images": {
-        const data = await postJson("/pdf/extract-images", { file: fileKeys[0] });
-        return setLinks([{ label: "Download Images ZIP", url: data.url }]);
-      }
+      case "pdf-to-image": {
+    const res = await fetch(`${BACKEND_URL}/pdf-to-images`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ file: fileKeys[0] })
+    });
+
+    if (!res.ok) throw new Error("Failed to generate images");
+
+    const blob = await res.blob();
+    const downloadUrl = URL.createObjectURL(blob);
+
+    setLinks([{ label: "Download ZIP", url: downloadUrl }]);
+    break;
+}
+
 
       case "pdf-to-pptx": {
         const data = await postJson("/pdf/to-pptx", { file: fileKeys[0] });
