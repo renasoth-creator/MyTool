@@ -12,7 +12,7 @@
   | "pdf-spreadsheet"
   | "pdf-docx"
   //More_Tools_below
-  | "pdf/to-image"
+  | "pdf/to-images"
   | "extract-images"
   | "pdf-to-pptx"
   | "pdf-to-excel"
@@ -121,10 +121,10 @@ export const tools: ToolConfig[] = [
 
 
   {
-  id: "pdf/to-image",
+  id: "pdf/to-images",
   name: "PDF → Images",
   description: "Convert each PDF page into PNG/JPG images.",
-  route: "/pdf-to-image",
+  route: "/pdf-to-images",
 },
 {
   id: "extract-images",
