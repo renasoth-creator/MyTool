@@ -109,6 +109,20 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         break;
       }
 
+      case "pdf-docx": {
+      // Python microservice conversion
+        const data = await postJson("/pdf-docx", { file: fileKeys[0] });
+
+        setLinks([
+         {
+           label: "Download DOCX",
+           url: data.url,
+         },
+       ]);
+       break;
+      }
+
+
       case "split": {
         const data = await postJson("/pdf/split", { file: fileKeys[0] });
         const resultLinks: ResultLink[] =
@@ -151,19 +165,6 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         break;
       }
 
-      case "docx-to-pdf":
-      case "xlsx-to-pdf":
-      case "pptx-to-pdf":
-      case "html-to-pdf": {
-        const data = await postJson("/office/to-pdf", { file: fileKeys[0] });
-        setLinks([
-          {
-            label: "Download converted PDF",
-            url: data.pdfUrl,
-          },
-        ]);
-        break;
-      }
 
       case "protect-pdf": {
         if (!password) {
