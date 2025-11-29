@@ -12,18 +12,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
   // -----------------------------
   // COMING SOON CARD
   // -----------------------------
-  if (isComingSoon) {
-    return (
-      <div
-        className="
-          block rounded-2xl bg-[#F9F9F9]
-          border border-gray-200
-          p-6 h-full
-          shadow-sm opacity-60
-          cursor-not-allowed select-none
-          flex flex-col justify-between
-        "
-      >
+  
         {/* ICON BOX */}
         <div
           className="
