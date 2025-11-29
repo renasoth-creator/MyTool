@@ -10,8 +10,7 @@
   | "html-to-pdf"
   | "protect-pdf"  
   | "pdf-spreadsheet"
-  |  "coming-soon"
-  {/*|  "PDF-PSD";*/}
+  | "pdf-docx"
 
 
 export interface ToolConfig {
@@ -91,10 +90,10 @@ export const tools: ToolConfig[] = [
   route: "/pdf-spreadsheet",
   },
   {
-  id: "coming-soon",
-  name: "Soon",
-  description: "in this tol, you can upload and ues this tool for as loong as you want",
-  route: "/cooming-soon",
+  id: "pdf-docx",
+  name: "PDF to Word",
+  description: "Conver PDF to word with high processing and conversion",
+  route: "/pdf-docx",
   },
 
   /*
