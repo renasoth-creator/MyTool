@@ -92,7 +92,7 @@ export const tools: ToolConfig[] = [
   {
   id: "pdf-docx",
   name: "PDF to Word",
-  description: "Conver PDF to word with high processing and conversion",
+  description: "Convert PDF to DOCX with the highest processing and conversion",
   route: "/pdf-docx",
   },
 
