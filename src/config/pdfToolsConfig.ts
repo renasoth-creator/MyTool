@@ -14,7 +14,7 @@
   //More_Tools_below
   | "pdf-to-images"
   | "extract-images"
-  | "pdf-to-pptx"
+  | "pdf-to-pptx" 
   | "pdf-to-excel"
   | "pdf-remove-pages"
   | "pdf-reorder-pages"
