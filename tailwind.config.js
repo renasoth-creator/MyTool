@@ -18,3 +18,9 @@ export default {
   },
   plugins: [],
 };
+extend: {
+  animation: {
+    "spin-slow": "spin 6s linear infinite",
+  }
+}
+
