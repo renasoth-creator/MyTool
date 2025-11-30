@@ -20,9 +20,9 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-4 text-[#ff7a1a]">Office to PDF</h3>
           <ul className="space-y-1 text-sm text-gray-300">
-            <li><a className="hover:text-white" href="/tool/docx-to-pdf?type=docx">DOCX to PDF</a></li>
-            <li><a className="hover:text-white" href="/tool/xlsx-to-pdf?type=xlsx">XLSX to PDF</a></li>
-            <li><a className="hover:text-white" href="/tool/pptx-to-pdf?type=pptx">PPTX to PDF</a></li>
+            <li><a className="hover:text-white" href="/docx-to-pdf?type=docx">DOCX to PDF</a></li>
+            <li><a className="hover:text-white" href="/xlsx-to-pdf?type=xlsx">XLSX to PDF</a></li>
+            <li><a className="hover:text-white" href="/pptx-to-pdf?type=pptx">PPTX to PDF</a></li>
           </ul>
         </div>
 
@@ -30,10 +30,10 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-4 text-[#ff7a1a]">PDF Tools</h3>
           <ul className="space-y-1 text-sm text-gray-300">
-            <li><a className="hover:text-white" href="merge">Merge PDF</a></li>
-            <li><a className="hover:text-white" href="/tool/split">Split PDF</a></li>
-            <li><a className="hover:text-white" href="/tool/compress">Compress PDF</a></li>
-            <li><a className="hover:text-white" href="/tool/protect-pdf">Protect PDF</a></li>
+            <li><a className="hover:text-white" href="/merge">Merge PDF</a></li>
+            <li><a className="hover:text-white" href="/split">Split PDF</a></li>
+            <li><a className="hover:text-white" href="/compress">Compress PDF</a></li>
+            <li><a className="hover:text-white" href="/protect-pdf">Protect PDF</a></li>
           </ul>
         </div>
 
