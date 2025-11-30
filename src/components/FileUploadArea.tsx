@@ -135,8 +135,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       }
 
       /* ---------- IMAGES ---------- */
-      case "pdf-to-images":
-      case "pdf-spreadsheet": {
+      case "pdf-to-images":{
         const data = await smartFetch("/pdf/to-images", { file: fileKeys[0] }, "json");
         setLinks([{ label: "Download ZIP", url: data.url }]);
         break;
@@ -227,7 +226,8 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         break;
       }
 
-      case "image-to-pdf": {
+      case "image-to-pdf": 
+      case "pdf-spreadsheet":{
         const data = await smartFetch("/image/to-pdf", { files: fileKeys }, "json");
         setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
         break;
