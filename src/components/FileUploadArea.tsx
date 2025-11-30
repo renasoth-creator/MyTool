@@ -1,4 +1,4 @@
-﻿﻿// src/components/FileUploadArea.tsx
+﻿// src/components/FileUploadArea.tsx
 
 import React, { useRef, useState } from "react";
 import type { ToolId } from "../config/pdfToolsConfig";
@@ -136,7 +136,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
 
       /* ---------- IMAGES ---------- */
       case "pdf-to-images":
-      case "pdf-to-images": {
+      case "pdf-spreadsheet": {
         const data = await smartFetch("/pdf/to-images", { file: fileKeys[0] }, "json");
         setLinks([{ label: "Download ZIP", url: data.url }]);
         break;
