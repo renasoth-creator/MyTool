@@ -59,7 +59,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     <Layout>
       {/* BREADCRUMB */}
       <div className="mb-6 flex items-center gap-2 text-xs text-slate-600">
-        <Link to="/" className="hover:text-[#ff7a1a] hover:underline">
+        <Link to="/" className="hover:text-[#ffffff] hover:underline">
           All tools
         </Link>
         <span>/</span>
