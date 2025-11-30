@@ -28,7 +28,6 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   multiple = false,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-
   const [files, setFiles] = useState<File[] | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -54,9 +53,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
     setStatus("idle");
   };
 
-  // ---------------------------------------
-  // UPLOAD: /upload → returns { key, url }
-  // ---------------------------------------
+  // Upload file → returns { key, url }
   async function uploadSingleFile(file: File): Promise<UploadedFileInfo> {
     const fd = new FormData();
     fd.append("file", file);
@@ -64,38 +61,32 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
     const res = await fetch(`${BACKEND_URL}/upload`, {
       method: "POST",
       body: fd,
+      headers: { "X-API-KEY": import.meta.env.VITE_API_KEY }
     });
 
-    if (!res.ok) {
-      throw new Error("Upload failed");
-    }
+    if (!res.ok) throw new Error("Upload failed");
 
     return await res.json();
   }
 
   async function uploadAllFiles(files: File[]) {
     const uploaded: UploadedFileInfo[] = [];
-    for (const f of files) {
-      uploaded.push(await uploadSingleFile(f));
-    }
+    for (const f of files) uploaded.push(await uploadSingleFile(f));
     return uploaded;
   }
 
-  // ---------------------------------------
-  // UNIVERSAL fetch (handles JSON or FILE)
-  // ---------------------------------------
-  async function smartFetch(
-    path: string,
-    body: any,
-    returnType: "json" | "file"
-  ) {
+  // fetch wrapper
+  async function smartFetch(path: string, body: any, type: "json" | "file") {
     const res = await fetch(`${BACKEND_URL}${path}`, {
       method: "POST",
-      body: returnType === "json" ? JSON.stringify(body) : body,
+      body: type === "json" ? JSON.stringify(body) : body,
       headers:
-        returnType === "json"
-          ? { "Content-Type": "application/json" }
-          : undefined,
+        type === "json"
+          ? {
+              "Content-Type": "application/json",
+              "X-API-KEY": import.meta.env.VITE_API_KEY,
+            }
+          : { "X-API-KEY": import.meta.env.VITE_API_KEY },
     });
 
     if (!res.ok) {
@@ -108,126 +99,120 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       throw new Error(err.error || "Request failed");
     }
 
-    if (returnType === "file") {
-      const blob = await res.blob();
-      return { url: URL.createObjectURL(blob) };
+    if (type === "file") {
+      const data = await res.json();
+      return data; // server returns JSON with { url }
     }
 
     return await res.json();
   }
 
-  // ---------------------------------------
-  // MAIN TOOL ROUTER — ALL ROUTES FIXED
-  // ---------------------------------------
+  // MAIN ACTION ROUTER
   async function callToolEndpoint(fileKeys: string[]) {
+    setError(null);
     setLinks([]);
     setExtractedText(null);
-    setError(null);
-
-    const FILE = "file";
-    const JSON = "json";
 
     switch (toolId) {
-      // ----------------------------
-      // JSON ENDPOINTS
-      // ----------------------------
+      /* ---------- TEXT / OCR ---------- */
       case "pdf-to-text": {
-        const data = await smartFetch("/pdf/to-text", { file: fileKeys[0] }, JSON);
+        const data = await smartFetch("/pdf/to-text", { file: fileKeys[0] }, "json");
         setExtractedText(data.text);
         break;
       }
 
       case "pdf-ocr": {
-        const data = await smartFetch("/pdf/ocr", { file: fileKeys[0] }, JSON);
-        setExtractedText(data.text);
+        const data = await smartFetch("/pdf/ocr-text", { file: fileKeys[0] }, "json");
+        setLinks([{ label: "Download OCR Text", url: data.url }]);
         break;
       }
 
-      // ----------------------------
-      // FILE ENDPOINTS
-      // ----------------------------
-
+      /* ---------- DOCX ---------- */
       case "pdf-docx": {
-        const data = await smartFetch("/pdf-docx", { file: fileKeys[0] }, JSON);
+        const data = await smartFetch("/pdf-docx", { file: fileKeys[0] }, "json");
         setLinks([{ label: "Download DOCX", url: data.url }]);
         break;
       }
 
+      /* ---------- IMAGES ---------- */
+      case "pdf-to-image":
       case "pdf/to-images": {
-        const data = await smartFetch("/pdf/to-images", { file: fileKeys[0] }, FILE);
+        const data = await smartFetch("/pdf/to-images", { file: fileKeys[0] }, "json");
         setLinks([{ label: "Download ZIP", url: data.url }]);
         break;
       }
 
       case "extract-images": {
-        const data = await smartFetch("/extract-images", { file: fileKeys[0] }, FILE);
+        const data = await smartFetch("/pdf/extract-images", { file: fileKeys[0] }, "json");
         setLinks([{ label: "Download Images ZIP", url: data.url }]);
         break;
       }
 
+      /* ---------- PPTX / EXCEL ---------- */
       case "pdf-to-pptx": {
-        const data = await smartFetch("/pdf/to-pptx", { file: fileKeys[0] }, FILE);
+        const data = await smartFetch("/pdf/to-pptx", { file: fileKeys[0] }, "json");
         setLinks([{ label: "Download PPTX", url: data.url }]);
         break;
       }
 
       case "pdf-to-excel": {
-        const data = await smartFetch("/pdf/to-excel", { file: fileKeys[0] }, FILE);
+        const data = await smartFetch("/pdf/to-excel", { file: fileKeys[0] }, "json");
         setLinks([{ label: "Download XLSX", url: data.url }]);
         break;
       }
 
+      /* ---------- PAGE REMOVE ---------- */
       case "pdf-remove-pages": {
         if (!removePages) throw new Error("Enter pages to remove.");
         const data = await smartFetch(
           "/pdf/remove-pages",
           { file: fileKeys[0], pages: removePages },
-          FILE
+          "json"
         );
-        setLinks([{ label: "Download PDF", url: data.url }]);
+        setLinks([{ label: "Download Modified PDF", url: data.url }]);
         break;
       }
 
+      /* ---------- PAGE REORDER ---------- */
       case "pdf-reorder-pages": {
-        if (!reorderPages) throw new Error("Enter reordered page order.");
+        if (!reorderPages) throw new Error("Enter new page order.");
         const data = await smartFetch(
           "/pdf/reorder-pages",
           { file: fileKeys[0], order: reorderPages },
-          FILE
+          "json"
         );
-        setLinks([{ label: "Download PDF", url: data.url }]);
+        setLinks([{ label: "Download Modified PDF", url: data.url }]);
         break;
       }
 
+      /* ---------- WATERMARK ---------- */
       case "pdf-watermark": {
         if (!watermarkText) throw new Error("Enter watermark text.");
         const data = await smartFetch(
           "/pdf/watermark",
           { file: fileKeys[0], text: watermarkText },
-          FILE
+          "json"
         );
-        setLinks([{ label: "Download PDF", url: data.url }]);
+        setLinks([{ label: "Download Watermarked PDF", url: data.url }]);
         break;
       }
 
+      /* ---------- HTML ---------- */
       case "pdf-to-html": {
-        const data = await smartFetch("/pdf/to-html", { file: fileKeys[0] }, FILE);
+        const data = await smartFetch("/pdf/to-html", { file: fileKeys[0] }, "json");
         setLinks([{ label: "Download HTML", url: data.url }]);
         break;
       }
 
-      // ----------------------------
-      // EXISTING BACKEND ROUTES
-      // ----------------------------
-
+      /* ---------- EXISTING ROUTES ---------- */
       case "merge": {
-        const data = await smartFetch("/pdf/merge", { files: fileKeys }, JSON);
+        const data = await smartFetch("/pdf/merge", { files: fileKeys }, "json");
         setLinks([{ label: "Download merged PDF", url: data.url }]);
         break;
       }
 
       case "split": {
-        const data = await smartFetch("/pdf/split", { file: fileKeys[0] }, JSON);
+        const data = await smartFetch("/pdf/split", { file: fileKeys[0] }, "json");
         setLinks(data.pages.map((p: any) => ({ label: `Page ${p.page}`, url: p.url })));
         break;
       }
@@ -236,15 +221,14 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         const data = await smartFetch(
           "/pdf/compress",
           { file: fileKeys[0], level: "medium" },
-          JSON
+          "json"
         );
         setLinks([{ label: "Download compressed PDF", url: data.url }]);
         break;
       }
 
-      case "image-to-pdf":
-      case "pdf-spreadsheet": {
-        const data = await smartFetch("/image/to-pdf", { files: fileKeys }, JSON);
+      case "image-to-pdf": {
+        const data = await smartFetch("/image/to-pdf", { files: fileKeys }, "json");
         setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
         break;
       }
@@ -254,9 +238,9 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         const data = await smartFetch(
           "/pdf/encrypt",
           { file: fileKeys[0], password },
-          JSON
+          "json"
         );
-        setLinks([{ label: "Download protected PDF", url: data.url }]);
+        setLinks([{ label: "Download encrypted PDF", url: data.url }]);
         break;
       }
 
@@ -265,25 +249,20 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
     }
   }
 
-  // ---------------------------------------
-  // PROCESS → Upload → Convert
-  // ---------------------------------------
   async function handleProcess() {
     if (!files?.length) return;
 
-    setStatus("uploading");
-    setError(null);
-
     try {
+      setStatus("uploading");
       const uploaded = await uploadAllFiles(files);
       const keys = uploaded.map((u) => u.key);
 
       setStatus("processing");
+
       await callToolEndpoint(keys);
 
       setStatus("done");
     } catch (err: any) {
-      console.error(err);
       setError(err.message);
       setStatus("error");
     }
@@ -293,7 +272,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Upload area */}
+      {/* Upload box */}
       <div
         onClick={handleClick}
         className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-white px-6 py-10 text-center hover:border-sky-300 hover:bg-sky-50"
@@ -312,19 +291,17 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         <p className="mt-2 text-sm font-semibold text-slate-800">
           Click to upload or drag & drop
         </p>
-        {accept && (
-          <p className="text-xs text-slate-500 mt-1">Supported: {accept}</p>
-        )}
+        {accept && <p className="text-xs text-slate-500 mt-1">Supported: {accept}</p>}
       </div>
 
-      {/* Special inputs */}
+      {/* Tool inputs */}
       {toolId === "protect-pdf" && (
         <InputBox label="Password" value={password} onChange={setPassword} />
       )}
 
       {toolId === "pdf-remove-pages" && (
         <InputBox
-          label="Pages to remove (2,4,7)"
+          label="Pages to remove (e.g. 2,4,7 or 1-3)"
           value={removePages}
           onChange={setRemovePages}
         />
@@ -332,7 +309,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
 
       {toolId === "pdf-reorder-pages" && (
         <InputBox
-          label="New page order (3,1,2)"
+          label="New page order (e.g. 3,1,2)"
           value={reorderPages}
           onChange={setReorderPages}
         />
@@ -407,9 +384,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   );
 };
 
-// --------------------------------------------
-// Reusable Input Box
-// --------------------------------------------
+// reusable input
 const InputBox = ({
   label,
   value,

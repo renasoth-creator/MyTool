@@ -172,7 +172,7 @@ export const tools: ToolConfig[] = [
   id: "pdf-to-html",
   name: "PDF → HTML",
   description: "Convert PDF to clean HTML.",
-  route: "/pdf-to-html",
+  route: "/pdf/to-html",
 },
 
 
