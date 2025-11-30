@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-200">
+    <div className="min-h-screen flex flex-col bg-slate-100">
 
       {/* HEADER */}
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
