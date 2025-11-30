@@ -30,7 +30,7 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-4 text-[#ff7a1a]">PDF Tools</h3>
           <ul className="space-y-1 text-sm text-gray-300">
-            <li><a className="hover:text-white" href="/tool/merge">Merge PDF</a></li>
+            <li><a className="hover:text-white" href="merge">Merge PDF</a></li>
             <li><a className="hover:text-white" href="/tool/split">Split PDF</a></li>
             <li><a className="hover:text-white" href="/tool/compress">Compress PDF</a></li>
             <li><a className="hover:text-white" href="/tool/protect-pdf">Protect PDF</a></li>
