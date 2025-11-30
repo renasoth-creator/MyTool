@@ -40,7 +40,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-gray-700 text-gray-400 text-xs text-center py-4">
-        © 2025 PDFConvert.tech — All rights reserved.
+        © 2025 PDFConvert.tech All rights reserved.
       </div>
     </footer>
   );
