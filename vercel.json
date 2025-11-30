@@ -1,8 +1,13 @@
 {
-  "rewrites": [
+  "headers": [
     {
       "source": "/(.*)",
-      "destination": "/"
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://pdfconvert.tech https://www.pdfconvert.tech"
+        }
+      ]
     }
   ]
 }
