@@ -10,9 +10,9 @@ export default function Footer() {
           <h3 className="font-semibold mb-4 text-[#ff7a1a]">PDF to Office</h3>
           <ul className="space-y-1 text-sm text-gray-300">
             <li><a className="hover:text-white" href="/pdf-docx">PDF to DOCX</a></li>
-            <li><a className="hover:text-white" href="/tool/pdf-to-pptx">PDF to PPTX</a></li>
-            <li><a className="hover:text-white" href="/tool/pdf-to-excel">PDF to Excel</a></li>
-            <li><a className="hover:text-white" href="/tool/pdf-to-html">PDF to HTML</a></li>
+            <li><a className="hover:text-white" href="/pdf-to-pptx">PDF to PPTX</a></li>
+            <li><a className="hover:text-white" href="/pdf-to-excel">PDF to Excel</a></li>
+            <li><a className="hover:text-white" href="/pdf-to-html">PDF to HTML</a></li>
           </ul>
         </div>
 
