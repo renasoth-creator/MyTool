@@ -1,6 +1,10 @@
 // src/components/Layout.tsx
 
-
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import CookiePopup from "./CookiePopup";
+import Header from "./Header";
+import Footer from "./Footer";
 
 interface LayoutProps {
   children: React.ReactNode;

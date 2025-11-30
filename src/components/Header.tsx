@@ -5,17 +5,12 @@ import OrbitCircles from "./OrbitCircles";
 
 export default function Header() {
   return (
-    <header className="relative w-full bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <header className="w-full bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
-      {/* ORBIT ANIMATION — positioned behind header */}
-      <div className="absolute left-10 top-1/2 -translate-y-1/2 opacity-60 pointer-events-none">
-        <OrbitCircles />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-
+        
         {/* LEFT — LOGO */}
-        <Link to="/" className="flex items-center gap-2 z-10">
+        <Link to="/" className="flex items-center gap-2">
           <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-[#ff7a1a] text-white font-bold text-lg shadow">
             PDF
           </div>
@@ -26,16 +21,18 @@ export default function Header() {
 
         {/* CENTER — NAVIGATION */}
         <nav className="flex items-center gap-3">
+          
           <MenuLink to="/" label="All Tools" />
           <MenuLink to="/pdf-docx" label="Convert" />
           <MenuLink to="/merge" label="Merge" />
           <MenuLink to="/split" label="Split" />
           <MenuLink to="/protect-pdf" label="Protect" />
           <MenuLink to="/compress" label="Compress" />
+
         </nav>
 
-        {/* RIGHT — AUTH BUTTONS */}
-        <div className="flex items-center gap-4 text-sm z-10">
+        {/* RIGHT — AUTH */}
+        <div className="flex items-center gap-4 text-sm">
           <button className="text-slate-700 hover:text-[#ff7a1a] transition font-medium">
             Sign In
           </button>
@@ -46,13 +43,17 @@ export default function Header() {
         </div>
 
       </div>
+
+
     </header>
   );
 }
 
+
 /* ---------------------------------------------
    Reusable Premium Menu Button Component
 ---------------------------------------------- */
+
 function MenuLink({ to, label }: { to: string; label: string }) {
   return (
     <NavLink
@@ -62,11 +63,9 @@ function MenuLink({ to, label }: { to: string; label: string }) {
         `
         relative px-4 py-2 rounded-xl font-medium text-sm transition
 
-        ${
-          isActive
-            ? "text-[#ff7a1a] bg-orange-50 border border-orange-300 shadow-sm"
-            : "text-slate-700 bg-white hover:bg-slate-100 border border-slate-200"
-        }
+        ${isActive
+          ? "text-[#ff7a1a] bg-orange-50 border border-orange-300 shadow-sm"
+          : "text-slate-700 bg-white hover:bg-slate-100 border border-slate-200"}
         `
       }
     >
