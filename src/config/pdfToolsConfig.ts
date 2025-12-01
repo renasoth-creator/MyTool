@@ -4,9 +4,9 @@
   | "compress"
   | "image-to-pdf"
   | "pdf-to-text"
-  | "docx-to-pdf"
-  | "xlsx-to-pdf"
-  | "pptx-to-pdf"
+  | "office/to-pdf"
+  | "office/to-pdf"
+  | "office/to-pdf"
   | "html-to-pdf"
   | "protect-pdf"  
   | "pdf-spreadsheet"
@@ -65,22 +65,22 @@ export const tools: ToolConfig[] = [
     route: "/pdf-to-text",
   },
   {
-    id: "docx-to-pdf",
+    id: "office/to-pdf",
     name: "DOCX to PDF",
     description: "Convert Word documents into PDFs.",
-    route: "/docx-to-pdf",
+    route: "/office/to-pdf",
   },
   {
-    id: "xlsx-to-pdf",
+    id: "office/to-pdf",
     name: "XLSX to PDF",
     description: "Turn spreadsheets into printable PDF files.",
-    route: "/xlsx-to-pdf",
+    route: "/office/to-pdf",
   },
   {
-    id: "pptx-to-pdf",
+    id: "office/to-pdf",
     name: "PPTX to PDF",
     description: "Convert presentations directly into PDF.",
-    route: "/pptx-to-pdf",
+    route: "/office/to-pdf",
   },
   {
     id: "html-to-pdf",
