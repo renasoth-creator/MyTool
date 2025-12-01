@@ -65,19 +65,19 @@ export const tools: ToolConfig[] = [
     route: "/pdf-to-text",
   },
   {
-    id: "office/to-pdf",
+    id: "docx-pdf",
     name: "DOCX to PDF",
     description: "Convert Word documents into PDFs.",
     route: "/office/to-pdf",
   },
   {
-    id: "office/to-pdf",
+    id: "xlsx-pdf",
     name: "XLSX to PDF",
     description: "Turn spreadsheets into printable PDF files.",
     route: "/office/to-pdf",
   },
   {
-    id: "office/to-pdf",
+    id: "pptx-pdf",
     name: "PPTX to PDF",
     description: "Convert presentations directly into PDF.",
     route: "/office/to-pdf",
