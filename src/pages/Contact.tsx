@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { BACKEND_URL } from "../config/backend";
 import Layout from "../components/Layout";
+import Popup from "../components/Popup";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -22,7 +23,6 @@ export default function Contact() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
     setStatus("sending");
 
     try {
@@ -44,6 +44,26 @@ export default function Contact() {
 
   return (
     <Layout>
+      {/* --- Popup Layer --- */}
+      <div className="relative">
+        {status === "sent" && (
+          <Popup
+            type="success"
+            message="Your message has been sent successfully!"
+            onClose={() => setStatus("idle")}
+          />
+        )}
+
+        {status === "error" && (
+          <Popup
+            type="error"
+            message="Something went wrong. Please try again."
+            onClose={() => setStatus("idle")}
+          />
+        )}
+      </div>
+
+      {/* --- Main Form Content --- */}
       <div className="max-w-3xl mx-auto py-12 px-4">
         <h1 className="text-3xl font-bold text-slate-900 mb-2">
           Contact Support
@@ -64,7 +84,7 @@ export default function Contact() {
             </label>
             <input
               type="text"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#ff7a1a33] focus:border-[#ff7a1a]"
+              className="w-full border rounded-lg px-3 py-2"
               value={form.name}
               onChange={(e) => updateField("name", e.target.value)}
             />
@@ -78,7 +98,7 @@ export default function Contact() {
             <input
               type="email"
               required
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#ff7a1a33] focus:border-[#ff7a1a]"
+              className="w-full border rounded-lg px-3 py-2"
               value={form.email}
               onChange={(e) => updateField("email", e.target.value)}
             />
@@ -91,7 +111,7 @@ export default function Contact() {
             </label>
             <select
               required
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#ff7a1a33] focus:border-[#ff7a1a]"
+              className="w-full border rounded-lg px-3 py-2"
               value={form.topic}
               onChange={(e) => updateField("topic", e.target.value)}
             >
@@ -111,7 +131,7 @@ export default function Contact() {
             </label>
             <textarea
               required
-              className="w-full border rounded-lg px-3 py-2 h-36 resize-none focus:outline-none focus:ring-2 focus:ring-[#ff7a1a33] focus:border-[#ff7a1a]"
+              className="w-full border rounded-lg px-3 py-2 h-36 resize-none"
               value={form.message}
               onChange={(e) => updateField("message", e.target.value)}
             />
@@ -129,12 +149,6 @@ export default function Contact() {
               ? "Message Sent ✓"
               : "Send Message"}
           </button>
-
-          {status === "error" && (
-            <p className="text-red-600 text-sm mt-2">
-              Something went wrong. Try again later.
-            </p>
-          )}
         </form>
       </div>
     </Layout>
