@@ -20,7 +20,7 @@
   | "pdf-reorder-pages"
   | "pdf-watermark"
   | "pdf-ocr"
-  | "pdf-to-html"
+  | "pdf/to-html"
 
 
 
@@ -169,7 +169,7 @@ export const tools: ToolConfig[] = [
   route: "/pdf-ocr",
 },
 {
-  id: "pdf-to-html",
+  id: "pdf/to-html",
   name: "PDF → HTML",
   description: "Convert PDF to clean HTML.",
   route: "/pdf/to-html",

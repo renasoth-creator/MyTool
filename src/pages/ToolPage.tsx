@@ -47,7 +47,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     "pdf-reorder-pages": "application/pdf",
     "pdf-watermark": "application/pdf",
     "pdf-ocr": "application/pdf",
-    "pdf-to-html": "application/pdf",
+    "pdf/to-html": "application/pdf",
   };
 
   const accept = acceptByTool[toolId] ?? undefined;
