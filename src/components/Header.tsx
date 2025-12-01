@@ -104,7 +104,7 @@ function ConvertDropdown() {
           <div>
             <h3 className="text-sm font-semibold text-[#ff7a1a] mb-3">Images & Other</h3>
             <MegaLink to="/image-to-pdf" label="Image → PDF" />
-            <MegaLink to="/pdf/to-images" label="PDF → Image" />
+            <MegaLink to="/pdf-to-images" label="PDF → Image" />
           </div>
         </div>
       )}
