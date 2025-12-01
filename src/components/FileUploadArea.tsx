@@ -175,7 +175,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       // OFFICE TO PD USING LIBRE OFFICR//
 
       case "docx-pdf": {
-       const data = await smartFetch("/office/to-pdf", { file: fileKeys[0] }, "json");
+       const data = await smartFetch("/docx-pdf", { file: fileKeys[0] }, "json");
        setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
        break;
       }
