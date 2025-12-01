@@ -191,6 +191,13 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
        setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
        break;
       }
+      // HTML TO PDF/ 
+
+      case "html-to-pdf": {
+       const data = await smartFetch("/html-to-pdf", { file: fileKeys[0] }, "json");
+       setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
+       break;
+      }
 
 
 
