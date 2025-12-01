@@ -5,15 +5,21 @@ import { BACKEND_URL } from "../config/backend";
 import Layout from "../components/Layout";
 import Popup from "../components/Popup";
 
-// ---------------------------
-//  reCAPTCHA helper
-// ---------------------------
-async function getRecaptchaToken() {
-  return await new Promise((resolve) => {
+// Let TypeScript know global grecaptcha exists:
+declare const grecaptcha: any;
+
+// Helper to get reCAPTCHA v3 token
+async function getRecaptchaToken(): Promise<string> {
+  return await new Promise((resolve, reject) => {
+    if (typeof grecaptcha === "undefined") {
+      return reject(new Error("reCAPTCHA not loaded"));
+    }
+
     grecaptcha.ready(() => {
       grecaptcha
-        .execute("6LeUPx4sAAAAAKXY0jct4ZP6VyjsD-qzvP7zaxQD", { action: "submit" })
-        .then(resolve);
+        .execute("YOUR_SITE_KEY_HERE", { action: "submit" })
+        .then((token: string) => resolve(token))
+        .catch(reject);
     });
   });
 }
@@ -34,21 +40,22 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  // ---------------------------
-  //  Submit Handler
-  // ---------------------------
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault(); // MUST come first
-
+    e.preventDefault();
     setStatus("sending");
 
     try {
-      const token = await getRecaptchaToken(); // generate valid token
+      // 1) Get reCAPTCHA token
+      const token = await getRecaptchaToken();
 
+      // 2) Send to backend
       const res = await fetch(`${BACKEND_URL}/contact/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, recaptcha: token }), // FIXED
+        body: JSON.stringify({
+          ...form,
+          recaptcha: token,
+        }),
       });
 
       if (!res.ok) throw new Error("Failed");
@@ -63,7 +70,7 @@ export default function Contact() {
 
   return (
     <Layout>
-      {/* Popup */}
+      {/* --- Popup Layer --- */}
       <div className="relative">
         {status === "sent" && (
           <Popup
@@ -72,6 +79,7 @@ export default function Contact() {
             onClose={() => setStatus("idle")}
           />
         )}
+
         {status === "error" && (
           <Popup
             type="error"
@@ -81,13 +89,14 @@ export default function Contact() {
         )}
       </div>
 
-      {/* Form */}
+      {/* --- Main Form Content --- */}
       <div className="max-w-3xl mx-auto py-12 px-4">
         <h1 className="text-3xl font-bold text-slate-900 mb-2">
           Contact Support
         </h1>
         <p className="text-sm text-slate-600 mb-6">
-          Have questions or business inquiries? Fill out the form below.
+          Have questions, removal requests, or business inquiries? Fill out the
+          form below and we’ll get back to you.
         </p>
 
         <form
@@ -154,7 +163,7 @@ export default function Contact() {
             />
           </div>
 
-          {/* Submit */}
+          {/* Send Button */}
           <button
             type="submit"
             disabled={status === "sending"}
