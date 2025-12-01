@@ -172,6 +172,32 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         break;
       }
 
+      // OFFICE TO PD USING LIBRE OFFICR//
+
+      case "docx-pdf": {
+       const data = await smartFetch("/office/to-pdf", { file: fileKeys[0] }, "json");
+       setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
+       break;
+      }
+
+      case "xlsx-pdf": {
+       const data = await smartFetch("/office/to-pdf", { file: fileKeys[0] }, "json");
+       setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
+       break;
+      }
+
+      case "pptx-pdf": {
+       const data = await smartFetch("/office/to-pdf", { file: fileKeys[0] }, "json");
+       setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
+       break;
+      }
+
+
+
+
+
+
+
       /* ---------- PAGE REORDER ---------- */
       case "pdf-reorder-pages": {
         if (!reorderPages) throw new Error("Enter new page order.");
