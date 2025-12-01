@@ -117,21 +117,7 @@ function ConvertDropdown() {
    Dropdown Button (same shape as header buttons)
 ---------------------------------------------- */
 
-function DropLink({ to, label }: { to: string; label: string }) {
-  return (
-    <Link
-      to={to}
-      className="
-        px-4 py-2 rounded-xl text-sm font-medium 
-        bg-white border border-slate-200 
-        hover:bg-orange-50 hover:border-orange-300 hover:text-[#ff7a1a]
-        transition shadow-sm
-      "
-    >
-      {label}
-    </Link>
-  );
-}
+
 
 /* --------------------------------------------- */
 
