@@ -1,4 +1,5 @@
-﻿import React from "react";
+﻿// src/App.tsx
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import DashboardPage from "./pages/DashboardPage";
@@ -10,6 +11,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import CookiesPage from "./pages/CookiesPage";
 import FaqPage from "./pages/FaqPage";
 import BlogPage from "./pages/BlogPage";
+import Contact from "./pages/Contact";
 
 const App: React.FC = () => {
   return (
@@ -32,8 +34,9 @@ const App: React.FC = () => {
       <Route path="/cookies" element={<CookiesPage />} />
       <Route path="/faq" element={<FaqPage />} />
       <Route path="/blog" element={<BlogPage />} />
+      <Route path="/contact" element={<Contact />} />
 
-      {/* Fallback send unknown routes to home */}
+      {/* Fallback */}
       <Route path="*" element={<DashboardPage />} />
     </Routes>
   );
