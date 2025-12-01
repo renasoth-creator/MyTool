@@ -28,9 +28,9 @@ export default function Footer() {
           </h3>
 
           <ul className="space-y-2 text-[15px] text-gray-300">
-            <li><Link className="hover:text-white transition" to="/docx-to-pdf?type=docx">DOCX to PDF</Link></li>
-            <li><Link className="hover:text-white transition" to="/xlsx-to-pdf?type=xlsx">XLSX to PDF</Link></li>
-            <li><Link className="hover:text-white transition" to="/pptx-to-pdf?type=pptx">PPTX to PDF</Link></li>
+            <li><Link className="hover:text-white transition" to="/docx-pdf?type=docx">DOCX to PDF</Link></li>
+            <li><Link className="hover:text-white transition" to="/xlsx-pdf?type=xlsx">XLSX to PDF</Link></li>
+            <li><Link className="hover:text-white transition" to="/pptx-pdf?type=pptx">PPTX to PDF</Link></li>
           </ul>
         </div>
 
