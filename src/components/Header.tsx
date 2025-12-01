@@ -95,9 +95,9 @@ function ConvertDropdown() {
           {/* Column 2 */}
           <div>
             <h3 className="text-sm font-semibold text-[#ff7a1a] mb-3">Office → PDF</h3>
-            <MegaLink to="/office/to-pdf" label="DOCX → PDF" />
-            <MegaLink to="/office/to-pdf" label="Excel → PDF" />
-            <MegaLink to="/office/to-pdf" label="PowerPoint → PDF" />
+            <MegaLink to="/docx-pdf" label="DOCX → PDF" />
+            <MegaLink to="/xlsx-pdf" label="Excel → PDF" />
+            <MegaLink to="/pptx-pdf" label="PowerPoint → PDF" />
           </div>
 
           {/* Column 3 */}

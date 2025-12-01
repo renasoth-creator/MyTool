@@ -1,4 +1,7 @@
-﻿export type ToolId =
+﻿
+// The ToolID Route must be same as ToolCinfig Rout
+
+export type ToolId =
   | "merge"
   | "split"
   | "compress"
@@ -32,7 +35,7 @@ export interface ToolConfig {
   badge?: string;
   icon?:string;
 }
-
+// The toolsCongig Route must be same as ToolID
 export const tools: ToolConfig[] = [
   {
     id: "merge",
@@ -74,13 +77,13 @@ export const tools: ToolConfig[] = [
     id: "xlsx-pdf",
     name: "XLSX to PDF",
     description: "Turn spreadsheets into printable PDF files.",
-    route: "/office/to-pdf",
+    route: "xlsx-pdf",
   },
   {
     id: "pptx-pdf",
     name: "PPTX to PDF",
     description: "Convert presentations directly into PDF.",
-    route: "/office/to-pdf",
+    route: "pptx-pdf",
   },
   {
     id: "html-to-pdf",
