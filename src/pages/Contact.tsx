@@ -17,7 +17,7 @@ async function getRecaptchaToken(): Promise<string> {
 
     grecaptcha.ready(() => {
       grecaptcha
-        .execute("YOUR_SITE_KEY_HERE", { action: "submit" })
+        .execute("6LeUPx4sAAAAAKXY0jct4ZP6VyjsD-qzvP7zaxQD", { action: "submit" })
         .then((token: string) => resolve(token))
         .catch(reject);
     });
