@@ -68,7 +68,7 @@ export const tools: ToolConfig[] = [
     id: "docx-pdf",
     name: "DOCX to PDF",
     description: "Convert Word documents into PDFs.",
-    route: "/office/to-pdf",
+    route: "docx-pdf",
   },
   {
     id: "xlsx-pdf",
