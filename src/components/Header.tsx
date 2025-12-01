@@ -73,7 +73,7 @@ function ConvertDropdown() {
       </button>
 
 
-      {/* Edit the Drop menu left to right*/}
+      {/* Edit the Drop menu l*/}
       {open && (
         <div
           className="
@@ -95,9 +95,9 @@ function ConvertDropdown() {
           {/* Column 2 */}
           <div>
             <h3 className="text-sm font-semibold text-[#ff7a1a] mb-3">Office → PDF</h3>
-            <MegaLink to="/docx-to-pdf" label="DOCX → PDF" />
-            <MegaLink to="/xlsx-to-pdf" label="Excel → PDF" />
-            <MegaLink to="/pptx-to-pdf" label="PowerPoint → PDF" />
+            <MegaLink to="/office/to-pdf" label="DOCX → PDF" />
+            <MegaLink to="/office/to-pdf" label="Excel → PDF" />
+            <MegaLink to="/office/to-pdf" label="PowerPoint → PDF" />
           </div>
 
           {/* Column 3 */}
