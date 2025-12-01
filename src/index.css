@@ -32,3 +32,145 @@
 .delay-4000 {
     animation-delay: 4s;
 }
+
+
+/* SHARED STYLE FOR ALL 4 PIECES */
+.logo-piece {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #ff7a1a;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- CLIP PATHS — CUT THE LOGO INTO 4 REAL PARTS --- */
+.piece-tl {
+    clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%);
+    animation: pieceTL 3s ease-in-out infinite;
+}
+
+.piece-tr {
+    clip-path: polygon(50% 0, 100% 0, 100% 50%, 50% 50%);
+    animation: pieceTR 3s ease-in-out infinite;
+}
+
+.piece-bl {
+    clip-path: polygon(0 50%, 50% 50%, 50% 100%, 0 100%);
+    animation: pieceBL 3s ease-in-out infinite;
+}
+
+.piece-br {
+    clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);
+    animation: pieceBR 3s ease-in-out infinite;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes pieceTL {
+    0% {
+        transform: translate(0,0);
+    }
+
+    40% {
+        transform: translate(-14px, -14px);
+    }
+
+    70% {
+        transform: translate(-22px, -22px);
+    }
+
+    100% {
+        transform: translate(0,0);
+    }
+}
+
+@keyframes pieceTR {
+    0% {
+        transform: translate(0,0);
+    }
+
+    40% {
+        transform: translate(14px, -14px);
+    }
+
+    70% {
+        transform: translate(22px, -22px);
+    }
+
+    100% {
+        transform: translate(0,0);
+    }
+}
+
+@keyframes pieceBL {
+    0% {
+        transform: translate(0,0);
+    }
+
+    40% {
+        transform: translate(-14px, 14px);
+    }
+
+    70% {
+        transform: translate(-22px, 22px);
+    }
+
+    100% {
+        transform: translate(0,0);
+    }
+}
+
+@keyframes pieceBR {
+    0% {
+        transform: translate(0,0);
+    }
+
+    40% {
+        transform: translate(14px, 14px);
+    }
+
+    70% {
+        transform: translate(22px, 22px);
+    }
+
+    100% {
+        transform: translate(0,0);
+    }
+}
+
+@keyframes dropdown {
+    0% {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-dropdown {
+    animation: dropdown 0.18s ease-out;
+}
+
+@keyframes dropdown {
+    0% {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-dropdown {
+    animation: dropdown 0.3s ease-out;
+}
