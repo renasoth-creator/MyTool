@@ -41,18 +41,48 @@
 		<loc>https://pdfconvert.tech/pdf-to-text</loc>
 	</url>
 	<url>
-		<loc>https://pdfconvert.tech/docx-to-pdf</loc>
+		<loc>https://pdfconvert.tech/docx-pdf</loc>
 	</url>
 	<url>
-		<loc>https://pdfconvert.tech/xlsx-to-pdf</loc>
+		<loc>https://pdfconvert.tech/xlsx-pdf</loc>
 	</url>
 	<url>
-		<loc>https://pdfconvert.tech/pptx-to-pdf</loc>
+		<loc>https://pdfconvert.tech/pptx-pdf</loc>
 	</url>
 	<url>
 		<loc>https://pdfconvert.tech/html-to-pdf</loc>
 	</url>
 	<url>
 		<loc>https://pdfconvert.tech/protect-pdf</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf-docx</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf-to-images</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/extract-images</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf-to-pptx</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf-to-excel</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf-remove-pages</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf-reorder-pages</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf-watermark</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf-ocr</loc>
+	</url>
+	<url>
+		<loc>https://pdfconvert.tech/pdf/to-html</loc>
 	</url>
 </urlset>
