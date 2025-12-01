@@ -30,9 +30,9 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     "pdf-spreadsheet": "image/*",
 
     "pdf-to-text": "application/pdf",
-    "docx-to-pdf": ".doc,.docx",
-    "xlsx-to-pdf": ".xls,.xlsx",
-    "pptx-to-pdf": ".ppt,.pptx",
+    "docx-pdf": ".doc,.docx",
+    "xlsx-pdf": ".xls,.xlsx",
+    "pptx-pdf": ".ppt,.pptx",
     "html-to-pdf": ".html,.htm,text/html",
 
     "protect-pdf": "application/pdf",
