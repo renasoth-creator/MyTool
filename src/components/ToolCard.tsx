@@ -11,7 +11,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
     <Link
       to={tool.route}
       className="
-        block rounded-2xl bg-[#F9F9F9]
+        block rounded-2xl bg-[#FDFDFF]
         border border-gray-200
         p-6 h-full
         shadow-sm flex flex-col justify-between
@@ -21,7 +21,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
     >
       {/* ICON BOX */}
       <div
-        className="
+        className=" 
           flex items-center justify-center
           h-12 w-12 rounded-xl
           bg-[#F9F9F9] border border-gray-200

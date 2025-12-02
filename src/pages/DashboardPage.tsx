@@ -12,7 +12,7 @@ const DashboardPage: React.FC = () => {
       ================================= */}
       <header className="text-center mb-12">
         <h1 className="text-4x1 md:text-5xl font-extrabold text-primary-dark tracking-tight">
-          The Ultimate <span className="text-primary-orange">Tools</span> Suite
+          PDF Converter <span className="text-primary-orange">Tools</span> Suite
         </h1>
 
         <p className="mt- text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
