@@ -5,6 +5,7 @@ import FileUploadArea from "../components/FileUploadArea";
 
 import { tools } from "../config/pdfToolsConfig";
 import type { ToolId } from "../config/pdfToolsConfig";
+import { Helmet } from "react-helmet";
 
 interface ToolPageProps {
   toolId: ToolId;
@@ -16,11 +17,17 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
   if (!tool) {
     return (
       <Layout>
+        <Helmet>
+          <title>Tool Not Found – PDFConvert.tech</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
+
         <p className="text-sm text-red-500">Tool not found.</p>
       </Layout>
     );
   }
 
+  // Allowed file types per tool
   const acceptByTool: Partial<Record<ToolId, string>> = {
     merge: "application/pdf",
     split: "application/pdf",
@@ -50,14 +57,6 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     "pdf/to-html": "application/pdf",
   };
 
-  
-
-
-
-
-
-
-
   const accept = acceptByTool[toolId] ?? undefined;
 
   const allowMultiple =
@@ -65,6 +64,19 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
 
   return (
     <Layout>
+
+      {/* ------------------------- */}
+      {/* ⭐⭐⭐ SEO Helmet ⭐⭐⭐ */}
+      {/* ------------------------- */}
+      <Helmet>
+        <title>{tool.name} – Free Online Tool | PDFConvert.tech</title>
+        <meta name="description" content={tool.description} />
+
+        <meta property="og:title" content={tool.name + " – PDFConvert.tech"} />
+        <meta property="og:description" content={tool.description} />
+        <meta property="og:type" content="article" />
+      </Helmet>
+
       {/* BREADCRUMB */}
       <div className="mb-6 flex items-center gap-2 text-xs text-slate-600">
         <Link to="/" className="hover:text-[#ff7a1a] hover:underline">
@@ -129,7 +141,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
             </h2>
             <ul className="list-disc list-inside space-y-1">
               <li>Avoid password-protected files unless required.</li>
-              <li>Large files may take a bit longer to process.</li>
+              <li>Large files may take longer to process.</li>
               <li>If something fails, try refreshing the page.</li>
             </ul>
           </div>
