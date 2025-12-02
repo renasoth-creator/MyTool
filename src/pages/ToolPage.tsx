@@ -50,6 +50,14 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     "pdf/to-html": "application/pdf",
   };
 
+  
+
+
+
+
+
+
+
   const accept = acceptByTool[toolId] ?? undefined;
 
   const allowMultiple =
