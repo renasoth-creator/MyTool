@@ -25,7 +25,7 @@ export default function Header() {
 
         {/* RIGHT — AUTH */}
         <div className="flex items-center gap-4 text-sm">
-          <button className="text-slate-600 hover:text-[#ff7a1a] transition font-medium">
+          <button className="text-slate-700 hover:text-[#ff7a1a] transition font-medium">
             Sign In
           </button>
 
