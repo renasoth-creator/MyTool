@@ -14,7 +14,7 @@ export default function Login() {
     e.preventDefault();
     setError("");
 
-    const res = await fetch(`${BACKEND_URL}/auth/login`, {
+    const res = await fetch(`${BACKEND_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
