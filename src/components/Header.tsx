@@ -29,9 +29,13 @@ export default function Header() {
             Sign In
           </button>
 
-          <button className="px-5 py-2 rounded-full bg-[#ff7a1a] text-white font-semibold hover:bg-[#e66d10] transition shadow">
+          <Link
+           to="/signup"
+           className="px-5 py-2 rounded-full bg-[#ff7a1a] text-white font-semibold hover:bg-[#e66d10] transition shadow"
+          >
             Sign Up
-          </button>
+          </Link>
+
         </div>
 
       </div>

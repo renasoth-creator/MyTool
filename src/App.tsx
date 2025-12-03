@@ -12,14 +12,18 @@ import CookiesPage from "./pages/CookiesPage";
 import FaqPage from "./pages/FaqPage";
 import BlogPage from "./pages/BlogPage";
 import Contact from "./pages/Contact";
+import Profile from "./pages/Profile";
+
+import Signup from "./pages/Signup";
+import VerifyEmail from "./pages/VerifyEmail";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
 const App: React.FC = () => {
   return (
     <Routes>
-      {/* Home / tools grid */}
       <Route path="/" element={<DashboardPage />} />
 
-      {/* Dynamic tool pages */}
       {tools.map((tool) => (
         <Route
           key={tool.id}
@@ -28,7 +32,6 @@ const App: React.FC = () => {
         />
       ))}
 
-      {/* Static pages */}
       <Route path="/terms" element={<TermsPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/cookies" element={<CookiesPage />} />
@@ -36,7 +39,13 @@ const App: React.FC = () => {
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/contact" element={<Contact />} />
 
-      {/* Fallback */}
+      {/* Auth pages */}
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/profile" element={<Profile />} />
+
       <Route path="*" element={<DashboardPage />} />
     </Routes>
   );

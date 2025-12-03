@@ -190,3 +190,6 @@
 .animate-slideIn {
     animation: slideIn 0.35s ease-out;
 }
+.btn-primary {
+    @apply bg-gradient-to-r from-[#ff7a1a] to-[#e66d10] text-white font-semibold px-5 py-3 rounded-xl shadow hover:opacity-90 transition;
+}

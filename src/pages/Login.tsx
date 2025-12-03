@@ -1,0 +1,72 @@
+import { useState } from "react";
+import { BACKEND_URL } from "../config/backend";
+import Layout from "../components/Layout";
+
+export default function Login() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+
+  function update(k: string, v: string) {
+    setForm((p) => ({ ...p, [k]: v }));
+  }
+
+  async function handleLogin(e: any) {
+    e.preventDefault();
+    setError("");
+
+    const res = await fetch(`${BACKEND_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data.error);
+      return;
+    }
+
+    localStorage.setItem("token", data.token);
+    window.location.href = "/dashboard";
+  }
+
+  return (
+    <Layout>
+      <div className="max-w-lg mx-auto py-12">
+        <h1 className="text-3xl font-bold mb-6">Welcome Back</h1>
+
+        <form
+          onSubmit={handleLogin}
+          className="bg-white border border-slate-200 p-8 rounded-2xl shadow space-y-5"
+        >
+          <input
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={(e) => update("email", e.target.value)}
+            className="w-full border rounded-lg px-3 py-2"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={(e) => update("password", e.target.value)}
+            className="w-full border rounded-lg px-3 py-2"
+          />
+
+          <button className="btn-primary w-full">Login</button>
+
+          {error && <p className="text-red-600 text-center">{error}</p>}
+
+          <p className="text-xs text-center text-slate-600">
+            No account?{" "}
+            <a href="/signup" className="text-[#ff7a1a] font-medium">
+              Create one
+            </a>
+          </p>
+        </form>
+      </div>
+    </Layout>
+  );
+}
