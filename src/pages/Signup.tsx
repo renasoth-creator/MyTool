@@ -22,7 +22,7 @@ export default function Signup() {
     setStatus("sending");
 
     try {
-      const res = await fetch(`${BACKEND_URL}/auth/signup`, {
+      const res = await fetch(`${BACKEND_URL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -32,7 +32,7 @@ export default function Signup() {
       if (!res.ok) throw new Error(data.error || "Failed");
 
       localStorage.setItem("pendingEmail", form.email);
-      window.location.href = "/auth/verify";
+      window.location.href = "/verify";
 
     } catch (err: any) {
       setError(err.message);
