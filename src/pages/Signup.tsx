@@ -32,7 +32,7 @@ export default function Signup() {
       if (!res.ok) throw new Error(data.error || "Failed");
 
       localStorage.setItem("pendingEmail", form.email);
-      window.location.href = "/auth/verify";
+      window.location.href = "/verify-email";
 
     } catch (err: any) {
       setError(err.message);
