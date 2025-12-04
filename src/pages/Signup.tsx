@@ -22,7 +22,7 @@ export default function Signup() {
     setStatus("sending");
 
     try {
-      const res = await fetch(`${BACKEND_URL}/signup`, {
+      const res = await fetch(`${BACKEND_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
