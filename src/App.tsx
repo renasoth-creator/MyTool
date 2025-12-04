@@ -40,9 +40,9 @@ const App: React.FC = () => {
       <Route path="/contact" element={<Contact />} />
 
       {/* Auth pages */}
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/verify" element={<VerifyEmail />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/auth/signup" element={<Signup />} />
+      <Route path="/auth/verify" element={<VerifyEmail />} />
+      <Route path="/auth/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
 
