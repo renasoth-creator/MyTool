@@ -26,14 +26,14 @@ export default function Header() {
         {/* RIGHT — AUTH */}
         <div className="flex items-center gap-4 text-sm">
          <Link
-           to="/login"
+           to="/auth/login"
            className="text-slate-700 hover:text-[#ff7a1a] transition font-medium"
          >
            Sign In
          </Link>
 
           <Link
-           to="/signup"
+           to="/auth/signup"
            className="px-5 py-2 rounded-full bg-[#ff7a1a] text-white font-semibold hover:bg-[#e66d10] transition shadow"
           >
             Sign Up
