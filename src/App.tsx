@@ -20,11 +20,16 @@ import EmailVerified from "./pages/EmailVerified";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AccountSettings from "./pages/AccountSettings";
-
+import Verify2FA from "./pages/Verify2FA";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 <Routes>
   {/* Your other routes */}
 
   <Route path="/account/*" element={<AccountSettings />} />
+  <Route path="/verify-2fa" element={<Verify2FA />} />
+  <Route path="/forgot-password" element={<ForgotPassword />} />
+<Route path="/reset-password" element={<ResetPassword />} />
 </Routes>
 
 

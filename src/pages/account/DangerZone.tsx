@@ -1,8 +1,37 @@
+import { useState } from "react";
 import AccountLayout from "./AccountLayout";
+import { BACKEND_URL } from "../../config/backend";
 import { useAuth } from "../../context/AuthContext";
 
 export default function DangerZone() {
-  const { logout } = useAuth();
+  const { token, logout } = useAuth();
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("");
+
+  async function deleteAccount(e: any) {
+    e.preventDefault();
+    setStatus("");
+
+    const res = await fetch(`${BACKEND_URL}/auth/delete-account`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({ password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setStatus(data.error);
+      return;
+    }
+
+    logout();
+    alert("Account has been permanently deleted.");
+    window.location.href = "/";
+  }
 
   return (
     <AccountLayout>
@@ -12,21 +41,23 @@ export default function DangerZone() {
         <h2 className="text-xl font-semibold text-red-700 mb-2">
           Delete Account
         </h2>
-        <p className="text-sm text-red-600 mb-4">
-          This action is permanent and cannot be undone.
-        </p>
 
-        <button className="px-5 py-2 bg-red-600 text-white rounded-lg">
-          Delete My Account
-        </button>
+        {status && <p className="text-red-600 text-sm mb-2">{status}</p>}
+
+        <form className="space-y-3" onSubmit={deleteAccount}>
+          <input
+            type="password"
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Confirm your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button className="px-5 py-2 bg-red-600 text-white rounded-lg">
+            Delete My Account Permanently
+          </button>
+        </form>
       </div>
-
-      <button
-        onClick={logout}
-        className="mt-8 px-4 py-2 bg-slate-200 text-slate-800 rounded"
-      >
-        Log out
-      </button>
     </AccountLayout>
   );
 }

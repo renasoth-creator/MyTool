@@ -17,11 +17,29 @@ export default function Login() {
     setError("");
 
     try {
-      await login(form.email, form.password);
-      window.location.href = "/dashboard";
-    } catch (err: any) {
-      setError(err.message || "Login failed");
-    }
+  const res = await fetch(`${BACKEND_URL}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  });
+
+  const data = await res.json();
+
+  if (data.requires2FA) {
+    localStorage.setItem("2fa_email", form.email);
+    window.location.href = "/verify-2fa";
+    return;
+  }
+
+  if (!res.ok) throw new Error(data.error);
+
+  localStorage.setItem("jwt", data.token);
+  localStorage.setItem("user", JSON.stringify(data.user));
+  window.location.href = "/dashboard";
+} catch (err: any) {
+  setError(err.message);
+}
+
   }
 
   return (
