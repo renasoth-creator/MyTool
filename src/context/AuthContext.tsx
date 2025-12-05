@@ -7,6 +7,7 @@ interface User {
   name?: string;
   phone?: string;
   verified: boolean;
+  twoFactorEnabled?: boolean;
 }
 
 interface AuthContextType {
