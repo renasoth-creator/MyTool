@@ -33,7 +33,7 @@ export default function Header() {
          </Link>
 
           <Link
-           to="/auth/signup"
+           to="/signup"
            className="px-5 py-2 rounded-full bg-[#ff7a1a] text-white font-semibold hover:bg-[#e66d10] transition shadow"
           >
             Sign Up
