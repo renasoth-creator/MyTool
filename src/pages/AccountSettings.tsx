@@ -28,15 +28,16 @@ export default function AccountSettings() {
   if (!user || !token) {
     return (
       <Layout>
-        <div className="max-w-md mx-auto py-16 text-center">
-          <p className="text-sm text-slate-600 mb-4">
-            You need to be logged in to manage your account.
+        <div className="max-w-md mx-auto py-20 text-center">
+          <h2 className="text-2xl font-bold mb-2 text-slate-900">Access denied</h2>
+          <p className="text-sm text-slate-600 mb-6">
+            You must be logged in to view this page.
           </p>
           <a
             href="/login"
-            className="px-4 py-2 rounded-xl bg-[#ff7a1a] text-white text-sm font-semibold"
+            className="px-5 py-2 rounded-xl bg-[#ff7a1a] text-white text-sm font-semibold hover:bg-[#e66d10] transition"
           >
-            Go to login
+            Go to Login
           </a>
         </div>
       </Layout>
@@ -84,13 +85,13 @@ export default function AccountSettings() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Change password failed");
+      if (!res.ok) throw new Error(data.error || "Password update failed");
 
       setPwMessage("Password changed successfully.");
       setCurrentPassword("");
       setNewPassword("");
     } catch (err: any) {
-      setPwMessage(err.message || "Change password failed");
+      setPwMessage(err.message || "Password update failed");
     }
   }
 
@@ -112,7 +113,7 @@ export default function AccountSettings() {
       if (!res.ok) throw new Error(data.error || "Email change failed");
 
       setEmailStep("code-sent");
-      setEmailMessage("Code sent to new email address.");
+      setEmailMessage("A verification code was sent to your new email.");
     } catch (err: any) {
       setEmailMessage(err.message || "Email change failed");
     }
@@ -133,141 +134,181 @@ export default function AccountSettings() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Confirm email failed");
+      if (!res.ok) throw new Error(data.error || "Email verification failed");
 
-      setEmailMessage("Email updated successfully. You may need to login again.");
+      setEmailMessage("Email updated successfully. You may need to log in again.");
     } catch (err: any) {
-      setEmailMessage(err.message || "Confirm email failed");
+      setEmailMessage(err.message || "Email verification failed");
     }
   }
 
   return (
-  <Layout>
-    <div className="max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold text-slate-900 mb-8 text-center">
-        Account Settings
-      </h1>
+    <Layout>
+      <div className="max-w-3xl mx-auto py-12 px-4 space-y-12">
 
-      {status && (
-        <p className="text-center mb-6 text-sm text-[#ff7a1a]">{status}</p>
-      )}
+        {/* ============================
+            HEADER
+        ============================= */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-extrabold text-slate-900">
+              Account Settings
+            </h1>
+            <p className="text-sm text-slate-500 mt-1">
+              Manage your personal information and account security.
+            </p>
+          </div>
 
-      <div className="space-y-10">
+          <button
+            onClick={logout}
+            className="text-sm px-4 py-2 rounded-xl bg-red-50 border border-red-300 text-red-600 hover:bg-red-100 transition"
+          >
+            Log out
+          </button>
+        </div>
 
-        {/* =========================
+        {/* ============================
             PROFILE SECTION
-        ==========================*/}
-        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">
-            Profile
-          </h2>
+        ============================= */}
+        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-4">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="text-2xl"></div>
+            <h2 className="text-xl font-semibold text-slate-900">Profile</h2>
+          </div>
 
-          <div className="space-y-4">
-            {/* NAME */}
+          <form onSubmit={saveProfile} className="space-y-4">
+
             <div>
-              <label className="text-sm font-medium text-slate-700 block mb-1">
-                Name
-              </label>
+              <label className="text-sm font-medium text-slate-700">Name</label>
               <input
-                className="w-full border border-slate-300 px-3 py-2 rounded-lg"
+                className="w-full border border-slate-300 px-3 py-2 rounded-lg mt-1"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
 
-            {/* EMAIL (readonly) */}
             <div>
-              <label className="text-sm font-medium text-slate-700 block mb-1">
-                Email (current)
-              </label>
+              <label className="text-sm font-medium text-slate-700">Phone</label>
               <input
-                disabled
-                className="w-full border border-slate-300 px-3 py-2 rounded-lg bg-slate-100 text-slate-500"
-                value={email}
+                className="w-full border border-slate-300 px-3 py-2 rounded-lg mt-1"
+                placeholder="Optional"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </div>
 
             <button
-              onClick={updateName}
-              className="mt-2 bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition"
-            >
-              Save Changes
-            </button>
-          </div>
-        </section>
-
-        {/* =========================
-            CHANGE EMAIL SECTION
-        ==========================*/}
-        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">
-            Change Email
-          </h2>
-
-          <div className="space-y-4">
-            <input
-              type="email"
-              placeholder="New email address"
-              className="w-full border border-slate-300 px-3 py-2 rounded-lg"
-              value={newEmail}
-              onChange={(e) => setNewEmail(e.target.value)}
-            />
-
-            <button
-              onClick={updateEmail}
+              type="submit"
+              disabled={savingProfile}
               className="bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition"
             >
-              Update Email
+              {savingProfile ? "Saving..." : "Save Changes"}
             </button>
-          </div>
+
+            {profileMessage && (
+              <p className="text-xs text-green-600 mt-2">{profileMessage}</p>
+            )}
+          </form>
         </section>
 
-        {/* =========================
-            CHANGE PASSWORD SECTION
-        ==========================*/}
-        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">
-            Change Password
-          </h2>
+        {/* ============================
+            PASSWORD SECTION
+        ============================= */}
+        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-4">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="text-2xl"></div>
+            <h2 className="text-xl font-semibold text-slate-900">Change Password</h2>
+          </div>
 
-          <div className="space-y-4">
+          <form onSubmit={changePassword} className="space-y-4">
             <input
               type="password"
               placeholder="Current password"
-              className="w-full border border-slate-300 px-3 py-2 rounded-lg"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border px-3 py-2 rounded-lg"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
             />
 
             <input
               type="password"
               placeholder="New password"
-              className="w-full border border-slate-300 px-3 py-2 rounded-lg"
+              className="w-full border px-3 py-2 rounded-lg"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
 
-            <button
-              onClick={updatePassword}
-              className="bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition"
-            >
-              Change Password
+            <button className="bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition">
+              Update Password
             </button>
-          </div>
+
+            {pwMessage && <p className="text-xs text-green-600">{pwMessage}</p>}
+          </form>
         </section>
 
-        {/* =========================
+        {/* ============================
+            EMAIL SECTION
+        ============================= */}
+        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-4">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="text-2xl"></div>
+            <h2 className="text-xl font-semibold text-slate-900">Change Email</h2>
+          </div>
+
+          {/* STEP 1 — ENTER NEW EMAIL */}
+          {emailStep === "idle" && (
+            <form onSubmit={startEmailChange} className="space-y-4">
+              <input
+                type="email"
+                placeholder="New email address"
+                className="w-full border px-3 py-2 rounded-lg"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+              />
+
+              <input
+                type="password"
+                placeholder="Current password"
+                className="w-full border px-3 py-2 rounded-lg"
+                value={emailPassword}
+                onChange={(e) => setEmailPassword(e.target.value)}
+              />
+
+              <button className="bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition">
+                Send Verification Code
+              </button>
+            </form>
+          )}
+
+          {/* STEP 2 — ENTER CODE */}
+          {emailStep === "code-sent" && (
+            <form onSubmit={confirmEmailChange} className="space-y-4">
+              <input
+                maxLength={6}
+                placeholder="Enter the 6-digit code"
+                className="w-full border px-3 py-2 rounded-lg tracking-[0.3em]"
+                value={emailCode}
+                onChange={(e) => setEmailCode(e.target.value)}
+              />
+
+              <button className="bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition">
+                Confirm Email Change
+              </button>
+            </form>
+          )}
+
+          {emailMessage && (
+            <p className="text-xs text-green-600">{emailMessage}</p>
+          )}
+        </section>
+
+        {/* ============================
             DANGER ZONE
-        ==========================*/}
+        ============================= */}
         <section className="p-6 bg-red-50 border border-red-300 rounded-2xl shadow-sm">
-          <h2 className="text-xl font-semibold text-red-700 mb-4">
-            Danger Zone
-          </h2>
+          <h2 className="text-xl font-semibold text-red-700 mb-3">Danger Zone</h2>
 
           <button
-            onClick={() => {
-              if (confirm("Are you sure you want to log out?")) logout();
-            }}
+            onClick={() => logout()}
             className="px-5 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition"
           >
             Log Out
@@ -275,9 +316,6 @@ export default function AccountSettings() {
         </section>
 
       </div>
-    </div>
-  </Layout>
-
-
+    </Layout>
   );
 }
