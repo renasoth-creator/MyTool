@@ -36,7 +36,11 @@ export default function Profile() {
       return;
     }
 
-    setStatus("Profile updated successfully. Reload page to see changes.");
+    if (data.user) {
+      localStorage.setItem("user", JSON.stringify(data.user));
+    }
+    setStatus("Profile updated successfully.");
+
   }
 
   return (
