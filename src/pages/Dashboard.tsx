@@ -5,28 +5,14 @@ import { BACKEND_URL } from "../config/backend";
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
 
-  uuseEffect(() => {
-  const jwt = localStorage.getItem("jwt");
-
-  if (!jwt) {
-    window.location.href = "/login";
-    return;
-  }
-
-  fetch(`${BACKEND_URL}/auth/me`, {
-    headers: { Authorization: "Bearer " + jwt },
-  })
-    .then((r) => r.json())
-    .then((data) => {
-      if (data.error) {
-        window.location.href = "/login";
-      } else {
-        setUser(data);
-      }
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/auth/me`, {
+      headers: { Authorization: "Bearer " + localStorage.getItem("jwt") },
     })
-    .catch(() => (window.location.href = "/login"));
-}, []);
-
+      .then((r) => r.json())
+      .then(setUser)
+      .catch(() => (window.location.href = "/login"));
+  }, []);
 
   if (!user)
     return (
