@@ -1,10 +1,10 @@
 import { useState } from "react";
-//import { BACKEND_URL } from "../config/backend";
+import { BACKEND_URL } from "../config/backend";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
-  const { login } = useAuth();
+  const { } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
