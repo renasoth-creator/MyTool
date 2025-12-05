@@ -2,30 +2,38 @@ import React from "react";
 import Layout from "../components/Layout";
 import ToolCard from "../components/ToolCard";
 import { tools } from "../config/pdfToolsConfig";
+import { useAuth } from "../context/AuthContext";
 
 const DashboardPage: React.FC = () => {
-  return (
-    <Layout>
+    const { user } = useAuth();
+     return (
+      <Layout>
 
       {/* ================================
           HERO HEADER
       ================================= */}
       <header className="text-center mb-12">
-        <h1 className="text-4x1 md:text-5xl font-extrabold text-primary-dark tracking-tight">
-          PDF Converter <span className="text-primary-orange">Tools</span> Suite
-        </h1>
 
-        <p className="mt- text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
-          Fast, secure and 100% free. No signup required. Files auto-delete after 24 hours.
-        </p>
-        <a
-          href="/account"
-          className="text-sm text-[#ff7a1a] font-medium underline"
-        >
-          Account settings
-        </a>
+  <h1 className="text-4x1 md:text-5xl font-extrabold text-primary-dark tracking-tight">
+    PDF Converter <span className="text-primary-orange">Tools</span> Suite
+  </h1>
 
-      </header>
+  <p className="mt- text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+    Fast, secure and 100% free. No signup required. Files auto-delete after 24 hours.
+  </p>
+
+  {user && (
+    <div className="mt-4">
+      <a
+        href="/account"
+        className="text-sm text-[#ff7a1a] font-medium underline hover:text-primary-dark transition"
+      >
+        Account settings
+      </a>
+    </div>
+  )}
+</header>
+
 
       {/* ================================
           TOOLS GRID (Orange hover cards)
