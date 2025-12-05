@@ -1,14 +1,23 @@
-import { useState } from "react";
+﻿import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { BACKEND_URL } from "../config/backend";
+import { useAuth } from "../context/AuthContext";
+import Layout from "../components/Layout";
 
 export default function Verify2FA() {
-  const email = localStorage.getItem("2fa_email");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function submit(e: any) {
+  const [params] = useSearchParams();
+  const email = params.get("email");
+
+  const { setUser, setToken } = useAuth() as any; // allow updates
+
+  async function submitCode(e: any) {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     const res = await fetch(`${BACKEND_URL}/auth/verify-2fa`, {
       method: "POST",
@@ -17,37 +26,56 @@ export default function Verify2FA() {
     });
 
     const data = await res.json();
+    setLoading(false);
+
     if (!res.ok) {
-      setError(data.error);
+      setError(data.error || "Invalid code");
       return;
     }
 
-    localStorage.removeItem("2fa_email");
+    // 🔥 SAVE LOGIN STATE
+    setToken(data.token);
+    setUser(data.user);
+
     localStorage.setItem("jwt", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
 
+    // Redirect NOW
     window.location.href = "/dashboard";
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-20 p-6 border rounded-xl shadow">
-      <h1 className="text-xl font-bold mb-3">Two-Factor Authentication</h1>
-      <p className="text-sm mb-4">
-        Enter the 6-digit code sent to <strong>{email}</strong>.
-      </p>
+    <Layout>
+      <div className="max-w-md mx-auto py-16">
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          Enter 2-Factor Code
+        </h1>
+        <p className="text-center text-sm mb-6">
+          A login code was sent to <b>{email}</b>
+        </p>
 
-      {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
+        <form
+          onSubmit={submitCode}
+          className="bg-white p-6 rounded-2xl shadow border space-y-4"
+        >
+          <input
+            maxLength={6}
+            className="w-full border rounded-lg px-3 py-3 text-center tracking-[0.5em] text-lg"
+            placeholder="Enter 6-digit code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
 
-      <form onSubmit={submit} className="space-y-3">
-        <input
-          maxLength={6}
-          className="w-full border px-3 py-2 rounded"
-          placeholder="123456"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-        <button className="btn-primary w-full">Verify</button>
-      </form>
-    </div>
+          <button
+            className="btn-primary w-full py-3"
+            disabled={loading || code.length !== 6}
+          >
+            {loading ? "Verifying…" : "Verify Code"}
+          </button>
+
+          {error && <p className="text-red-600 text-center">{error}</p>}
+        </form>
+      </div>
+    </Layout>
   );
 }
