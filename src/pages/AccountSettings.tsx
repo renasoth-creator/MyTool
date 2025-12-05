@@ -142,138 +142,142 @@ export default function AccountSettings() {
   }
 
   return (
-    <Layout>
-      <div className="max-w-4xl mx-auto py-10 space-y-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900">
-              Account settings
-            </h1>
-            <p className="text-xs text-slate-500 mt-1">
-              Manage your profile, security, and email.
-            </p>
-          </div>
-          <button
-            onClick={logout}
-            className="text-xs text-slate-500 hover:text-red-500"
-          >
-            Log out
-          </button>
-        </div>
+  <Layout>
+    <div className="max-w-3xl mx-auto py-12 px-4">
+      <h1 className="text-3xl font-bold text-slate-900 mb-8 text-center">
+        Account Settings
+      </h1>
 
-        {/* Profile */}
-        <section className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-          <h2 className="font-semibold text-lg">Profile</h2>
-          <form className="space-y-3" onSubmit={saveProfile}>
+      {status && (
+        <p className="text-center mb-6 text-sm text-[#ff7a1a]">{status}</p>
+      )}
+
+      <div className="space-y-10">
+
+        {/* =========================
+            PROFILE SECTION
+        ==========================*/}
+        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <h2 className="text-xl font-semibold text-slate-900 mb-4">
+            Profile
+          </h2>
+
+          <div className="space-y-4">
+            {/* NAME */}
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">
+              <label className="text-sm font-medium text-slate-700 block mb-1">
                 Name
               </label>
               <input
-                className="w-full border rounded-lg px-3 py-2 text-sm"
+                className="w-full border border-slate-300 px-3 py-2 rounded-lg"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
 
+            {/* EMAIL (readonly) */}
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">
-                Phone (optional)
+              <label className="text-sm font-medium text-slate-700 block mb-1">
+                Email (current)
               </label>
               <input
-                className="w-full border rounded-lg px-3 py-2 text-sm"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                disabled
+                className="w-full border border-slate-300 px-3 py-2 rounded-lg bg-slate-100 text-slate-500"
+                value={email}
               />
             </div>
 
             <button
-              type="submit"
-              disabled={savingProfile}
-              className="btn-primary text-sm px-4 py-2 rounded-xl"
+              onClick={updateName}
+              className="mt-2 bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition"
             >
-              {savingProfile ? "Saving..." : "Save profile"}
+              Save Changes
             </button>
-
-            {profileMessage && (
-              <p className="text-xs mt-2 text-slate-600">{profileMessage}</p>
-            )}
-          </form>
+          </div>
         </section>
 
-        {/* Password */}
-        <section className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-          <h2 className="font-semibold text-lg">Change password</h2>
-          <form className="space-y-3" onSubmit={changePassword}>
+        {/* =========================
+            CHANGE EMAIL SECTION
+        ==========================*/}
+        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <h2 className="text-xl font-semibold text-slate-900 mb-4">
+            Change Email
+          </h2>
+
+          <div className="space-y-4">
+            <input
+              type="email"
+              placeholder="New email address"
+              className="w-full border border-slate-300 px-3 py-2 rounded-lg"
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
+            />
+
+            <button
+              onClick={updateEmail}
+              className="bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition"
+            >
+              Update Email
+            </button>
+          </div>
+        </section>
+
+        {/* =========================
+            CHANGE PASSWORD SECTION
+        ==========================*/}
+        <section className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <h2 className="text-xl font-semibold text-slate-900 mb-4">
+            Change Password
+          </h2>
+
+          <div className="space-y-4">
             <input
               type="password"
               placeholder="Current password"
-              className="w-full border rounded-lg px-3 py-2 text-sm"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
+              className="w-full border border-slate-300 px-3 py-2 rounded-lg"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
+
             <input
               type="password"
-              placeholder="New password (min 6 chars)"
-              className="w-full border rounded-lg px-3 py-2 text-sm"
+              placeholder="New password"
+              className="w-full border border-slate-300 px-3 py-2 rounded-lg"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-            <button className="btn-primary text-sm px-4 py-2 rounded-xl">
-              Update password
+
+            <button
+              onClick={updatePassword}
+              className="bg-[#ff7a1a] text-white px-5 py-2 rounded-lg font-medium hover:bg-[#e66d10] transition"
+            >
+              Change Password
             </button>
-            {pwMessage && (
-              <p className="text-xs mt-2 text-slate-600">{pwMessage}</p>
-            )}
-          </form>
+          </div>
         </section>
 
-        {/* Email */}
-        <section className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-          <h2 className="font-semibold text-lg">Change email</h2>
+        {/* =========================
+            DANGER ZONE
+        ==========================*/}
+        <section className="p-6 bg-red-50 border border-red-300 rounded-2xl shadow-sm">
+          <h2 className="text-xl font-semibold text-red-700 mb-4">
+            Danger Zone
+          </h2>
 
-          {emailStep === "idle" && (
-            <form className="space-y-3" onSubmit={startEmailChange}>
-              <input
-                type="email"
-                placeholder="New email"
-                className="w-full border rounded-lg px-3 py-2 text-sm"
-                value={newEmail}
-                onChange={(e) => setNewEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Current password"
-                className="w-full border rounded-lg px-3 py-2 text-sm"
-                value={emailPassword}
-                onChange={(e) => setEmailPassword(e.target.value)}
-              />
-              <button className="btn-primary text-sm px-4 py-2 rounded-xl">
-                Send confirmation code
-              </button>
-            </form>
-          )}
-
-          {emailStep === "code-sent" && (
-            <form className="space-y-3" onSubmit={confirmEmailChange}>
-              <input
-                maxLength={6}
-                placeholder="Enter code from email"
-                className="w-full border rounded-lg px-3 py-2 text-sm tracking-[0.3em]"
-                value={emailCode}
-                onChange={(e) => setEmailCode(e.target.value)}
-              />
-              <button className="btn-primary text-sm px-4 py-2 rounded-xl">
-                Confirm new email
-              </button>
-            </form>
-          )}
-
-          {emailMessage && (
-            <p className="text-xs mt-2 text-slate-600">{emailMessage}</p>
-          )}
+          <button
+            onClick={() => {
+              if (confirm("Are you sure you want to log out?")) logout();
+            }}
+            className="px-5 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition"
+          >
+            Log Out
+          </button>
         </section>
+
       </div>
-    </Layout>
-  );
+    </div>
+  </Layout>
+
+
+ );
 }
