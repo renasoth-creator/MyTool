@@ -41,16 +41,13 @@ const App: React.FC = () => {
       <Route path="/contact" element={<Contact />} />
 
       {/* Auth pages */}
-<<<<<<< HEAD
+
       <Route path="/signup" element={<Signup />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/email-verified" element={<EmailVerified />} />
       <Route path="/login" element={<Login />} />
-=======
-      <Route path="/auth/signup" element={<Signup />} />
-      <Route path="/auth/verify" element={<VerifyEmail />} />
-      <Route path="/auth/login" element={<Login />} />
->>>>>>> 7659196798d5f464a73ec8e5435d83a0a2f00302
+
+
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
 
