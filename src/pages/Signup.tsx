@@ -1,25 +1,29 @@
-import { useState } from "react";
-import { BACKEND_URL } from "../config/backend";
+﻿import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
+import { BACKEND_URL } from "../config/backend";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
-    name: "",
+    phone: "",
   });
 
-  const [error, setError] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending">("idle");
+  const [status, setStatus] =
+    useState<"idle" | "sending" | "success" | "error">("idle");
+  const [error, setError] = useState<string | null>(null);
 
-  function update(key: string, val: string) {
-    setForm((p) => ({ ...p, [key]: val }));
+  function update(key: string, value: string) {
+    setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
     setStatus("sending");
+    setError(null);
 
     try {
       const res = await fetch(`${BACKEND_URL}/signup`, {
@@ -29,71 +33,74 @@ export default function Signup() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed");
+      if (!res.ok) throw new Error(data.error || "Signup failed");
 
-      localStorage.setItem("pendingEmail", form.email);
-      window.location.href = "/verify";
+      // SUCCESS → Redirect to verification page
+      navigate("/verify-email?email=" + encodeURIComponent(form.email));
 
     } catch (err: any) {
-      setError(err.message);
+      setStatus("error");
+      setError(err.message || "Signup failed");
     }
-
-    setStatus("idle");
   }
 
   return (
     <Layout>
-      <div className="max-w-lg mx-auto py-12">
-        <h1 className="text-3xl font-bold text-slate-900 mb-6">Create Account</h1>
+      <div className="max-w-md mx-auto py-10">
+        <h1 className="text-2xl font-bold mb-2 text-slate-900">Sign up</h1>
 
         <form
           onSubmit={handleSubmit}
-          className="bg-white border border-slate-200 p-8 rounded-2xl shadow space-y-5"
+          className="bg-white p-6 rounded-2xl shadow border border-slate-200 space-y-4"
         >
+          {/* NAME */}
           <input
             type="text"
+            className="w-full border rounded-lg px-3 py-2 text-sm"
             placeholder="Name (optional)"
             value={form.name}
             onChange={(e) => update("name", e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
           />
 
+          {/* EMAIL */}
           <input
             type="email"
             required
-            placeholder="Email address"
+            className="w-full border rounded-lg px-3 py-2 text-sm"
+            placeholder="Email"
             value={form.email}
             onChange={(e) => update("email", e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
           />
 
+          {/* PASSWORD */}
           <input
             type="password"
             required
+            minLength={6}
+            className="w-full border rounded-lg px-3 py-2 text-sm"
             placeholder="Password"
             value={form.password}
             onChange={(e) => update("password", e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
+          />
+
+          {/* PHONE (optional) */}
+          <input
+            type="tel"
+            className="w-full border rounded-lg px-3 py-2 text-sm"
+            placeholder="Phone (optional)"
+            value={form.phone}
+            onChange={(e) => update("phone", e.target.value)}
           />
 
           <button
             type="submit"
             disabled={status === "sending"}
-            className="btn-primary w-full"
+            className="w-full bg-orange-500 text-white font-semibold py-2.5 rounded-xl"
           >
-            {status === "sending" ? "Creating..." : "Sign Up"}
+            {status === "sending" ? "Creating account..." : "Sign up"}
           </button>
 
-          {error && (
-            <p className="text-red-600 text-sm text-center">{error}</p>
-          )}
-
-          <p className="text-xs text-center text-slate-600">
-            Already have an account?{" "}
-            <a href="/login" className="text-[#ff7a1a] font-medium">
-              Login
-            </a>
-          </p>
+          {error && <p className="text-red-600 text-xs mt-2">{error}</p>}
         </form>
       </div>
     </Layout>

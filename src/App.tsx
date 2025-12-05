@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 
 import Signup from "./pages/Signup";
 import VerifyEmail from "./pages/VerifyEmail";
+import EmailVerified from "./pages/EmailVerified";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
@@ -42,6 +43,7 @@ const App: React.FC = () => {
       {/* Auth pages */}
       <Route path="/signup" element={<Signup />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/email-verified" element={<EmailVerified />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />

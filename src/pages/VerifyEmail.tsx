@@ -1,59 +1,60 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BACKEND_URL } from "../config/backend";
-import Layout from "../components/Layout";
 
 export default function VerifyEmail() {
-  const email = localStorage.getItem("pendingEmail");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const email = new URLSearchParams(location.search).get("email") || "";
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
-  async function submit(e: any) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
-    const res = await fetch(`${BACKEND_URL}/verify`, {
+    const res = await fetch(`${BACKEND_URL}/verify-email-code`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, code }),
     });
 
     const data = await res.json();
+
     if (!res.ok) {
       setError(data.error || "Invalid code");
       return;
     }
 
-    // login automatically
-    localStorage.setItem("token", data.token);
-    window.location.href = "/dashboard";
+    navigate("/email-verified");
   }
 
   return (
-    <Layout>
-      <div className="max-w-lg mx-auto py-12">
-        <h1 className="text-3xl font-bold mb-4">Verify Email</h1>
-        <p className="text-sm text-slate-600 mb-6">
-          We sent a 6-digit code to <strong>{email}</strong>.
-        </p>
+    <div className="max-w-md mx-auto py-16">
+      <h1 className="text-2xl font-bold mb-4">Verify Your Email</h1>
 
-        <form
-          onSubmit={submit}
-          className="bg-white border border-slate-200 p-8 rounded-2xl shadow space-y-5"
-        >
-          <input
-            type="text"
-            maxLength={6}
-            placeholder="Enter verification code"
-            className="w-full border rounded-lg px-3 py-2 text-center text-lg tracking-widest"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-          />
+      <p className="text-sm text-gray-600 mb-6">
+        Enter the 6-digit verification code sent to:
+        <br />
+        <b>{email}</b>
+      </p>
 
-          <button className="btn-primary w-full">Verify</button>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          className="w-full text-center text-xl tracking-widest border rounded-lg py-3"
+          maxLength={6}
+          placeholder="123456"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+        />
 
-          {error && <p className="text-red-600 text-center">{error}</p>}
-        </form>
-      </div>
-    </Layout>
+        <button className="w-full bg-orange-500 text-white py-2 rounded-lg">
+          Verify
+        </button>
+
+        {error && <p className="text-red-500 text-xs">{error}</p>}
+      </form>
+    </div>
   );
 }
