@@ -18,6 +18,13 @@ const DashboardPage: React.FC = () => {
         <p className="mt- text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
           Fast, secure and 100% free. No signup required. Files auto-delete after 24 hours.
         </p>
+        <a
+          href="/account"
+          className="text-sm text-[#ff7a1a] font-medium underline"
+        >
+          Account settings
+        </a>
+
       </header>
 
       {/* ================================

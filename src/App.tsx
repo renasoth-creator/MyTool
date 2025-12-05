@@ -19,7 +19,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import EmailVerified from "./pages/EmailVerified";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-
+import AccountSettings from "./pages/AccountSettings";
 const App: React.FC = () => {
   return (
     <Routes>
@@ -46,10 +46,12 @@ const App: React.FC = () => {
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/email-verified" element={<EmailVerified />} />
       <Route path="/login" element={<Login />} />
+      
 
 
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/account" element={<AccountSettings />} />
 
       <Route path="*" element={<DashboardPage />} />
     </Routes>
