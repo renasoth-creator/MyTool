@@ -4,6 +4,8 @@ import Security from "./account/Security";
 import EmailSettings from "./account/Email";
 import Sessions from "./account/Sessions";
 import DangerZone from "./account/DangerZone";
+import EmailSettings from "./account/Email";
+
 
 export default function AccountSettings() {
   return (
