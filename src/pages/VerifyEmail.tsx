@@ -15,7 +15,7 @@ export default function VerifyEmail() {
     e.preventDefault();
     setError("");
 
-    const res = await fetch(`${BACKEND_URL}/verify-email-code`, {
+    const res = await fetch(`${BACKEND_URL}/auth/verify`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: emailParam, code }),

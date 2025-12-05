@@ -26,7 +26,7 @@ export default function Header() {
         {/* RIGHT — AUTH */}
         <div className="flex items-center gap-4 text-sm">
          <Link
-           to="/auth/login"
+           to="/login"
            className="text-slate-700 hover:text-[#ff7a1a] transition font-medium"
          >
            Sign In
