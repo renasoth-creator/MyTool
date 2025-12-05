@@ -35,13 +35,12 @@ export default function Signup() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Signup failed");
 
-<<<<<<< HEAD
       // SUCCESS → Redirect to verification page
       navigate("/verify-email?email=" + encodeURIComponent(form.email));
-=======
+
       localStorage.setItem("pendingEmail", form.email);
       window.location.href = "/verify-email";
->>>>>>> 7659196798d5f464a73ec8e5435d83a0a2f00302
+
 
     } catch (err: any) {
       setStatus("error");
