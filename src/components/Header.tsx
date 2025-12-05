@@ -1,8 +1,17 @@
 ﻿import { Link, NavLink } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import LogoSplitAnimate from "./LogoSplitAnimate";
+import { useAuth } from "../context/AuthContext";
+
 
 export default function Header() {
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();                 // clears jwt + user from localStorage + context
+    window.location.href = "/"; // send user back to homepage
+  };
+
   return (
     <header className="relative w-full bg-white/80 backdrop-blur border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
@@ -25,26 +34,53 @@ export default function Header() {
 
         {/* RIGHT — AUTH */}
         <div className="flex items-center gap-4 text-sm">
-         <Link
-           to="/login"
-           className="text-slate-700 hover:text-[#ff7a1a] transition font-medium"
-         >
-           Sign In
-         </Link>
+          {user ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="px-4 py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-100 transition font-medium"
+              >
+                Dashboard
+              </Link>
 
-          <Link
-           to="/signup"
-           className="px-5 py-2 rounded-full bg-[#ff7a1a] text-white font-semibold hover:bg-[#e66d10] transition shadow"
-          >
-            Sign Up
-          </Link>
+              <Link
+                to="/account"
+                className="text-slate-700 hover:text-[#ff7a1a] transition font-medium"
+              >
+                Account
+              </Link>
 
+              <button
+                onClick={handleLogout}
+                className="text-slate-500 hover:text-red-500 transition font-medium"
+              >
+                Log out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="text-slate-700 hover:text-[#ff7a1a] transition font-medium"
+              >
+                Sign In
+              </Link>
+
+              <Link
+                to="/signup"
+                className="px-5 py-2 rounded-full bg-[#ff7a1a] text-white font-semibold hover:bg-[#e66d10] transition shadow"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
 
       </div>
     </header>
   );
 }
+
 
 /* ---------------------------------------------
    Convert Dropdown Component
