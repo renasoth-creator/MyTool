@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { BACKEND_URL } from "../config/backend";
 import Layout from "../components/Layout";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+  const { login } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -14,20 +16,12 @@ export default function Login() {
     e.preventDefault();
     setError("");
 
-    const res = await fetch(`${BACKEND_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      setError(data.error);
-      return;
+    try {
+      await login(form.email, form.password);
+      window.location.href = "/dashboard";
+    } catch (err: any) {
+      setError(err.message || "Login failed");
     }
-
-    localStorage.setItem("token", data.token);
-    window.location.href = "/dashboard";
   }
 
   return (
