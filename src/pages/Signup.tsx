@@ -38,10 +38,6 @@ export default function Signup() {
       // SUCCESS → Redirect to verification page
       navigate("/verify-email?email=" + encodeURIComponent(form.email));
 
-      localStorage.setItem("pendingEmail", form.email);
-      window.location.href = "/verify-email";
-
-
     } catch (err: any) {
       setStatus("error");
       setError(err.message || "Signup failed");
