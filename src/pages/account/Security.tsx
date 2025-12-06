@@ -1,5 +1,4 @@
-﻿// src/pages/account/Security.tsx
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import AccountLayout from "./AccountLayout";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL } from "../../config/backend";
@@ -17,15 +16,14 @@ export default function Security() {
   const [twoFAStep, setTwoFAStep] = useState<"idle" | "code">("idle");
   const [twoFACode, setTwoFACode] = useState("");
 
+  // LOGIN SESSIONS
+  const [sessions, setSessions] = useState<any[]>([]);
+
   // GLOBAL STATUS MESSAGE
   const [status, setStatus] = useState("");
 
-  // LOGIN SESSIONS
-  const [sessions, setSessions] = useState<any[]>([]);
-  const [sessionStatus, setSessionStatus] = useState("");
-
   /* -----------------------------------------
-      LOAD LOGIN SESSIONS
+      LOAD SESSIONS (AUTO)
   ------------------------------------------ */
   useEffect(() => {
     if (!token) return;
@@ -35,54 +33,42 @@ export default function Security() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data?.sessions) setSessions(data.sessions);
+        if (Array.isArray(data)) setSessions(data);
       })
-      .catch((err) => console.error("Sessions load error:", err));
+      .catch(() => {});
   }, [token]);
 
+
   /* -----------------------------------------
-      LOGOUT SINGLE SESSION
+      REVOKE A SINGLE SESSION
   ------------------------------------------ */
-  async function logoutSession(sessionToken: string) {
-    const res = await fetch(`${BACKEND_URL}/auth/sessions/logout`, {
+  async function revokeSession(sessionToken: string) {
+    await fetch(`${BACKEND_URL}/auth/sessions/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-      body: JSON.stringify({ sessionToken }),
+      body: JSON.stringify({ token: sessionToken }),
     });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      setSessionStatus(data.error || "Failed to remove session");
-      return;
-    }
-
-    // Refresh session list
-    setSessions(sessions.filter((s) => s.token !== sessionToken));
-    setSessionStatus("Session removed ✔");
+    setSessions((prev) => prev.filter((s) => s.token !== sessionToken));
   }
 
   /* -----------------------------------------
-      LOGOUT ALL SESSIONS
+      REVOKE ALL OTHER SESSIONS
   ------------------------------------------ */
-  async function logoutAllSessions() {
-    const res = await fetch(`${BACKEND_URL}/auth/sessions/logout-all`, {
+  async function revokeAll() {
+    await fetch(`${BACKEND_URL}/auth/sessions/logout-all`, {
       method: "POST",
-      headers: { Authorization: "Bearer " + token },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({ currentToken: token }),
     });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      setSessionStatus(data.error || "Failed to clear sessions");
-      return;
-    }
-
-    setSessions([]);
-    setSessionStatus("All sessions cleared ✔");
+    setSessions((prev) => prev.filter((s) => s.token === token));
   }
 
   /* -----------------------------------------
@@ -98,10 +84,7 @@ export default function Security() {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-      body: JSON.stringify({
-        currentPassword: currentPw,
-        newPassword: newPw,
-      }),
+      body: JSON.stringify({ currentPassword: currentPw, newPassword: newPw }),
     });
 
     const data = await res.json();
@@ -131,7 +114,7 @@ export default function Security() {
   }
 
   /* -----------------------------------------
-      CONFIRM ENABLE 2FA
+      CONFIRM 2FA
   ------------------------------------------ */
   async function confirm2FA(e: any) {
     e.preventDefault();
@@ -149,11 +132,7 @@ export default function Security() {
     const data = await res.json();
     if (!res.ok) return setTwoFAStatus(data.error);
 
-    const updatedUser: User = {
-      ...(user as User),
-      twoFactorEnabled: true,
-    };
-
+    const updatedUser: User = { ...(user as User), twoFactorEnabled: true };
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));
 
@@ -176,11 +155,7 @@ export default function Security() {
     const data = await res.json();
     if (!res.ok) return setTwoFAStatus(data.error);
 
-    const updatedUser: User = {
-      ...(user as User),
-      twoFactorEnabled: false,
-    };
-
+    const updatedUser: User = { ...(user as User), twoFactorEnabled: false };
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));
 
@@ -191,10 +166,10 @@ export default function Security() {
     <AccountLayout>
       <h1 className="text-2xl font-bold mb-6">Security</h1>
 
-      {/* GLOBAL STATUS */}
       {status && <p className="text-green-600 mb-3">{status}</p>}
 
       <section className="space-y-6">
+
         {/* PASSWORD */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Password</h2>
@@ -222,7 +197,7 @@ export default function Security() {
           </form>
         </div>
 
-        {/* TWO FACTOR AUTH */}
+        {/* 2FA */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Two-Factor Authentication</h2>
 
@@ -232,10 +207,7 @@ export default function Security() {
 
           {user?.twoFactorEnabled ? (
             <>
-              <p className="text-sm text-slate-600">
-                2FA is currently <strong>enabled</strong>.
-              </p>
-
+              <p className="text-sm text-slate-600">2FA is enabled.</p>
               <button
                 onClick={disable2FA}
                 className="px-4 py-2 bg-red-500 text-white rounded-lg"
@@ -246,7 +218,7 @@ export default function Security() {
           ) : (
             <>
               <p className="text-sm text-slate-600">
-                Enable 2FA to receive a login code via email.
+                Enable 2FA to require email verification on login.
               </p>
 
               {twoFAStep === "idle" && (
@@ -278,50 +250,41 @@ export default function Security() {
           )}
         </div>
 
-        {/* ======================
-            LOGIN SESSIONS
-        ====================== */}
+        {/* SESSIONS BLOCK */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Active Sessions</h2>
+          <p className="text-sm text-slate-600">
+            Devices currently logged into your account.
+          </p>
 
-          {sessionStatus && (
-            <p className="text-green-600 text-sm">{sessionStatus}</p>
-          )}
-
-          {sessions.length === 0 && (
-            <p className="text-sm text-slate-600">No active sessions found.</p>
-          )}
-
-          <div className="space-y-4">
-            {sessions.map((s, i) => (
-              <div
-                key={i}
-                className="p-4 border rounded-xl bg-slate-50 flex justify-between items-center"
-              >
-                <div>
-                  <p className="font-medium">{s.userAgent}</p>
-                  <p className="text-xs text-slate-500">
-                    IP: {s.ip} • Last Active:{" "}
-                    {new Date(s.lastActive).toLocaleString()}
-                  </p>
-                </div>
-
-                <button
-                  onClick={() => logoutSession(s.token)}
-                  className="text-red-500 hover:underline text-sm"
-                >
-                  Logout
-                </button>
+          {sessions.map((s, i) => (
+            <div
+              key={i}
+              className="border p-3 rounded-lg flex justify-between items-center"
+            >
+              <div>
+                <p className="font-medium text-sm">{s.userAgent}</p>
+                <p className="text-xs text-slate-500">IP: {s.ip}</p>
+                <p className="text-xs text-slate-400">
+                  Last Active: {new Date(s.lastActive).toLocaleString()}
+                </p>
               </div>
-            ))}
-          </div>
+
+              <button
+                onClick={() => revokeSession(s.token)}
+                className="text-red-600 text-sm hover:underline"
+              >
+                Logout
+              </button>
+            </div>
+          ))}
 
           {sessions.length > 1 && (
             <button
-              onClick={logoutAllSessions}
-              className="mt-3 text-sm text-red-600 hover:underline"
+              onClick={revokeAll}
+              className="bg-red-500 w-full text-white py-2 rounded-lg mt-3"
             >
-              Logout All Sessions
+              Logout All Other Sessions
             </button>
           )}
         </div>
