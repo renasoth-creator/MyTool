@@ -36,16 +36,16 @@ export default function VerifyEmail() {
         <h1 className="text-2xl font-bold mb-4">Verify Your Email</h1>
 
         <p className="text-sm text-slate-600 mb-6">
-          Enter the 6-digit code sent to:  
+          Enter the digit codes sent to:  
           <br />
           <b>{emailParam}</b>
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
-            maxLength={6}
+            maxLength={7}
             className="w-full text-center text-xl tracking-widest border rounded-lg py-3"
-            placeholder="123456"
+            placeholder="1234567"
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
