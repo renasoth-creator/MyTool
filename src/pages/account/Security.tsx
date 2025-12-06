@@ -212,62 +212,6 @@ async function revokeAll() {
             </button>
           </form>
         </div>
-        {/* =========================
-    ACTIVE SESSIONS
-========================= */}
-<div className="p-6 bg-white border rounded-2xl shadow space-y-4">
-  <h2 className="text-lg font-bold">Active Sessions</h2>
-
-  <p className="text-sm text-slate-600">
-    These devices are currently logged into your account.
-  </p>
-
-  {sessionStatus && (
-    <p className="text-red-600 text-sm">{sessionStatus}</p>
-  )}
-
-  {sessions.length === 0 && (
-    <p className="text-sm text-slate-500">No active sessions found.</p>
-  )}
-
-  {sessions.map((s, i) => (
-    <div
-      key={i}
-      className="border p-3 rounded-lg flex justify-between items-center"
-    >
-      <div>
-        <p className="font-medium text-sm">{s.userAgent}</p>
-        <p className="text-xs text-slate-500">IP: {s.ip}</p>
-        <p className="text-xs text-slate-400">
-          Last Active: {new Date(s.lastActive).toLocaleString()}
-        </p>
-        {s.isCurrent && (
-          <p className="text-xs text-green-600 font-semibold">
-            This Device
-          </p>
-        )}
-      </div>
-
-      {!s.isCurrent && (
-        <button
-          onClick={() => revokeSession(s.token)}
-          className="text-red-600 text-sm hover:underline"
-        >
-          Logout
-        </button>
-      )}
-    </div>
-  ))}
-
-  {sessions.length > 1 && (
-    <button
-      onClick={revokeAll}
-      className="bg-red-500 w-full text-white py-2 rounded-lg mt-3"
-    >
-      Logout All Other Sessions
-    </button>
-  )}
-</div>
 
 
 
@@ -326,44 +270,63 @@ async function revokeAll() {
           )}
         </div>
 
-        {/* SESSIONS BLOCK */}
-        <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
-          <h2 className="text-lg font-bold">Active Sessions</h2>
-          <p className="text-sm text-slate-600">
-            Devices currently logged into your account.
+        {/* =========================
+    ACTIVE SESSIONS
+========================= */}
+<div className="p-6 bg-white border rounded-2xl shadow space-y-4">
+  <h2 className="text-lg font-bold">Active Sessions</h2>
+
+  <p className="text-sm text-slate-600">
+    These devices are currently logged into your account.
+  </p>
+
+  {sessionStatus && (
+    <p className="text-red-600 text-sm">{sessionStatus}</p>
+  )}
+
+  {sessions.length === 0 && (
+    <p className="text-sm text-slate-500">No active sessions found.</p>
+  )}
+
+  {sessions.map((s, i) => (
+    <div
+      key={i}
+      className="border p-3 rounded-lg flex justify-between items-center"
+    >
+      <div>
+        <p className="font-medium text-sm">{s.userAgent}</p>
+        <p className="text-xs text-slate-500">IP: {s.ip}</p>
+        <p className="text-xs text-slate-400">
+          Last Active: {new Date(s.lastActive).toLocaleString()}
+        </p>
+        {s.isCurrent && (
+          <p className="text-xs text-green-600 font-semibold">
+            This Device
           </p>
+        )}
+      </div>
 
-          {sessions.map((s, i) => (
-            <div
-              key={i}
-              className="border p-3 rounded-lg flex justify-between items-center"
-            >
-              <div>
-                <p className="font-medium text-sm">{s.userAgent}</p>
-                <p className="text-xs text-slate-500">IP: {s.ip}</p>
-                <p className="text-xs text-slate-400">
-                  Last Active: {new Date(s.lastActive).toLocaleString()}
-                </p>
-              </div>
+      {!s.isCurrent && (
+        <button
+          onClick={() => revokeSession(s.token)}
+          className="text-red-600 text-sm hover:underline"
+        >
+          Logout
+        </button>
+      )}
+    </div>
+  ))}
 
-              <button
-                onClick={() => revokeSession(s.token)}
-                className="text-red-600 text-sm hover:underline"
-              >
-                Logout
-              </button>
-            </div>
-          ))}
+  {sessions.length > 1 && (
+    <button
+      onClick={revokeAll}
+      className="bg-red-500 w-full text-white py-2 rounded-lg mt-3"
+    >
+      Logout All Other Sessions
+    </button>
+  )}
+</div>
 
-          {sessions.length > 1 && (
-            <button
-              onClick={revokeAll}
-              className="bg-red-500 w-full text-white py-2 rounded-lg mt-3"
-            >
-              Logout All Other Sessions
-            </button>
-          )}
-        </div>
       </section>
     </AccountLayout>
   );
