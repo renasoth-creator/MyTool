@@ -1,6 +1,4 @@
-﻿const [sessions, setSessions] = useState<any[]>([]);
-const [sessionStatus, setSessionStatus] = useState("");
-
+﻿// src/pages/account/Security.tsx
 import { useState, useEffect } from "react";
 import AccountLayout from "./AccountLayout";
 import { useAuth } from "../../context/AuthContext";
@@ -19,72 +17,67 @@ export default function Security() {
   const [twoFAStep, setTwoFAStep] = useState<"idle" | "code">("idle");
   const [twoFACode, setTwoFACode] = useState("");
 
-
-
-  // GLOBAL STATUS MESSAGE
+  // STATUS
   const [status, setStatus] = useState("");
 
+  // SESSION STATES
+  const [sessions, setSessions] = useState<any[]>([]);
+  const [sessionStatus, setSessionStatus] = useState("");
+
   /* -----------------------------------------
-      LOAD SESSIONS (AUTO)
+      LOAD SESSIONS
   ------------------------------------------ */
   useEffect(() => {
-    if (!token) return;
-
-    fetch(`${BACKEND_URL}/auth/sessions`, {
-      headers: { Authorization: "Bearer " + token },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) setSessions(data);
-      })
-      .catch(() => {});
+    loadSessions();
   }, [token]);
 
+  async function loadSessions() {
+    if (!token) return;
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/auth/sessions`, {
+        headers: { Authorization: "Bearer " + token },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setSessionStatus(data.error || "Failed to load sessions");
+        return;
+      }
+
+      setSessions(data.sessions || []);
+    } catch {
+      setSessionStatus("Failed to load sessions");
+    }
+  }
 
   /* -----------------------------------------
-      REVOKE A SINGLE SESSION
+      REVOKE ONE SESSION
   ------------------------------------------ */
- async function revokeSession(sessionToken: string) {
-  const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify({ sessionToken }),
-  });
-
-  if (res.ok) {
-    loadSessions(); // refresh
-  }
-}
-
-async function revokeAll() {
-  const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
-    method: "POST",
-    headers: { Authorization: "Bearer " + token }
-  });
-
-  if (res.ok) {
-    loadSessions();
-  }
-}
-
-
-  /* -----------------------------------------
-      REVOKE ALL OTHER SESSIONS
-  ------------------------------------------ */
-  async function revokeAll() {
-    await fetch(`${BACKEND_URL}/auth/sessions/logout-all`, {
+  async function revokeSession(sessionToken: string) {
+    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-      body: JSON.stringify({ currentToken: token }),
+      body: JSON.stringify({ sessionToken }),
     });
 
-    setSessions((prev) => prev.filter((s) => s.token === token));
+    if (res.ok) loadSessions();
+  }
+
+  /* -----------------------------------------
+      REVOKE ALL SESSIONS EXCEPT CURRENT
+  ------------------------------------------ */
+  async function revokeAll() {
+    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+    });
+
+    if (res.ok) loadSessions();
   }
 
   /* -----------------------------------------
@@ -100,7 +93,10 @@ async function revokeAll() {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-      body: JSON.stringify({ currentPassword: currentPw, newPassword: newPw }),
+      body: JSON.stringify({
+        currentPassword: currentPw,
+        newPassword: newPw,
+      }),
     });
 
     const data = await res.json();
@@ -130,11 +126,10 @@ async function revokeAll() {
   }
 
   /* -----------------------------------------
-      CONFIRM 2FA
+      CONFIRM ENABLE 2FA
   ------------------------------------------ */
   async function confirm2FA(e: any) {
     e.preventDefault();
-    setTwoFAStatus("");
 
     const res = await fetch(`${BACKEND_URL}/auth/2fa/confirm`, {
       method: "POST",
@@ -161,8 +156,6 @@ async function revokeAll() {
       DISABLE 2FA
   ------------------------------------------ */
   async function disable2FA() {
-    setTwoFAStatus("");
-
     const res = await fetch(`${BACKEND_URL}/auth/2fa/disable`, {
       method: "POST",
       headers: { Authorization: "Bearer " + token },
@@ -185,7 +178,6 @@ async function revokeAll() {
       {status && <p className="text-green-600 mb-3">{status}</p>}
 
       <section className="space-y-6">
-
         {/* PASSWORD */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Password</h2>
@@ -213,11 +205,9 @@ async function revokeAll() {
           </form>
         </div>
 
-
-
-
-
-        {/* 2FA */}
+        {/* ======================
+            TWO-FACTOR AUTH
+        ======================= */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Two-Factor Authentication</h2>
 
@@ -228,6 +218,7 @@ async function revokeAll() {
           {user?.twoFactorEnabled ? (
             <>
               <p className="text-sm text-slate-600">2FA is enabled.</p>
+
               <button
                 onClick={disable2FA}
                 className="px-4 py-2 bg-red-500 text-white rounded-lg"
@@ -270,63 +261,58 @@ async function revokeAll() {
           )}
         </div>
 
-        {/* =========================
-    ACTIVE SESSIONS
-========================= */}
-<div className="p-6 bg-white border rounded-2xl shadow space-y-4">
-  <h2 className="text-lg font-bold">Active Sessions</h2>
+        {/* ======================
+            ACTIVE SESSIONS
+        ======================= */}
+        <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
+          <h2 className="text-lg font-bold">Active Sessions</h2>
 
-  <p className="text-sm text-slate-600">
-    These devices are currently logged into your account.
-  </p>
+          {sessionStatus && (
+            <p className="text-red-600 text-sm">{sessionStatus}</p>
+          )}
 
-  {sessionStatus && (
-    <p className="text-red-600 text-sm">{sessionStatus}</p>
-  )}
+          {sessions.length === 0 && (
+            <p className="text-sm text-slate-500">No active sessions found.</p>
+          )}
 
-  {sessions.length === 0 && (
-    <p className="text-sm text-slate-500">No active sessions found.</p>
-  )}
+          {sessions.map((s, i) => (
+            <div
+              key={i}
+              className="border p-3 rounded-lg flex justify-between items-center"
+            >
+              <div>
+                <p className="font-medium text-sm">{s.userAgent}</p>
+                <p className="text-xs text-slate-500">IP: {s.ip}</p>
+                <p className="text-xs text-slate-400">
+                  Last Active: {new Date(s.lastActive).toLocaleString()}
+                </p>
+                {s.isCurrent && (
+                  <p className="text-xs text-green-600 font-semibold">
+                    This Device
+                  </p>
+                )}
+              </div>
 
-  {sessions.map((s, i) => (
-    <div
-      key={i}
-      className="border p-3 rounded-lg flex justify-between items-center"
-    >
-      <div>
-        <p className="font-medium text-sm">{s.userAgent}</p>
-        <p className="text-xs text-slate-500">IP: {s.ip}</p>
-        <p className="text-xs text-slate-400">
-          Last Active: {new Date(s.lastActive).toLocaleString()}
-        </p>
-        {s.isCurrent && (
-          <p className="text-xs text-green-600 font-semibold">
-            This Device
-          </p>
-        )}
-      </div>
+              {!s.isCurrent && (
+                <button
+                  onClick={() => revokeSession(s.token)}
+                  className="text-red-600 text-sm hover:underline"
+                >
+                  Logout
+                </button>
+              )}
+            </div>
+          ))}
 
-      {!s.isCurrent && (
-        <button
-          onClick={() => revokeSession(s.token)}
-          className="text-red-600 text-sm hover:underline"
-        >
-          Logout
-        </button>
-      )}
-    </div>
-  ))}
-
-  {sessions.length > 1 && (
-    <button
-      onClick={revokeAll}
-      className="bg-red-500 w-full text-white py-2 rounded-lg mt-3"
-    >
-      Logout All Other Sessions
-    </button>
-  )}
-</div>
-
+          {sessions.length > 1 && (
+            <button
+              onClick={revokeAll}
+              className="bg-red-500 w-full text-white py-2 rounded-lg mt-3"
+            >
+              Logout All Other Sessions
+            </button>
+          )}
+        </div>
       </section>
     </AccountLayout>
   );
