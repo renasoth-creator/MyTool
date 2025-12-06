@@ -1,10 +1,10 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import AccountLayout from "./AccountLayout";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL } from "../../config/backend";
 
 export default function Security() {
-  const { user, token } = useAuth();
+  const { user, token, setUser } = useAuth();
 
   // PASSWORD STATES
   const [currentPw, setCurrentPw] = useState("");
@@ -53,13 +53,14 @@ export default function Security() {
 
     const res = await fetch(`${BACKEND_URL}/auth/2fa/start`, {
       method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
+      headers: { Authorization: "Bearer " + token },
     });
 
     const data = await res.json();
-    if (!res.ok) return setTwoFAStatus(data.error);
+    if (!res.ok) {
+      setTwoFAStatus(data.error);
+      return;
+    }
 
     setTwoFAStatus("A verification code has been sent to your email.");
     setTwoFAStep("code");
@@ -82,7 +83,15 @@ export default function Security() {
     });
 
     const data = await res.json();
-    if (!res.ok) return setTwoFAStatus(data.error);
+    if (!res.ok) {
+      setTwoFAStatus(data.error);
+      return;
+    }
+
+    // 🔥 Update global auth state
+    const updatedUser = { ...user, twoFactorEnabled: true };
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
 
     setTwoFAStatus("Two-Factor Authentication enabled!");
     setTwoFAStep("idle");
@@ -97,15 +106,23 @@ export default function Security() {
 
     const res = await fetch(`${BACKEND_URL}/auth/2fa/disable`, {
       method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
+      headers: { Authorization: "Bearer " + token },
     });
 
     const data = await res.json();
-    if (!res.ok) return setTwoFAStatus(data.error);
+    if (!res.ok) {
+      setTwoFAStatus(data.error);
+      return;
+    }
+
+    // 🔥 Update global auth state
+    const updatedUser = { ...user, twoFactorEnabled: false };
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
 
     setTwoFAStatus("Two-Factor Authentication disabled.");
+    setTwoFAStep("idle");
+    setTwoFACode("");
   }
 
   return (
@@ -118,7 +135,7 @@ export default function Security() {
       <section className="space-y-6">
 
         {/* ===================================================
-              PASSWORD
+              PASSWORD SECTION
         =================================================== */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Password</h2>
@@ -149,65 +166,63 @@ export default function Security() {
         {/* ===================================================
               TWO FACTOR AUTHENTICATION (2FA)
         =================================================== */}
-        {/* TWO FACTOR AUTH */}
-<div className="p-6 bg-white border rounded-2xl shadow space-y-3">
-  <h2 className="text-lg font-bold">Two-Factor Authentication</h2>
+        <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
+          <h2 className="text-lg font-bold">Two-Factor Authentication</h2>
 
-  <p className="text-sm text-slate-600">
-    Add an extra layer of security to your account.
-  </p>
+          {twoFAStatus && (
+            <p className="text-green-600 text-sm">{twoFAStatus}</p>
+          )}
 
-  {user?.twoFactorEnabled ? (
-    <>
-      <p className="text-green-600 text-sm font-medium">2FA is enabled</p>
-      <button
-        className="border px-4 py-2 rounded-xl hover:bg-slate-50 text-red-500 border-red-300"
-        onClick={async () => {
-          const res = await fetch(`${BACKEND_URL}/auth/disable-2fa`, {
-            method: "POST",
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          });
+          {/* 🔥 IF ENABLED */}
+          {user?.twoFactorEnabled ? (
+            <>
+              <p className="text-sm text-slate-600">
+                Your account is currently protected with 2FA.
+              </p>
 
-          const data = await res.json();
-          if (res.ok) {
-            user.twoFactorEnabled = false;
-            localStorage.setItem("user", JSON.stringify(user));
-            setStatus("Two-factor authentication disabled.");
-          } else {
-            setStatus(data.error);
-          }
-        }}
-      >
-        Disable 2FA
-      </button>
-    </>
-  ) : (
-    <button
-      className="border px-4 py-2 rounded-xl hover:bg-slate-50"
-      onClick={async () => {
-        const res = await fetch(`${BACKEND_URL}/auth/enable-2fa`, {
-          method: "POST",
-          headers: { Authorization: "Bearer " + token },
-        });
+              <button
+                onClick={disable2FA}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg"
+              >
+                Disable 2FA
+              </button>
+            </>
+          ) : (
+            <>
+              {/* 🔥 IF DISABLED */}
+              <p className="text-sm text-slate-600">
+                Enable 2FA to require a verification code at login.
+              </p>
 
-        const data = await res.json();
+              {twoFAStep === "idle" && (
+                <button
+                  onClick={start2FA}
+                  className="px-4 py-2 bg-[#ff7a1a] text-white rounded-lg"
+                >
+                  Enable 2FA
+                </button>
+              )}
 
-        if (res.ok) {
-          user.twoFactorEnabled = true;
-          localStorage.setItem("user", JSON.stringify(user));
-          setStatus("Two-factor authentication enabled.");
-        } else {
-          setStatus(data.error);
-        }
-      }}
-    >
-      Enable 2FA
-    </button>
-  )}
-</div>
+              {/* 🔥 ENTER CODE */}
+              {twoFAStep === "code" && (
+                <form className="space-y-3" onSubmit={confirm2FA}>
+                  <input
+                    type="text"
+                    maxLength={6}
+                    className="w-full border px-3 py-2 rounded tracking-widest"
+                    placeholder="Enter 6-digit code"
+                    value={twoFACode}
+                    onChange={(e) => setTwoFACode(e.target.value)}
+                  />
 
+                  <button className="px-4 py-2 bg-[#ff7a1a] text-white rounded-lg">
+                    Confirm 2FA
+                  </button>
+                </form>
+              )}
+            </>
+          )}
+        </div>
       </section>
     </AccountLayout>
   );
