@@ -1,33 +1,37 @@
-﻿import { useEffect, useState } from "react";
-import Layout from "../components/Layout";
+﻿import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { BACKEND_URL } from "../config/backend";
 import { useAuth } from "../context/AuthContext";
+import Layout from "../components/Layout";
 
 export default function Verify2FA() {
-  const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
-  const [error, setError] = useState("");
-  const [status, setStatus] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [resending, setResending] = useState(false);
+  const [search] = useSearchParams();
+  const urlEmail = search.get("email");
+
+  // 🔥 Always fallback to stored email
+  const email = urlEmail || localStorage.getItem("2fa_email") || "";
 
   const { setUser, setToken } = useAuth() as any;
 
-  /* ----------------------------------
-     LOAD EMAIL FROM LOCALSTORAGE
-  -------------------------------------*/
-  useEffect(() => {
-    const savedEmail = localStorage.getItem("2fa_email") || "";
-    setEmail(savedEmail);
-  }, []);
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
 
-  /* ----------------------------------
-      SUBMIT CODE
-  -------------------------------------*/
-  async function submitCode(e: any) {
+  useEffect(() => {
+    if (!email) setError("Missing email. Please login again.");
+  }, [email]);
+
+  async function handleVerify(e: any) {
     e.preventDefault();
+
+    if (!email) {
+      setError("Email missing. Please login again.");
+      return;
+    }
+
     setError("");
-    setStatus("");
     setLoading(true);
 
     const res = await fetch(`${BACKEND_URL}/auth/verify-2fa`, {
@@ -44,26 +48,22 @@ export default function Verify2FA() {
       return;
     }
 
-    // Save full login session
+    // 🔥 Save login
     setToken(data.token);
     setUser(data.user);
 
     localStorage.setItem("jwt", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
-
-    // Cleanup
     localStorage.removeItem("2fa_email");
 
     window.location.href = "/dashboard";
   }
 
-  /* ----------------------------------
-      RESEND CODE
-  -------------------------------------*/
+  // ⭐ RESEND CODE
   async function resendCode() {
-    setError("");
-    setStatus("");
     setResending(true);
+    setError("");
+    setInfo("");
 
     const res = await fetch(`${BACKEND_URL}/auth/resend-2fa`, {
       method: "POST",
@@ -75,60 +75,52 @@ export default function Verify2FA() {
     setResending(false);
 
     if (!res.ok) {
-      setError(data.error || "Could not resend code");
+      setError(data.error || "Unable to resend code");
       return;
     }
 
-    setStatus("A new code was sent to your email.");
+    setInfo("A new code was sent to your email.");
   }
 
   return (
     <Layout>
       <div className="max-w-md mx-auto py-16">
-        <h1 className="text-2xl font-bold text-center mb-3">
-          Two-Factor Authentication
-        </h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Two-Factor Code</h1>
 
-        <p className="text-center text-sm text-slate-600 mb-6">
-          Enter the 2FA code sent to <br />
-          <b>{email}</b>
+        <p className="text-center mb-4 text-sm">
+          Enter the code sent to <b>{email}</b>
         </p>
 
         <form
-          onSubmit={submitCode}
-          className="bg-white p-6 shadow rounded-xl space-y-5"
+          onSubmit={handleVerify}
+          className="bg-white p-6 rounded-xl shadow space-y-4"
         >
           <input
-            maxLength={7}
-            className="w-full border px-3 py-3 rounded text-center text-xl tracking-[0.4em]"
-            placeholder="Enter code"
+            maxLength={6}
+            className="w-full border px-3 py-3 rounded text-center text-xl tracking-[0.3em]"
+            placeholder="000000"
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
 
-          <button
-            type="submit"
-            className="btn-primary w-full"
-            disabled={loading}
-          >
-            {loading ? "Verifying…" : "Verify"}
+          <button className="btn-primary w-full" disabled={loading}>
+            {loading ? "Verifying…" : "Verify Code"}
           </button>
 
-          {/* Resend link */}
-          <p className="text-center text-xs text-slate-600">
-            Didn’t receive a code?{" "}
+          {error && <p className="text-red-600 text-center">{error}</p>}
+          {info && <p className="text-green-600 text-center">{info}</p>}
+
+          <p className="text-xs text-center mt-3">
+            Didn’t get the code?{" "}
             <button
               type="button"
               onClick={resendCode}
+              className="text-[#ff7a1a] hover:underline font-medium"
               disabled={resending}
-              className="text-[#ff7a1a] font-semibold hover:underline disabled:opacity-40"
             >
-              {resending ? "Sending…" : "Resend code"}
+              {resending ? "Sending…" : "Resend Code"}
             </button>
           </p>
-
-          {status && <p className="text-green-600 text-center text-sm">{status}</p>}
-          {error && <p className="text-red-600 text-center text-sm">{error}</p>}
         </form>
       </div>
     </Layout>

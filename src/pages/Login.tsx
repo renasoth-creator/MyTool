@@ -1,10 +1,8 @@
-import { useState } from "react";
-import { BACKEND_URL } from "../config/backend";
+﻿import { useState } from "react";
 import Layout from "../components/Layout";
-import { useAuth } from "../context/AuthContext";
+import { BACKEND_URL } from "../config/backend";
 
 export default function Login() {
-  const { } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -13,36 +11,36 @@ export default function Login() {
   }
 
   async function handleLogin(e: any) {
-  e.preventDefault();
-  setError("");
+    e.preventDefault();
+    setError("");
 
-  try {
-    const res = await fetch(`${BACKEND_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch(`${BACKEND_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
 
-    // 2FA required
-    if (data.requires2FA) {
-      window.location.href = `/verify-2fa?email=${encodeURIComponent(form.email)}`;
-      return;
+      // 🔥 2FA REQUIRED → redirect to verify page
+      if (data.requires2FA) {
+        localStorage.setItem("2fa_email", form.email); // backup
+        window.location.href = `/verify-2fa?email=${encodeURIComponent(form.email)}`;
+        return;
+      }
+
+      // 🔥 Normal login
+      localStorage.setItem("jwt", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      window.location.href = "/dashboard";
+
+    } catch (err: any) {
+      setError(err.message);
     }
-
-    if (!res.ok) throw new Error(data.error);
-
-    // Normal login
-    localStorage.setItem("jwt", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-    window.location.href = "/dashboard";
-
-  } catch (err: any) {
-    setError(err.message);
   }
-}
-
 
   return (
     <Layout>
@@ -68,12 +66,6 @@ export default function Login() {
             onChange={(e) => update("password", e.target.value)}
             className="w-full border rounded-lg px-3 py-2"
           />
-          <p className="text-right text-sm">
-            <a href="/forgot-password" className="text-[#ff7a1a] hover:underline">
-             Forgot password?
-            </a>
-          </p>
-
 
           <button className="btn-primary w-full">Login</button>
 
