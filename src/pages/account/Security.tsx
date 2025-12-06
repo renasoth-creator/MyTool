@@ -6,7 +6,8 @@ import { BACKEND_URL } from "../../config/backend";
 import type { User } from "../../context/AuthContext";
 
 export default function Security() {
-  const { user, token, setUser } = useAuth();
+  const { user, token, setUser, setToken } = useAuth();
+
 
   // PASSWORD STATES
   const [currentPw, setCurrentPw] = useState("");
