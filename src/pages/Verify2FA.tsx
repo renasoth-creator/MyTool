@@ -59,7 +59,7 @@ export default function Verify2FA() {
           onSubmit={submitCode}
         >
           <input
-            maxLength={6}
+            maxLength={7}
             className="w-full border px-3 py-3 rounded text-center text-xl tracking-[0.4em]"
             placeholder="Enter code"
             value={code}

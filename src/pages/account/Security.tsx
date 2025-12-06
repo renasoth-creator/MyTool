@@ -203,7 +203,7 @@ export default function Security() {
                 <form className="space-y-3" onSubmit={confirm2FA}>
                   <input
                     type="text"
-                    maxLength={6}
+                    maxLength={7}
                     className="w-full border px-3 py-2 rounded tracking-widest"
                     placeholder="Enter 6-digit code"
                     value={twoFACode}

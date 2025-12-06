@@ -86,7 +86,7 @@ export default function EmailSettings() {
         {step === "code-sent" && (
           <form className="space-y-4" onSubmit={confirmCode}>
             <input
-              maxLength={6}
+              maxLength={7}
               className="w-full border px-3 py-2 rounded tracking-[0.3em]"
               placeholder="6-digit code"
               value={code}
