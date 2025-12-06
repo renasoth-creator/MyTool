@@ -12,7 +12,7 @@ export default function Verify2FA() {
   const [params] = useSearchParams();
   const email = params.get("email");
 
-  const { setUser, setToken } = useAuth() as any; // allow updates
+  const { setUser, setToken } = useAuth() as any;
 
   async function submitCode(e: any) {
     e.preventDefault();
@@ -33,14 +33,13 @@ export default function Verify2FA() {
       return;
     }
 
-    // 🔥 SAVE LOGIN STATE
+    // IMPORTANT: SAVE LOGIN STATE
     setToken(data.token);
     setUser(data.user);
 
     localStorage.setItem("jwt", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
 
-    // Redirect NOW
     window.location.href = "/dashboard";
   }
 
@@ -48,29 +47,30 @@ export default function Verify2FA() {
     <Layout>
       <div className="max-w-md mx-auto py-16">
         <h1 className="text-2xl font-bold mb-4 text-center">
-          Enter 2-Factor Code
+          Enter 2FA Code
         </h1>
-        <p className="text-center text-sm mb-6">
-          A login code was sent to <b>{email}</b>
+
+        <p className="text-center mb-4 text-sm">
+          We sent a code to <b>{email}</b>
         </p>
 
         <form
+          className="bg-white p-6 shadow rounded-xl space-y-4"
           onSubmit={submitCode}
-          className="bg-white p-6 rounded-2xl shadow border space-y-4"
         >
           <input
             maxLength={6}
-            className="w-full border rounded-lg px-3 py-3 text-center tracking-[0.5em] text-lg"
-            placeholder="Enter 6-digit code"
+            className="w-full border px-3 py-3 rounded text-center text-xl tracking-[0.4em]"
+            placeholder="Enter code"
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
 
           <button
-            className="btn-primary w-full py-3"
-            disabled={loading || code.length !== 6}
+            className="btn-primary w-full"
+            disabled={loading}
           >
-            {loading ? "Verifying…" : "Verify Code"}
+            {loading ? "Verifying…" : "Verify"}
           </button>
 
           {error && <p className="text-red-600 text-center">{error}</p>}

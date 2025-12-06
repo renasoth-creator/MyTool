@@ -13,34 +13,36 @@ export default function Login() {
   }
 
   async function handleLogin(e: any) {
-    e.preventDefault();
-    setError("");
+  e.preventDefault();
+  setError("");
 
-    try {
-  const res = await fetch(`${BACKEND_URL}/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(form),
-  });
+  try {
+    const res = await fetch(`${BACKEND_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (data.requires2FA) {
-    localStorage.setItem("2fa_email", form.email);
-    window.location.href = "/verify-2fa";
-    return;
+    // 2FA required
+    if (data.requires2FA) {
+      window.location.href = `/verify-2fa?email=${encodeURIComponent(form.email)}`;
+      return;
+    }
+
+    if (!res.ok) throw new Error(data.error);
+
+    // Normal login
+    localStorage.setItem("jwt", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    window.location.href = "/dashboard";
+
+  } catch (err: any) {
+    setError(err.message);
   }
-
-  if (!res.ok) throw new Error(data.error);
-
-  localStorage.setItem("jwt", data.token);
-  localStorage.setItem("user", JSON.stringify(data.user));
-  window.location.href = "/dashboard";
-} catch (err: any) {
-  setError(err.message);
 }
 
-  }
 
   return (
     <Layout>
