@@ -1,10 +1,9 @@
 ﻿// src/pages/account/Security.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AccountLayout from "./AccountLayout";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL } from "../../config/backend";
-
-import type { User } from "../../context/AuthContext"; // <-- IMPORTANT
+import type { User } from "../../context/AuthContext";
 
 export default function Security() {
   const { user, token, setUser } = useAuth();
@@ -20,6 +19,71 @@ export default function Security() {
 
   // GLOBAL STATUS MESSAGE
   const [status, setStatus] = useState("");
+
+  // LOGIN SESSIONS
+  const [sessions, setSessions] = useState<any[]>([]);
+  const [sessionStatus, setSessionStatus] = useState("");
+
+  /* -----------------------------------------
+      LOAD LOGIN SESSIONS
+  ------------------------------------------ */
+  useEffect(() => {
+    if (!token) return;
+
+    fetch(`${BACKEND_URL}/auth/sessions`, {
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.sessions) setSessions(data.sessions);
+      })
+      .catch((err) => console.error("Sessions load error:", err));
+  }, [token]);
+
+  /* -----------------------------------------
+      LOGOUT SINGLE SESSION
+  ------------------------------------------ */
+  async function logoutSession(sessionToken: string) {
+    const res = await fetch(`${BACKEND_URL}/auth/sessions/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({ sessionToken }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setSessionStatus(data.error || "Failed to remove session");
+      return;
+    }
+
+    // Refresh session list
+    setSessions(sessions.filter((s) => s.token !== sessionToken));
+    setSessionStatus("Session removed ✔");
+  }
+
+  /* -----------------------------------------
+      LOGOUT ALL SESSIONS
+  ------------------------------------------ */
+  async function logoutAllSessions() {
+    const res = await fetch(`${BACKEND_URL}/auth/sessions/logout-all`, {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setSessionStatus(data.error || "Failed to clear sessions");
+      return;
+    }
+
+    setSessions([]);
+    setSessionStatus("All sessions cleared ✔");
+  }
 
   /* -----------------------------------------
       UPDATE PASSWORD
@@ -85,7 +149,6 @@ export default function Security() {
     const data = await res.json();
     if (!res.ok) return setTwoFAStatus(data.error);
 
-    // SAFELY UPDATE USER TYPE
     const updatedUser: User = {
       ...(user as User),
       twoFactorEnabled: true,
@@ -132,9 +195,7 @@ export default function Security() {
       {status && <p className="text-green-600 mb-3">{status}</p>}
 
       <section className="space-y-6">
-        {/* =========================
-            PASSWORD BLOCK
-        ========================== */}
+        {/* PASSWORD */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Password</h2>
 
@@ -161,9 +222,7 @@ export default function Security() {
           </form>
         </div>
 
-        {/* =========================
-            TWO FACTOR AUTH (2FA)
-        ========================== */}
+        {/* TWO FACTOR AUTH */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Two-Factor Authentication</h2>
 
@@ -174,7 +233,7 @@ export default function Security() {
           {user?.twoFactorEnabled ? (
             <>
               <p className="text-sm text-slate-600">
-                2FA is currently <strong>enabled</strong> on your account.
+                2FA is currently <strong>enabled</strong>.
               </p>
 
               <button
@@ -187,7 +246,7 @@ export default function Security() {
           ) : (
             <>
               <p className="text-sm text-slate-600">
-                Enable 2FA to require a login code sent to your email.
+                Enable 2FA to receive a login code via email.
               </p>
 
               {twoFAStep === "idle" && (
@@ -216,6 +275,54 @@ export default function Security() {
                 </form>
               )}
             </>
+          )}
+        </div>
+
+        {/* ======================
+            LOGIN SESSIONS
+        ====================== */}
+        <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
+          <h2 className="text-lg font-bold">Active Sessions</h2>
+
+          {sessionStatus && (
+            <p className="text-green-600 text-sm">{sessionStatus}</p>
+          )}
+
+          {sessions.length === 0 && (
+            <p className="text-sm text-slate-600">No active sessions found.</p>
+          )}
+
+          <div className="space-y-4">
+            {sessions.map((s, i) => (
+              <div
+                key={i}
+                className="p-4 border rounded-xl bg-slate-50 flex justify-between items-center"
+              >
+                <div>
+                  <p className="font-medium">{s.userAgent}</p>
+                  <p className="text-xs text-slate-500">
+                    IP: {s.ip} • Last Active:{" "}
+                    {new Date(s.lastActive).toLocaleString()}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => logoutSession(s.token)}
+                  className="text-red-500 hover:underline text-sm"
+                >
+                  Logout
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {sessions.length > 1 && (
+            <button
+              onClick={logoutAllSessions}
+              className="mt-3 text-sm text-red-600 hover:underline"
+            >
+              Logout All Sessions
+            </button>
           )}
         </div>
       </section>
