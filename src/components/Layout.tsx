@@ -14,8 +14,11 @@ export default function Layout({ children }: LayoutProps) {
     <div className="min-h-screen flex flex-col bg-slate-100">
       <Header />
 
-      <main className="flex-1 px-4 sm:px-8 lg:px-16">
-        <div className="mx-auto max-w-6xl py-10">{children}</div>
+      {/* PAGE CONTENT */}
+      <main className="flex-1 px-4 sm:px-6 lg:px-12">
+        <div className="mx-auto max-w-6xl py-6 sm:py-10">
+          {children}
+        </div>
       </main>
 
       <Footer />
