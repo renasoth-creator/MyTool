@@ -88,10 +88,14 @@ export default function Security() {
       return;
     }
 
-    // 🔥 Update global auth state
-    const updatedUser = { ...user, twoFactorEnabled: true };
-    setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+    //  Update global auth state
+    const updatedUser: User = { 
+  ...(user as User), 
+  twoFactorEnabled: true 
+};
+setUser(updatedUser);
+localStorage.setItem("user", JSON.stringify(updatedUser));
+
 
     setTwoFAStatus("Two-Factor Authentication enabled!");
     setTwoFAStep("idle");
