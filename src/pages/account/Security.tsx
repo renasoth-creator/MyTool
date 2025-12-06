@@ -78,10 +78,19 @@ export default function Security() {
   });
 
   if (res.ok) {
-    // Show only current session
-    loadSessions();
+    // 🔥 Clear local login because session is no longer valid
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+
+    // Clear context
+    setUser(null);
+    setToken(null);
+
+    // Redirect user to login
+    window.location.href = "/login";
   }
 }
+
 
 
   /* -----------------------------------------
