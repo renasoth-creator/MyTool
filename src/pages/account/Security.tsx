@@ -57,17 +57,29 @@ export default function Security() {
       REVOKE ONE SESSION
   ------------------------------------------ */
   async function revokeSession(sessionToken: string) {
-    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({ sessionToken }),
-    });
+  await fetch(`${BACKEND_URL}/auth/sessions/revoke`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify({ sessionToken }),
+  });
 
-    if (res.ok) loadSessions();
+  // If revoking the current session → logout immediately
+  if (sessionToken === token) {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+    return;
   }
+
+  // Otherwise refresh list
+  loadSessions();
+}
+
 
   /* -----------------------------------------
       REVOKE ALL SESSIONS EXCEPT CURRENT
