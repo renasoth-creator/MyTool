@@ -1,6 +1,10 @@
 ﻿// src/App.tsx
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { AuthProvider } from "./context/AuthContext";
+
+import Header from "./components/Header";
 
 import DashboardPage from "./pages/DashboardPage";
 import ToolPage from "./pages/ToolPage";
@@ -23,51 +27,47 @@ import AccountSettings from "./pages/AccountSettings";
 import Verify2FA from "./pages/Verify2FA";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-<Routes>
-  {/* Your other routes */}
-
-  <Route path="/account/*" element={<AccountSettings />} />
-  <Route path="/verify-2fa" element={<Verify2FA />} />
-  <Route path="/forgot-password" element={<ForgotPassword />} />
-<Route path="/reset-password" element={<ResetPassword />} />
-</Routes>
-
 
 const App: React.FC = () => {
   return (
-    <Routes>
-      <Route path="/" element={<DashboardPage />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Header />
 
-      {tools.map((tool) => (
-        <Route
-          key={tool.id}
-          path={tool.route}
-          element={<ToolPage toolId={tool.id} />}
-        />
-      ))}
-      <Route path="/account/*" element={<AccountSettings />} />    {/* Can be deleted */}
+        <Routes>
+          {/* HOME */}
+          <Route path="/" element={<DashboardPage />} />
 
+          {/* TOOL ROUTES */}
+          {tools.map((tool) => (
+            <Route
+              key={tool.id}
+              path={tool.route}
+              element={<ToolPage toolId={tool.id} />}
+            />
+          ))}
 
-      <Route path="/terms" element={<TermsPage />} />
-      <Route path="/privacy" element={<PrivacyPage />} />
-      <Route path="/cookies" element={<CookiesPage />} />
-      <Route path="/faq" element={<FaqPage />} />
-      <Route path="/blog" element={<BlogPage />} />
-      <Route path="/contact" element={<Contact />} />
+          {/* ACCOUNT ROUTES */}
+          <Route path="/account/*" element={<AccountSettings />} />
 
-      {/* Auth pages */}
+          {/* AUTH ROUTES */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/email-verified" element={<EmailVerified />} />
+          <Route path="/login" element={<Login />} />
 
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/verify-email" element={<VerifyEmail />} />
-      <Route path="/email-verified" element={<EmailVerified />} />
-      <Route path="/login" element={<Login />} />
+          <Route path="/verify-2fa" element={<Verify2FA />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
 
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="*" element={<DashboardPage />} />
-
-    </Routes>
+          {/* FALLBACK */}
+          <Route path="*" element={<DashboardPage />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 
