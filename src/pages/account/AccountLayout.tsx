@@ -20,11 +20,15 @@ export default function AccountLayout({ children }: { children: any }) {
         </nav>
 
         <button
-          onClick={logout}
-          className="mt-8 text-sm px-4 py-2 rounded-xl bg-red-50 border border-red-300 text-red-600 hover:bg-red-100 transition w-full"
+          onClick={() => {
+           logout();
+           window.location.href = "/";
+         }}
+         className="mt-8 text-sm px-4 py-2 rounded-xl bg-red-50 border border-red-300 text-red-600 hover:bg-red-100 transition w-full"
         >
           Log out
         </button>
+
       </aside>
 
       {/* PAGE CONTENT */}
