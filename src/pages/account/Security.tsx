@@ -72,13 +72,17 @@ export default function Security() {
       REVOKE ALL SESSIONS EXCEPT CURRENT
   ------------------------------------------ */
   async function revokeAll() {
-    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
-      method: "POST",
-      headers: { Authorization: "Bearer " + token },
-    });
+  const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
+    method: "POST",
+    headers: { Authorization: "Bearer " + token }
+  });
 
-    if (res.ok) loadSessions();
+  if (res.ok) {
+    // Show only current session
+    loadSessions();
   }
+}
+
 
   /* -----------------------------------------
       UPDATE PASSWORD
