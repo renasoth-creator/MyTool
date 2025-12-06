@@ -73,19 +73,19 @@ export default function Security() {
       REVOKE ALL SESSIONS EXCEPT CURRENT
   ------------------------------------------ */
   async function revokeAll() {
-  const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
+  const res = await fetch(`${BACKEND_URL}/sessions/revoke-all`, {
     method: "POST",
     headers: { Authorization: "Bearer " + token }
   });
 
   if (res.ok) {
+     // Clear context
+    setUser(null);
+    setToken(null);
+
     // 🔥 Clear local login because session is no longer valid
     localStorage.removeItem("jwt");
     localStorage.removeItem("user");
-
-    // Clear context
-    setUser(null);
-    setToken(null);
 
     // Redirect user to login
     window.location.href = "/login";
