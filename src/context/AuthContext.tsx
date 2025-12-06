@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+﻿import React, { createContext, useContext, useEffect, useState } from "react";
 import { BACKEND_URL } from "../config/backend";
 
 interface User {
@@ -15,6 +15,10 @@ interface AuthContextType {
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+
+  // IMPORTANT — add setters
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  // Load from localStorage on first render
+  // Load saved auth state
   useEffect(() => {
     const savedToken = localStorage.getItem("jwt");
     const savedUser = localStorage.getItem("user");
@@ -34,7 +38,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  // LOGIN FUNCTION
+  // LOGIN FUNCTION (first phase — before 2FA)
   async function login(email: string, password: string) {
     const res = await fetch(`${BACKEND_URL}/auth/login`, {
       method: "POST",
@@ -43,42 +47,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     const data = await res.json();
+
     if (!res.ok) throw new Error(data.error || "Login failed");
 
-    setUser(data.user);
-    setToken(data.token);
+    // Case 1: requires 2FA → DO NOT set login yet
+    if (data.requires2FA) {
+      return; // 2FA page handles the rest
+    }
 
+    // Case 2: normal login
     localStorage.setItem("jwt", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
+
+    setToken(data.token);
+    setUser(data.user);
   }
 
   // LOGOUT FUNCTION
   function logout() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("user");
-    setUser(null);
     setToken(null);
+    setUser(null);
   }
 
-  // Expose setters so 2FA & login can update auth state
-const value = {
-  user,
-  token,
-  login,
-  logout,
-  setUser,
-  setToken
+  const value: AuthContextType = {
+    user,
+    token,
+    login,
+    logout,
+    setUser,
+    setToken,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-return (
-  <AuthContext.Provider value={value}>
-    {children}
-  </AuthContext.Provider>
-);
-
-};
-
-// Hook for components
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");
