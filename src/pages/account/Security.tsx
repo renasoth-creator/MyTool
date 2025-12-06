@@ -36,7 +36,7 @@ export default function Security() {
     if (!token) return;
 
     try {
-      const res = await fetch(`${BACKEND_URL}/sessions`, {
+      const res = await fetch(`${BACKEND_URL}/auth/sessions`, {
         headers: { Authorization: "Bearer " + token },
       });
 
@@ -57,7 +57,7 @@ export default function Security() {
       REVOKE ONE SESSION
   ------------------------------------------ */
   async function revokeSession(sessionToken: string) {
-    const res = await fetch(`${BACKEND_URL}/sessions/revoke`, {
+    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function Security() {
       REVOKE ALL SESSIONS EXCEPT CURRENT
   ------------------------------------------ */
   async function revokeAll() {
-  const res = await fetch(`${BACKEND_URL}/sessions/revoke-all`, {
+  const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
     method: "POST",
     headers: { Authorization: "Bearer " + token }
   });
