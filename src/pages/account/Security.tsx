@@ -205,7 +205,7 @@ export default function Security() {
                     type="text"
                     maxLength={7}
                     className="w-full border px-3 py-2 rounded tracking-widest"
-                    placeholder="Enter 6-digit code"
+                    placeholder="Enter 7-digit code"
                     value={twoFACode}
                     onChange={(e) => setTwoFACode(e.target.value)}
                   />

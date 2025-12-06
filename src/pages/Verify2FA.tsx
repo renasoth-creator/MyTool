@@ -96,9 +96,9 @@ export default function Verify2FA() {
           className="bg-white p-6 rounded-xl shadow space-y-4"
         >
           <input
-            maxLength={6}
+            maxLength={7}
             className="w-full border px-3 py-3 rounded text-center text-xl tracking-[0.3em]"
-            placeholder="000000"
+            placeholder="0000000"
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
