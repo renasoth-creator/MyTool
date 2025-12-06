@@ -60,11 +60,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setToken(null);
   }
 
-  return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  // Expose setters so 2FA & login can update auth state
+const value = {
+  user,
+  token,
+  login,
+  logout,
+  setUser,
+  setToken
+};
+
+return (
+  <AuthContext.Provider value={value}>
+    {children}
+  </AuthContext.Provider>
+);
+
 };
 
 // Hook for components
