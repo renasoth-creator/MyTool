@@ -1,7 +1,10 @@
-﻿import { useState } from "react";
+﻿// src/pages/account/Security.tsx
+import { useState } from "react";
 import AccountLayout from "./AccountLayout";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL } from "../../config/backend";
+
+import type { User } from "../../context/AuthContext"; // <-- IMPORTANT
 
 export default function Security() {
   const { user, token, setUser } = useAuth();
@@ -18,9 +21,9 @@ export default function Security() {
   // GLOBAL STATUS MESSAGE
   const [status, setStatus] = useState("");
 
-  /* -------------------------------
+  /* -----------------------------------------
       UPDATE PASSWORD
-  --------------------------------*/
+  ------------------------------------------ */
   async function updatePassword(e: any) {
     e.preventDefault();
     setStatus("");
@@ -40,14 +43,14 @@ export default function Security() {
     const data = await res.json();
     if (!res.ok) return setStatus(data.error);
 
-    setStatus("Password updated successfully.");
+    setStatus("Password updated successfully ✔");
     setCurrentPw("");
     setNewPw("");
   }
 
-  /* -------------------------------
+  /* -----------------------------------------
       START ENABLE 2FA
-  --------------------------------*/
+  ------------------------------------------ */
   async function start2FA() {
     setTwoFAStatus("");
 
@@ -57,18 +60,15 @@ export default function Security() {
     });
 
     const data = await res.json();
-    if (!res.ok) {
-      setTwoFAStatus(data.error);
-      return;
-    }
+    if (!res.ok) return setTwoFAStatus(data.error);
 
-    setTwoFAStatus("A verification code has been sent to your email.");
+    setTwoFAStatus("A verification code was sent to your email.");
     setTwoFAStep("code");
   }
 
-  /* -------------------------------
+  /* -----------------------------------------
       CONFIRM ENABLE 2FA
-  --------------------------------*/
+  ------------------------------------------ */
   async function confirm2FA(e: any) {
     e.preventDefault();
     setTwoFAStatus("");
@@ -83,28 +83,25 @@ export default function Security() {
     });
 
     const data = await res.json();
-    if (!res.ok) {
-      setTwoFAStatus(data.error);
-      return;
-    }
+    if (!res.ok) return setTwoFAStatus(data.error);
 
-    //  Update global auth state
-    const updatedUser: User = { 
-  ...(user as User), 
-  twoFactorEnabled: true 
-};
-setUser(updatedUser);
-localStorage.setItem("user", JSON.stringify(updatedUser));
+    // SAFELY UPDATE USER TYPE
+    const updatedUser: User = {
+      ...(user as User),
+      twoFactorEnabled: true,
+    };
 
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
 
-    setTwoFAStatus("Two-Factor Authentication enabled!");
+    setTwoFAStatus("Two-Factor Authentication enabled ✔");
     setTwoFAStep("idle");
     setTwoFACode("");
   }
 
-  /* -------------------------------
+  /* -----------------------------------------
       DISABLE 2FA
-  --------------------------------*/
+  ------------------------------------------ */
   async function disable2FA() {
     setTwoFAStatus("");
 
@@ -114,19 +111,17 @@ localStorage.setItem("user", JSON.stringify(updatedUser));
     });
 
     const data = await res.json();
-    if (!res.ok) {
-      setTwoFAStatus(data.error);
-      return;
-    }
+    if (!res.ok) return setTwoFAStatus(data.error);
 
-    // 🔥 Update global auth state
-    const updatedUser = { ...user, twoFactorEnabled: false };
+    const updatedUser: User = {
+      ...(user as User),
+      twoFactorEnabled: false,
+    };
+
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));
 
     setTwoFAStatus("Two-Factor Authentication disabled.");
-    setTwoFAStep("idle");
-    setTwoFACode("");
   }
 
   return (
@@ -137,10 +132,9 @@ localStorage.setItem("user", JSON.stringify(updatedUser));
       {status && <p className="text-green-600 mb-3">{status}</p>}
 
       <section className="space-y-6">
-
-        {/* ===================================================
-              PASSWORD SECTION
-        =================================================== */}
+        {/* =========================
+            PASSWORD BLOCK
+        ========================== */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Password</h2>
 
@@ -167,21 +161,20 @@ localStorage.setItem("user", JSON.stringify(updatedUser));
           </form>
         </div>
 
-        {/* ===================================================
-              TWO FACTOR AUTHENTICATION (2FA)
-        =================================================== */}
+        {/* =========================
+            TWO FACTOR AUTH (2FA)
+        ========================== */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Two-Factor Authentication</h2>
 
           {twoFAStatus && (
-            <p className="text-green-600 text-sm">{twoFAStatus}</p>
+            <p className="text-green-600 text-sm mb-2">{twoFAStatus}</p>
           )}
 
-          {/* 🔥 IF ENABLED */}
           {user?.twoFactorEnabled ? (
             <>
               <p className="text-sm text-slate-600">
-                Your account is currently protected with 2FA.
+                2FA is currently <strong>enabled</strong> on your account.
               </p>
 
               <button
@@ -193,9 +186,8 @@ localStorage.setItem("user", JSON.stringify(updatedUser));
             </>
           ) : (
             <>
-              {/* 🔥 IF DISABLED */}
               <p className="text-sm text-slate-600">
-                Enable 2FA to require a verification code at login.
+                Enable 2FA to require a login code sent to your email.
               </p>
 
               {twoFAStep === "idle" && (
@@ -207,7 +199,6 @@ localStorage.setItem("user", JSON.stringify(updatedUser));
                 </button>
               )}
 
-              {/* 🔥 ENTER CODE */}
               {twoFAStep === "code" && (
                 <form className="space-y-3" onSubmit={confirm2FA}>
                   <input
