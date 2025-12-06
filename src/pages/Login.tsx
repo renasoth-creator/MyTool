@@ -68,6 +68,12 @@ export default function Login() {
             onChange={(e) => update("password", e.target.value)}
             className="w-full border rounded-lg px-3 py-2"
           />
+          <p className="text-right text-sm">
+  <a href="/forgot-password" className="text-[#ff7a1a] hover:underline">
+    Forgot password?
+  </a>
+</p>
+
 
           <button className="btn-primary w-full">Login</button>
 
