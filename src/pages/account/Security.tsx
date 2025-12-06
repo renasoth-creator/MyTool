@@ -8,7 +8,6 @@ import type { User } from "../../context/AuthContext";
 export default function Security() {
   const { user, token, setUser, setToken } = useAuth();
 
-
   // PASSWORD STATES
   const [currentPw, setCurrentPw] = useState("");
   const [newPw, setNewPw] = useState("");
@@ -18,15 +17,15 @@ export default function Security() {
   const [twoFAStep, setTwoFAStep] = useState<"idle" | "code">("idle");
   const [twoFACode, setTwoFACode] = useState("");
 
-  // STATUS
-  const [status, setStatus] = useState("");
-
   // SESSION STATES
   const [sessions, setSessions] = useState<any[]>([]);
   const [sessionStatus, setSessionStatus] = useState("");
 
+  // GLOBAL STATUS MESSAGE
+  const [status, setStatus] = useState("");
+
   /* -----------------------------------------
-      LOAD SESSIONS
+      LOAD SESSIONS ON MOUNT
   ------------------------------------------ */
   useEffect(() => {
     loadSessions();
@@ -54,61 +53,56 @@ export default function Security() {
   }
 
   /* -----------------------------------------
-      REVOKE ONE SESSION
+      REVOKE A SINGLE SESSION
   ------------------------------------------ */
   async function revokeSession(sessionToken: string) {
-  await fetch(`${BACKEND_URL}/auth/sessions/revoke`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify({ sessionToken }),
-  });
-
-  // If revoking the current session → logout immediately
-  if (sessionToken === token) {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("user");
-    window.location.href = "/login";
-    return;
-  }
-
-  // Otherwise refresh list
-  loadSessions();
-}
-
-
-  /* -----------------------------------------
-      REVOKE ALL SESSIONS EXCEPT CURRENT
-  ------------------------------------------ */
-  async function revokeAll() {
-  try {
-    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
+    await fetch(`${BACKEND_URL}/auth/sessions/revoke`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
+      body: JSON.stringify({ sessionToken }),
     });
-  } catch (err) {
-    console.warn("Failed to revoke sessions, but forcing logout:", err);
+
+    // If the session being revoked is the current user session → logout user
+    if (sessionToken === token) {
+      setToken(null);
+      setUser(null);
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+      return;
+    }
+
+    // Otherwise refresh list
+    loadSessions();
   }
 
-  // 🚀 ALWAYS LOG OUT USER COMPLETELY
-  setUser(null);
-  setToken(null);
-  localStorage.removeItem("jwt");
-  localStorage.removeItem("user");
+  /* -----------------------------------------
+      REVOKE ALL SESSIONS (INCLUDING CURRENT)
+      → FULL LOGOUT
+  ------------------------------------------ */
+  async function revokeAll() {
+    try {
+      await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      });
+    } catch (err) {
+      console.warn("Failed to revoke sessions, forcing logout:", err);
+    }
 
-  // Redirect to login page
-  window.location.href = "/login";
-}
-
-
-
+    // Full logout
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  }
 
   /* -----------------------------------------
       UPDATE PASSWORD
@@ -174,6 +168,7 @@ export default function Security() {
     if (!res.ok) return setTwoFAStatus(data.error);
 
     const updatedUser: User = { ...(user as User), twoFactorEnabled: true };
+
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));
 
@@ -208,6 +203,7 @@ export default function Security() {
       {status && <p className="text-green-600 mb-3">{status}</p>}
 
       <section className="space-y-6">
+
         {/* PASSWORD */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Password</h2>
@@ -235,9 +231,7 @@ export default function Security() {
           </form>
         </div>
 
-        {/* ======================
-            TWO-FACTOR AUTH
-        ======================= */}
+        {/* TWO-FACTOR AUTH */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Two-Factor Authentication</h2>
 
@@ -248,7 +242,6 @@ export default function Security() {
           {user?.twoFactorEnabled ? (
             <>
               <p className="text-sm text-slate-600">2FA is enabled.</p>
-
               <button
                 onClick={disable2FA}
                 className="px-4 py-2 bg-red-500 text-white rounded-lg"
@@ -291,9 +284,7 @@ export default function Security() {
           )}
         </div>
 
-        {/* ======================
-            ACTIVE SESSIONS
-        ======================= */}
+        {/* ACTIVE SESSIONS */}
         <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
           <h2 className="text-lg font-bold">Active Sessions</h2>
 
@@ -316,6 +307,7 @@ export default function Security() {
                 <p className="text-xs text-slate-400">
                   Last Active: {new Date(s.lastActive).toLocaleString()}
                 </p>
+
                 {s.isCurrent && (
                   <p className="text-xs text-green-600 font-semibold">
                     This Device
@@ -339,10 +331,11 @@ export default function Security() {
               onClick={revokeAll}
               className="bg-red-500 w-full text-white py-2 rounded-lg mt-3"
             >
-              Logout All Other Sessions
+              Logout All Sessions
             </button>
           )}
         </div>
+
       </section>
     </AccountLayout>
   );
