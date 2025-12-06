@@ -1,26 +1,35 @@
 import { useState } from "react";
+import Layout from "../components/Layout";
 import { BACKEND_URL } from "../config/backend";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("");
 
-  async function submit(e: any) {
+  async function sendResetCode(e: any) {
     e.preventDefault();
-    await fetch(`${BACKEND_URL}/auth/forgot-password`, {
+    setStatus("");
+
+    const res = await fetch(`${BACKEND_URL}/auth/forgot-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     });
-    setSent(true);
+
+    const data = await res.json();
+    if (!res.ok) return setStatus(data.error);
+
+    localStorage.setItem("reset_email", email);
+    setStatus("Reset code sent! Check your email.");
+    window.location.href = "/reset-password";
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-20 p-6 border rounded-xl">
-      <h1 className="text-xl font-bold mb-3">Reset Password</h1>
+    <Layout>
+      <div className="max-w-md mx-auto py-12">
+        <h1 className="text-3xl font-bold mb-6">Forgot Password</h1>
 
-      {!sent ? (
-        <form className="space-y-3" onSubmit={submit}>
+        <form onSubmit={sendResetCode} className="border p-6 rounded-lg space-y-4">
           <input
             type="email"
             className="w-full border px-3 py-2 rounded"
@@ -28,13 +37,12 @@ export default function ForgotPassword() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button className="btn-primary w-full">Send Code</button>
+
+          <button className="btn-primary w-full">Send Reset Code</button>
+
+          {status && <p className="text-center text-green-600">{status}</p>}
         </form>
-      ) : (
-        <p className="text-green-600">
-          If that email exists, a reset code has been sent.
-        </p>
-      )}
-    </div>
+      </div>
+    </Layout>
   );
 }
