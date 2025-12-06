@@ -61,6 +61,14 @@ const App: React.FC = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
 
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/cookies" element={<CookiesPage />} />
+      <Route path="/faq" element={<FaqPage />} />
+      <Route path="/blog" element={<BlogPage />} />
+      <Route path="/contact" element={<Contact />} />
+
+
       {/* DEFAULT ROUTE */}
       <Route path="*" element={<DashboardPage />} />
     </Routes>
