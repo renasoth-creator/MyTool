@@ -73,24 +73,28 @@ export default function Security() {
       REVOKE ALL SESSIONS EXCEPT CURRENT
   ------------------------------------------ */
   async function revokeAll() {
-  const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
-    method: "POST",
-    headers: { Authorization: "Bearer " + token }
-  });
-
-  if (res.ok) {
-     // Clear context
-    setUser(null);
-    setToken(null);
-
-    // 🔥 Clear local login because session is no longer valid
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("user");
-
-    // Redirect user to login
-    window.location.href = "/login";
+  try {
+    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+  } catch (err) {
+    console.warn("Failed to revoke sessions, but forcing logout:", err);
   }
+
+  // 🚀 ALWAYS LOG OUT USER COMPLETELY
+  setUser(null);
+  setToken(null);
+  localStorage.removeItem("jwt");
+  localStorage.removeItem("user");
+
+  // Redirect to login page
+  window.location.href = "/login";
 }
+
 
 
 
