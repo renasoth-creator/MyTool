@@ -1,7 +1,7 @@
 ﻿import React, { createContext, useContext, useEffect, useState } from "react";
 import { BACKEND_URL } from "../config/backend";
 
-interface User {
+export interface User {
   id: string;
   email: string;
   name?: string;
