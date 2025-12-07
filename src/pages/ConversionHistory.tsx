@@ -4,7 +4,7 @@ import { BACKEND_URL } from "../config/backend";
 import { useAuth } from "../context/AuthContext";
 
 export default function ConversionHistory() {
-  const { token } = useAuth();
+  const { jwt } = useAuth();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
