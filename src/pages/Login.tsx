@@ -80,15 +80,7 @@ export default function Login() {
             </a>
           </p>
 
-          {/* ➤ Reset Password */}
-          <p className="text-center text-sm mt-2">
-            <a
-              href="/reset-password"
-              className="text-[#ff7a1a] hover:underline font-medium"
-            >
-              Reset with reset code
-            </a>
-          </p>
+          
 
           {/* Sign Up Link */}
           <p className="text-xs text-center text-slate-600 mt-4">
