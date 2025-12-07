@@ -1,8 +1,10 @@
 ﻿import { useState } from "react";
-import Layout from "../components/Layout";
 import { BACKEND_URL } from "../config/backend";
+import Layout from "../components/Layout";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+  const { } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -22,21 +24,18 @@ export default function Login() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
 
-      // 🔥 2FA REQUIRED → redirect to verify page
       if (data.requires2FA) {
-        localStorage.setItem("2fa_email", form.email); // backup
-        window.location.href = `/verify-2fa?email=${encodeURIComponent(form.email)}`;
+        localStorage.setItem("2fa_email", form.email);
+        window.location.href = "/verify-2fa?email=" + form.email;
         return;
       }
 
-      // 🔥 Normal login
+      if (!res.ok) throw new Error(data.error);
+
       localStorage.setItem("jwt", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-
       window.location.href = "/dashboard";
-
     } catch (err: any) {
       setError(err.message);
     }
@@ -71,7 +70,28 @@ export default function Login() {
 
           {error && <p className="text-red-600 text-center">{error}</p>}
 
-          <p className="text-xs text-center text-slate-600">
+          {/* ➤ Forgot Password */}
+          <p className="text-center text-sm mt-4">
+            <a
+              href="/forgot-password"
+              className="text-[#ff7a1a] hover:underline font-medium"
+            >
+              Forgot your password?
+            </a>
+          </p>
+
+          {/* ➤ Reset Password */}
+          <p className="text-center text-sm mt-2">
+            <a
+              href="/reset-password"
+              className="text-[#ff7a1a] hover:underline font-medium"
+            >
+              Reset with reset code
+            </a>
+          </p>
+
+          {/* Sign Up Link */}
+          <p className="text-xs text-center text-slate-600 mt-4">
             No account?{" "}
             <a href="/signup" className="text-[#ff7a1a] font-medium">
               Create one
