@@ -25,7 +25,7 @@ import ResetPassword from "./pages/ResetPassword";
  import FaqPage from "./pages/FaqPage";
  import BlogPage from "./pages/BlogPage";
  import Contact from "./pages/Contact";
- import ConversionHistory from "./pages/ConversionHistory";
+ //import ConversionHistory from "./pages/ConversionHistory";
 
 
 const App: React.FC = () => {
