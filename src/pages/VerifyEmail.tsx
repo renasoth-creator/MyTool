@@ -7,19 +7,20 @@ export default function VerifyEmail() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Prefer URL email → fallback to saved email
   const emailParam =
     new URLSearchParams(location.search).get("email") ||
     localStorage.getItem("verify_email") ||
     "";
 
-  const [code, setCode] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [resending, setResending] = useState<boolean>(false);
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
 
   /* -------------------------------
-      SUBMIT VERIFICATION CODE
+      VERIFY EMAIL CODE
   --------------------------------*/
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -49,7 +50,7 @@ export default function VerifyEmail() {
   --------------------------------*/
   async function resendCode() {
     if (!emailParam) {
-      setError("Email address missing.");
+      setError("Missing email address.");
       return;
     }
 
@@ -67,11 +68,11 @@ export default function VerifyEmail() {
     setResending(false);
 
     if (!res.ok) {
-      setError(data.error || "Failed to resend code");
+      setError(data.error || "Unable to resend verification code.");
       return;
     }
 
-    setMessage("A new verification code has been sent.");
+    setMessage("New verification code sent! Check your email.");
   }
 
   return (
@@ -80,14 +81,15 @@ export default function VerifyEmail() {
         <h1 className="text-3xl font-bold mb-4 text-center">Verify Your Email</h1>
 
         <p className="text-sm text-slate-600 mb-6 text-center">
-          Please enter the 7-digit code sent to: <br />
+          Enter the 7-digit code sent to:
+          <br />
           <b className="text-slate-900">{emailParam}</b>
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             maxLength={7}
-            className="w-full text-center text-2xl tracking-widest border rounded-xl py-3 bg-white"
+            className="w-full text-center text-2xl tracking-[0.4em] border rounded-xl py-3 bg-white"
             placeholder="1234567"
             value={code}
             onChange={(e) => setCode(e.target.value)}
@@ -101,14 +103,14 @@ export default function VerifyEmail() {
             {loading ? "Verifying..." : "Verify Email"}
           </button>
 
-          <div className="text-center mt-4">
+          <div className="text-center mt-3">
             <p className="text-sm">
               Didn’t receive a code?{" "}
               <button
                 type="button"
                 onClick={resendCode}
                 disabled={resending}
-                className="text-[#ff7a1a] font-medium hover:underline disabled:opacity-40"
+                className="text-[#ff7a1a] font-medium hover:underline disabled:opacity-50"
               >
                 {resending ? "Sending..." : "Resend"}
               </button>
