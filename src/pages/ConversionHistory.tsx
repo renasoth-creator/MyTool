@@ -9,7 +9,7 @@ export default function ConversionHistory() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) return;
+    if (!jwt) return;
 
     fetch(`${BACKEND_URL}/auth/history/all`, {
       headers: { Authorization: "Bearer " + jwt }
