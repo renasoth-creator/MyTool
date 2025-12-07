@@ -84,25 +84,36 @@ export default function Security() {
       → FULL LOGOUT
   ------------------------------------------ */
   async function revokeAll() {
-    try {
-      await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      });
-    } catch (err) {
-      console.warn("Failed to revoke sessions, forcing logout:", err);
+  try {
+    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+    });
+
+    const data = await res.json();
+
+    // Server explicitly says to logout
+    if (data.forceLogout) {
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+      return;
     }
 
-    // Full logout
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("user");
-    window.location.href = "/login";
+  } catch (err) {
+    console.warn("Revoke all error", err);
   }
+
+  // Fallback safety logout
+  setUser(null);
+  setToken(null);
+  localStorage.removeItem("jwt");
+  localStorage.removeItem("user");
+  window.location.href = "/login";
+}
+
 
   /* -----------------------------------------
       UPDATE PASSWORD
