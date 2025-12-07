@@ -5,95 +5,84 @@ import { useAuth } from "../context/AuthContext";
 
 export default function ConversionHistory() {
   const { token } = useAuth();
-  const [history, setHistory] = useState<any[]>([]);
+  const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!token) return;
 
-    fetch(`${BACKEND_URL}/history`, {
+    fetch(`${BACKEND_URL}/auth/history`, {
       headers: { Authorization: "Bearer " + token }
     })
-      .then(res => res.json())
-      .then(data => {
-        setHistory(data || []);
+      .then((res) => res.json())
+      .then((data) => {
+        setItems(data.history || []);
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      });
   }, [token]);
 
-  function isExpired(createdAt: string) {
-    const created = new Date(createdAt).getTime();
-    const now = Date.now();
-    return now - created > 24 * 60 * 60 * 1000; // 24 hours
+  if (!token) {
+    return (
+      <Layout>
+        <div className="text-center py-20 text-lg">
+          Please log in to view your conversion history.
+        </div>
+      </Layout>
+    );
   }
 
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Conversion History</h1>
 
-        <h1 className="text-3xl font-bold mb-6">Conversion History</h1>
+      <p className="text-slate-600 mb-6">
+        Converted files are stored for <strong>24 hours</strong> and then deleted automatically.
+        Expired items become unavailable for download.
+      </p>
 
-        <p className="text-slate-600 mb-6 text-sm">
-          All files are <b>automatically deleted after 24 hours</b>.  
-          Expired records are disabled.
-        </p>
+      {loading ? (
+        <p>Loading…</p>
+      ) : items.length === 0 ? (
+        <p className="text-slate-500">No conversions yet.</p>
+      ) : (
+        <div className="space-y-4">
+          {items.map((item) => {
+            const createdAt = new Date(item.createdAt);
+            const ageHours = (Date.now() - createdAt.getTime()) / 36e5;
+            const expired = ageHours > 24;
 
-        {loading ? (
-          <p>Loading…</p>
-        ) : history.length === 0 ? (
-          <p className="text-slate-500">You have no conversions yet.</p>
-        ) : (
-          <div className="space-y-4">
-
-            {history.map((item) => {
-              const expired = isExpired(item.createdAt);
-
-              return (
-                <div
-                  key={item.id}
-                  className={`
-                    p-4 rounded-xl border shadow-sm flex justify-between items-center
-                    ${expired ? "bg-slate-100 opacity-60 cursor-not-allowed" : "bg-white"}
-                  `}
-                >
-
-                  <div>
-                    <p className="font-semibold">{item.fileName}</p>
-                    <p className="text-xs text-slate-500">
-                      Converted: {new Date(item.createdAt).toLocaleString()}
-                    </p>
-
-                    {expired && (
-                      <p className="text-xs text-red-500 font-semibold mt-1">
-                        Expired — File removed
-                      </p>
-                    )}
-                  </div>
-
-                  {!expired ? (
-                    <a
-                      href={item.downloadUrl}
-                      target="_blank"
-                      className="px-4 py-2 bg-[#ff7a1a] text-white rounded-lg text-sm hover:bg-[#e66d10]"
-                    >
-                      Download
-                    </a>
-                  ) : (
-                    <button
-                      disabled
-                      className="px-4 py-2 bg-slate-300 text-white rounded-lg text-sm cursor-not-allowed"
-                    >
-                      Download
-                    </button>
-                  )}
+            return (
+              <div
+                key={item._id}
+                className={`border p-4 rounded-xl flex justify-between items-center ${
+                  expired ? "opacity-40" : ""
+                }`}
+              >
+                <div>
+                  <p className="font-semibold">{item.fileName}</p>
+                  <p className="text-xs text-slate-600">
+                    Created: {createdAt.toLocaleString()}
+                  </p>
                 </div>
-              );
-            })}
 
-          </div>
-        )}
-      </div>
+                {expired ? (
+                  <span className="text-red-500 text-sm font-semibold">
+                    Expired
+                  </span>
+                ) : (
+                  <a
+                    href={item.downloadUrl}
+                    className="bg-[#ff7a1a] text-white px-4 py-2 rounded-lg text-sm"
+                    download
+                  >
+                    Download
+                  </a>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </Layout>
   );
 }
