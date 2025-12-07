@@ -11,8 +11,8 @@ export default function ConversionHistory() {
   useEffect(() => {
     if (!token) return;
 
-    fetch(`${BACKEND_URL}/auth/history`, {
-      headers: { Authorization: "Bearer " + token }
+    fetch(`${BACKEND_URL}/auth/history/all`, {
+      headers: { Authorization: "Bearer " + jwt }
     })
       .then((res) => res.json())
       .then((data) => {
