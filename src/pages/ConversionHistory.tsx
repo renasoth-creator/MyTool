@@ -4,15 +4,15 @@ import { BACKEND_URL } from "../config/backend";
 import { useAuth } from "../context/AuthContext";
 
 export default function ConversionHistory() {
-  const { jwt } = useAuth();
+  const { token } = useAuth();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!jwt) return;
+    if (!token) return;
 
     fetch(`${BACKEND_URL}/auth/history/all`, {
-      headers: { Authorization: "Bearer " + jwt }
+      headers: { Authorization: "Bearer " + token }
     })
       .then((res) => res.json())
       .then((data) => {
