@@ -33,12 +33,14 @@ export default function Sessions() {
     loadSessions();
   }
 
-  async function revokeAll() {
+  async function revokeAll(sessionToken: string) {
     await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
       method: "POST",
       headers: {
+          "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
+      ody: JSON.stringify({ sessionToken }),
     });
     loadSessions();
   }
