@@ -51,7 +51,7 @@ const App: React.FC = () => {
 
       {/* DASHBOARD */}
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/history" element={<ConversionHistory />} />
+      {/*<Route path="/history" element={<ConversionHistory />} />*/}
 
 
       {/* ACCOUNT SETTINGS */}

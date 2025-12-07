@@ -1,30 +1,40 @@
 ﻿import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { BACKEND_URL } from "../config/backend";
-import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
+  <Link
+  to="/history"
+  className="px-4 py-2 bg-[#ff7a1a] text-white rounded-lg inline-block"
+>
+  View Conversion History
+</Link>
+
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
+   const jwt = localStorage.getItem("jwt");
 
-    if (!jwt) {
-      window.location.href = "/login";
-      return;
-    }
+   if (!jwt) {
+    window.location.href = "/login";
+    return;
+  }
 
-    fetch(`${BACKEND_URL}/auth/me`, {
-      headers: { Authorization: "Bearer " + jwt },
+  fetch(`${BACKEND_URL}/auth/me`, {
+    headers: { Authorization: "Bearer " + jwt },
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      if (data.error) {
+        window.location.href = "/login";
+      } else {
+        setUser(data);
+      }
     })
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.error) window.location.href = "/login";
-        else setUser(data);
-      })
-      .catch(() => (window.location.href = "/login"));
-  }, []);
+    .catch(() => (window.location.href = "/login"));
+}, []);
 
+ 
   if (!user)
     return (
       <Layout>
@@ -39,18 +49,12 @@ export default function Dashboard() {
           Welcome, {user.name || user.email}
         </h1>
 
-        <Link
-          to="/history"
-          className="px-4 py-2 bg-[#ff7a1a] text-white rounded-lg inline-block mb-8"
-        >
-          View Conversion History
-        </Link>
-
         <div className="grid md:grid-cols-2 gap-6">
+          
           <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow">
             <h2 className="font-semibold text-lg mb-2">Your Conversions</h2>
             <p className="text-sm text-slate-600">
-              All converted files are available in History.
+              (Later we will store history here)
             </p>
           </div>
 
@@ -61,6 +65,7 @@ export default function Dashboard() {
             </p>
             <button className="btn-primary w-full">Donate</button>
           </div>
+
         </div>
       </div>
     </Layout>
