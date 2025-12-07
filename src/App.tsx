@@ -25,6 +25,8 @@ import ResetPassword from "./pages/ResetPassword";
  import FaqPage from "./pages/FaqPage";
  import BlogPage from "./pages/BlogPage";
  import Contact from "./pages/Contact";
+ import ConversionHistory from "./pages/ConversionHistory";
+
 
 const App: React.FC = () => {
   return (
@@ -49,6 +51,8 @@ const App: React.FC = () => {
 
       {/* DASHBOARD */}
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/history" element={<ConversionHistory />} />
+
 
       {/* ACCOUNT SETTINGS */}
       {/* IMPORTANT: must match /account/* */}
