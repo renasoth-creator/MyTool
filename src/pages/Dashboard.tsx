@@ -4,12 +4,6 @@ import { BACKEND_URL } from "../config/backend";
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
-  <Link
-  to="/history"
-  className="px-4 py-2 bg-[#ff7a1a] text-white rounded-lg inline-block"
->
-  View Conversion History
-</Link>
 
 
   useEffect(() => {
