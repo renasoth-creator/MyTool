@@ -49,25 +49,25 @@
     justify-content: center;
 }
 
-/* --- CLIP PATHS — CUT THE LOGO INTO 4 REAL PARTS --- */
+/* --- CLIP PATHS â€“ CUT THE LOGO INTO 4 REAL PARTS --- */
 .piece-tl {
     clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%);
-    animation: pieceTL 3s ease-in-out infinite;
+    animation: pieceTL 3s ease-in-out 1 forwards;
 }
 
 .piece-tr {
     clip-path: polygon(50% 0, 100% 0, 100% 50%, 50% 50%);
-    animation: pieceTR 3s ease-in-out infinite;
+    animation: pieceTR 3s ease-in-out 1 forwards;
 }
 
 .piece-bl {
     clip-path: polygon(0 50%, 50% 50%, 50% 100%, 0 100%);
-    animation: pieceBL 3s ease-in-out infinite;
+    animation: pieceBL 3s ease-in-out 1 forwards;
 }
 
 .piece-br {
     clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);
-    animation: pieceBR 3s ease-in-out infinite;
+    animation: pieceBR 3s ease-in-out 1 forwards;
 }
 
 /* --- ANIMATIONS --- */
@@ -193,3 +193,4 @@
 .btn-primary {
     @apply bg-gradient-to-r from-[#ff7a1a] to-[#e66d10] text-white font-semibold px-5 py-3 rounded-xl shadow hover:opacity-90 transition;
 }
+

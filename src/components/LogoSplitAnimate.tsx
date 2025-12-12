@@ -1,8 +1,16 @@
 // src/components/LogoSplitAnimate.tsx
+import { useEffect, useState } from "react";
 
 export default function LogoSplitAnimate() {
+  const [animationKey, setAnimationKey] = useState(0);
+
+  useEffect(() => {
+    // Trigger animation on component mount (page load/refresh)
+    setAnimationKey(prev => prev + 1);
+  }, []);
+
   return (
-    <div className="relative h-10 w-10">
+    <div key={animationKey} className="relative h-10 w-10">
       {/* Each piece contains part of the logo but starts overlapped so the logo looks whole */}
 
       {/* TOP LEFT */}

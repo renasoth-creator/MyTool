@@ -15,14 +15,14 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white/80 backdrop-blur border-b border-slate-200 shadow-sm sticky top-0 z-50">
+    <header className="w-full bg-white/90 backdrop-blur-lg border-b border-orange-100 shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
 
         {/* LEFT — LOGO */}
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <LogoSplitAnimate />
-          <span className="text-lg font-semibold text-slate-900">
-            PDFConvert.tech
+          <span className="text-lg font-bold text-slate-900 hidden sm:inline">
+            PDFConvert<span className="text-orange-500">.tech</span>
           </span>
         </Link>
 
@@ -77,7 +77,7 @@ export default function Header() {
 
               <Link
                 to="/signup"
-                className="px-5 py-2 rounded-full bg-[#ff7a1a] text-white font-semibold hover:bg-[#e66d10] shadow"
+                className="px-5 py-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-orange-500/50 transition-all duration-300 hover:-translate-y-0.5"
               >
                 Sign Up
               </Link>

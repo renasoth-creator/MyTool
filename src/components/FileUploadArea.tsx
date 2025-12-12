@@ -304,11 +304,11 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   const hasResult = links.length > 0 || extractedText;
 
   return (
-    <div className="space-y-4">
-      {/* Upload box */}
+    <div className="space-y-6">
+      {/* Upload box - matching home page design */}
       <div
         onClick={handleClick}
-        className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-white px-6 py-10 text-center hover:border-sky-300 hover:bg-sky-50"
+        className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50 px-8 py-16 text-center transition-all duration-300 hover:border-orange-400 hover:from-orange-100 hover:to-amber-100 hover:shadow-lg"
       >
         <input
           ref={inputRef}
@@ -318,13 +318,14 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
           className="hidden"
           onChange={handleChange}
         />
-        <div className="h-14 w-14 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 text-white flex items-center justify-center text-2xl">
-          ⬆️
+        <div className="h-16 w-16 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 text-white flex items-center justify-center text-3xl shadow-lg mb-4">
+          📤
         </div>
-        <p className="mt-2 text-sm font-semibold text-slate-800">
+        <p className="text-lg font-semibold text-slate-800">
           Click to upload or drag & drop
         </p>
-        {accept && <p className="text-xs text-slate-500 mt-1">Supported: {accept}</p>}
+        <p className="text-sm text-slate-600 mt-2">Your file will be processed instantly</p>
+        {accept && <p className="text-xs text-slate-500 mt-3 bg-white bg-opacity-60 px-3 py-1 rounded-full">Supported: {accept}</p>}
       </div>
 
       {/* Tool inputs */}
@@ -358,11 +359,15 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
 
       {/* Selected files */}
       {files && (
-        <div className="border rounded-xl p-3 text-xs bg-white">
-          <p className="font-semibold mb-1">Selected files:</p>
+        <div className="border border-orange-200 rounded-2xl p-4 bg-gradient-to-br from-orange-50 to-transparent">
+          <p className="font-semibold mb-3 text-slate-800 flex items-center">
+            <span className="inline-block w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
+            Selected files:
+          </p>
           {files.map((f) => (
-            <div key={f.name}>
-              {f.name} ({(f.size / 1024 / 1024).toFixed(2)} MB)
+            <div key={f.name} className="text-sm text-slate-700 ml-4 mb-2 flex items-center">
+              <span className="text-orange-500 mr-2">📄</span>
+              {f.name} • {(f.size / 1024 / 1024).toFixed(2)} MB
             </div>
           ))}
         </div>
@@ -371,45 +376,92 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       {/* Start button */}
       {files && (
         <button
-          className="rounded-xl bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-2 text-sm text-white font-semibold shadow disabled:opacity-50"
+          className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
           disabled={status === "uploading" || status === "processing"}
           onClick={handleProcess}
         >
-          {status === "uploading"
-            ? "Uploading..."
-            : status === "processing"
-            ? "Processing..."
-            : "Start"}
+          {status === "uploading" ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="animate-spin">⏳</span>
+              Uploading...
+            </span>
+          ) : status === "processing" ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="animate-spin">⚙️</span>
+              Processing...
+            </span>
+          ) : (
+            "Start Processing"
+          )}
         </button>
       )}
 
       {/* Error */}
       {error && (
-        <div className="border border-red-300 bg-red-50 text-red-700 p-2 rounded-xl text-xs">
-          {error}
+        <div className="border border-red-300 bg-red-50 text-red-700 p-4 rounded-2xl text-sm font-medium flex items-start gap-2">
+          <span className="text-lg mt-0.5">⚠️</span>
+          <div>{error}</div>
         </div>
       )}
 
-      {/* Results */}
-      {hasResult && (
-        <div className="border rounded-xl bg-white p-3 text-xs">
-          <p className="font-semibold mb-2">Your result:</p>
+      {/* Processing state with animation */}
+      {status === "processing" && (
+        <div className="border-2 border-orange-200 rounded-2xl bg-gradient-to-br from-orange-50 to-transparent p-8 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="relative w-20 h-20">
+              <div className="absolute inset-0 rounded-full border-4 border-orange-200"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-orange-500 animate-spin"></div>
+              <div className="absolute inset-0 flex items-center justify-center text-2xl">⚡</div>
+            </div>
+          </div>
+          <p className="text-lg font-semibold text-slate-800">Processing your file...</p>
+          <p className="text-sm text-slate-600 mt-2">This may take a few moments</p>
+        </div>
+      )}
 
-          {links.map((l) => (
-            <a
-              key={l.url}
-              href={l.url}
-              target="_blank"
-              className="text-sky-600 underline block"
-            >
-              {l.label}
-            </a>
-          ))}
+      {/* Results - Beautiful download box */}
+      {hasResult && (
+        <div className="border-2 border-green-200 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 p-8 shadow-lg">
+          <div className="flex items-center mb-6">
+            <span className="text-3xl mr-3">✅</span>
+            <h3 className="text-2xl font-bold text-green-700">Ready to download!</h3>
+          </div>
+
+          {links.length > 0 && (
+            <div className="space-y-3">
+              {links.map((l) => (
+                <a
+                  key={l.url}
+                  href={l.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">📥</span>
+                    <span className="font-semibold text-slate-800 group-hover:text-green-600 transition-colors">
+                      {l.label}
+                    </span>
+                  </div>
+                  <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              ))}
+            </div>
+          )}
 
           {extractedText && (
-            <pre className="mt-2 max-h-80 overflow-auto bg-slate-50 p-3 rounded-xl">
-              {extractedText}
-            </pre>
+            <div className="mt-6">
+              <p className="font-semibold text-slate-800 mb-3">Extracted Text:</p>
+              <pre className="max-h-96 overflow-auto bg-white border border-green-200 p-4 rounded-xl text-sm text-slate-700 whitespace-pre-wrap break-words">
+                {extractedText}
+              </pre>
+              <button
+                onClick={() => navigator.clipboard.writeText(extractedText)}
+                className="mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors"
+              >
+                📋 Copy to Clipboard
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -427,13 +479,14 @@ const InputBox = ({
   value: string;
   onChange: (v: string) => void;
 }) => (
-  <div className="flex flex-col gap-1 text-sm">
-    <label className="text-xs font-medium text-slate-700">{label}</label>
+  <div className="flex flex-col gap-2">
+    <label className="text-sm font-semibold text-slate-800">{label}</label>
     <input
       type="text"
-      className="rounded-xl border px-3 py-2"
+      className="rounded-xl border-2 border-orange-200 px-4 py-2 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all"
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      placeholder={label}
     />
   </div>
 );

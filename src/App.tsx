@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 
 import DashboardPage from "./pages/DashboardPage";
 import ToolPage from "./pages/ToolPage";
+import AllToolsPage from "./pages/AllToolsPage";
 import { tools } from "./config/pdfToolsConfig";
 
 import Signup from "./pages/Signup";
@@ -34,7 +35,8 @@ const App: React.FC = () => {
       {/* HOMEPAGE */}
       <Route path="/" element={<DashboardPage />} />
 
-      {/* TOOL ROUTES */}
+      {/* ALL TOOLS PAGE */}
+      <Route path="/all-tools" element={<AllToolsPage />} />
       {tools.map((tool) => (
         <Route
           key={tool.id}

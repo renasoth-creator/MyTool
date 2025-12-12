@@ -1,12 +1,20 @@
 ﻿import React from "react";
 import { Link } from "react-router-dom";
 import type { ToolConfig } from "../config/pdfToolsConfig";
+import * as Icons from "lucide-react";
 
 interface ToolCardProps {
   tool: ToolConfig;
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
+  // Get the icon component from lucide-react
+  const getIcon = () => {
+    if (!tool.icon) return null;
+    const IconComponent = (Icons as unknown as Record<string, React.ComponentType<any>>)[tool.icon];
+    return IconComponent ? <IconComponent size={24} /> : null;
+  };
+
   return (
     <Link
       to={tool.route}
@@ -21,15 +29,16 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
     >
       {/* ICON BOX */}
       <div
-        className=" 
+        className="
           flex items-center justify-center
           h-12 w-12 rounded-xl
           bg-[#F9F9F9] border border-gray-200
-          text-orange-500 text-2xl font-bold
+          text-orange-500
           mb-4
+          transition-transform duration-300
         "
       >
-        {tool.icon}
+        {getIcon()}
       </div>
 
       {/* TEXT */}
@@ -42,11 +51,6 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
           {tool.description}
         </p>
       </div>
-
-      {/* CTA */}
-      <span className="text-orange-600 font-semibold text-sm">
-        Explore the product →
-      </span>
     </Link>
   );
 };

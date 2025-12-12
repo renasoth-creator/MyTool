@@ -10,25 +10,47 @@ const DashboardPage: React.FC = () => {
       <Layout>
 
       {/* ================================
-          HERO HEADER
+          HERO HEADER - Enhanced
       ================================= */}
-      <header className="text-center mb-12">
+      <header className="text-center mb-16">
+        <div className="inline-block mb-4 px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold">
+           Free PDF Tools - No Login Required
+        </div>
 
-        <h1 className="text-4x1 md:text-5xl font-extrabold text-primary-dark tracking-tight">
-          PDF Converter <span className="text-primary-orange">Tools</span> Suite
+        <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-4">
+          PDF Converter <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">Tools</span> Suite
         </h1>
 
-        <p className="mt- text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
-          Fast, secure and 100% free. No signup required. Files auto-delete after 24 hours.
+        <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+          Fast, secure, and 100% free. Convert, merge, compress, and transform your PDFs instantly. Files auto-delete after 24 hours.
         </p>
-        
 
+        {/* Trust Badges */}
+        <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm text-gray-600">
+          <div className="flex items-center gap-2">
+            <span className="text-lg">🔒</span>
+            <span>256-bit Encrypted</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-lg">⚡</span>
+            <span>Instant Processing</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-lg">✨</span>
+            <span>No Watermarks</span>
+          </div>
+        </div>
+
+        {/* CTA Button */}
+        <a href="#tools-grid" className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          Explore Tools →
+        </a>
       </header>
 
       {/* ================================
           TOOLS GRID (Orange hover cards)
       ================================= */}
-      <section className="mt-10">
+      <section className="mt-10" id="tools-grid">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-fr">
         {tools.map((tool) => (
             <ToolCard key={tool.id} tool={tool} />
@@ -39,41 +61,79 @@ const DashboardPage: React.FC = () => {
        
       </section>
 
-      
+      {/* Explore All Tools Button */}
+      <div className="mt-12 text-center">
+        <a href="/all-tools" className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          Explore All Tools →
+        </a>
+      </div>
+
+
       {/*================================
-            HOW IT WORKS (Modern Block)
+            HOW IT WORKS (Modern Professional Block)
         =================================*/}
 <section className="mt-20 w-full">
-  <div className="rounded-3xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200">
+  <div className="rounded-3xl bg-gradient-to-br from-orange-50 to-amber-50 p-12 shadow-md border border-orange-100">
 
-    <h2 className="text-3xl font-bold text-primary-dark text-center mb-10">
+    <h2 className="text-4xl font-bold text-slate-900 text-center mb-4">
       How It Works
     </h2>
+    <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+      Get your files converted in just three simple steps. Fast, secure, and hassle-free.
+    </p>
 
-    <div className="grid gap-10 md:grid-cols-3 text-center">
+    <div className="grid gap-8 md:grid-cols-3">
 
-      <div>
-        <div className="text-4xl mb-3">📄</div>
-        <h3 className="font-semibold text-primary-dark text-lg">1. Upload</h3>
-        <p className="text-sm text-gray-600 mt-1">
-          Choose a PDF, Office file, or image directly from your device.
-        </p>
+      {/* Step 1 */}
+      <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-orange-100 hover:shadow-lg transition-all duration-300">
+        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg">
+          1
+        </div>
+        <div className="pt-4">
+          <div className="text-5xl mb-4">📄</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-3">Upload Your File</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Choose a PDF, Office file, or image directly from your device. Supports all common formats.
+          </p>
+        </div>
       </div>
 
-      <div>
-        <div className="text-4xl mb-3">⚙️</div>
-        <h3 className="font-semibold text-primary-dark text-lg">2. Process</h3>
-        <p className="text-sm text-gray-600 mt-1">
-          Our server processes your file securely and quickly.
-        </p>
+      {/* Arrow */}
+      <div className="hidden md:flex items-center justify-center">
+        <div className="text-3xl text-orange-400">→</div>
       </div>
 
-      <div>
-        <div className="text-4xl mb-3">⬇️</div>
-        <h3 className="font-semibold text-primary-dark text-lg">3. Download</h3>
-        <p className="text-sm text-gray-600 mt-1">
-          Your finished file is ready instantly—no signup required.
-        </p>
+      {/* Step 2 */}
+      <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-orange-100 hover:shadow-lg transition-all duration-300">
+        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg">
+          2
+        </div>
+        <div className="pt-4">
+          <div className="text-5xl mb-4">⚡</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-3">Instant Processing</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Our secure servers process your file instantly with military-grade encryption.
+          </p>
+        </div>
+      </div>
+
+      {/* Arrow */}
+      <div className="hidden md:flex items-center justify-center">
+        <div className="text-3xl text-orange-400">→</div>
+      </div>
+
+      {/* Step 3 */}
+      <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-orange-100 hover:shadow-lg transition-all duration-300">
+        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg">
+          3
+        </div>
+        <div className="pt-4">
+          <div className="text-5xl mb-4">⬇️</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-3">Download & Done</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Your finished file is ready instantly. No signup required, no watermarks.
+          </p>
+        </div>
       </div>
 
     </div>
@@ -82,73 +142,124 @@ const DashboardPage: React.FC = () => {
 
 
       {/* ================================
-    FEATURE GRID + WHY CHOOSE US : <section className="mt-20 w-full"> this makes the the block be strench
+    FEATURES SECTION - Professional Grid
 ================================= */}
 <section className="mt-20 w-full">
-  <div className="rounded-2xl bg-[#F9F9F9] p-10 shadow-sm border border-slate-200 space-y-10">
+  <div className="space-y-8">
 
-    {/* FEATURE GRID */}
-    <div className="grid gap-10 md:grid-cols-2">
-
-      <div>
-        <h3 className="text-xl font-bold text-primary-dark">🔒 Encrypted & Secure</h3>
-        <p className="text-sm text-gray-700 mt-1">
-          All transfers use 256-bit SSL encryption. Files are never stored permanently.
-        </p>
-      </div>
-
-      <div>
-        <h3 className="text-xl font-bold text-primary-dark">⚡ Auto Deletion</h3>
-        <p className="text-sm text-gray-700 mt-1">
-          Uploaded files are automatically removed after 24 hours.
-        </p>
-      </div>
-
-      <div>
-        <h3 className="text-xl font-bold text-primary-dark">🌍 Works Everywhere</h3>
-        <p className="text-sm text-gray-700 mt-1">
-          Works on Windows, macOS, Linux, iOS, Android—no installation needed.
-        </p>
-      </div>
-
-      <div>
-        <h3 className="text-xl font-bold text-primary-dark">🧰 Powerful Tools</h3>
-        <p className="text-sm text-gray-700 mt-1">
-          Merge, split, compress, extract text, convert formats, and more.
-        </p>
-      </div>
-
-    </div>
-
-    {/* WHY CHOOSE US */}
+    {/* Features Grid */}
     <div>
-      <h2 className="text-3xl font-bold text-primary-dark mb-4">
+      <h2 className="text-4xl font-bold text-slate-900 mb-12 text-center">
         Why Choose PDFConvert.tech?
       </h2>
 
-      <p className="text-sm text-gray-700 leading-relaxed mb-6">
-        PDFConvert.tech provides fast, secure, and easy-to-use PDF tools. Convert, merge,
-        compress, extract text, and transform files instantly—no installation required.
-      </p>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 
-      <h3 className="text-xl font-semibold text-primary-dark mb-3">Most Popular Tools</h3>
+        {/* Feature 1 */}
+        <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
+          <div className="text-4xl mb-4">🔒</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-2">Encrypted & Secure</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            256-bit SSL encryption. Files never stored permanently. Your privacy is guaranteed.
+          </p>
+        </div>
 
-      <ul className="list-disc ml-6 space-y-1 text-sm text-gray-700 mb-8">
-        <li>Merge multiple PDF files</li>
-        <li>Compress PDFs while maintaining quality</li>
-        <li>Create one PDF from many images</li>
-        <li>Convert Word, Excel, PPT, or HTML to PDF</li>
-        <li>Extract text using PDF-to-Text</li>
-        <li>Password-protect your PDF</li>
-      </ul>
+        {/* Feature 2 */}
+        <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
+          <div className="text-4xl mb-4">⚡</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-2">Lightning Fast</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Instant processing with zero delays. Convert multiple files simultaneously.
+          </p>
+        </div>
 
-      <h3 className="text-xl font-semibold text-primary-dark mb-2">
-        100% Free · No Watermark · No Signup Required
-      </h3>
+        {/* Feature 3 */}
+        <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
+          <div className="text-4xl mb-4">🌍</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-2">Works Everywhere</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Windows, macOS, Linux, iOS, Android. No installation required. Browser-based.
+          </p>
+        </div>
 
-      <p className="text-sm text-gray-700 leading-relaxed">
-        Whether on mobile or desktop, enjoy fast and simple tools with complete privacy protection.
-      </p>
+        {/* Feature 4 */}
+        <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
+          <div className="text-4xl mb-4">✨</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-2">100% Free</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            No watermarks, no hidden fees. Completely free and no signup required.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    {/* Popular Tools Section */}
+    <div className="mt-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-12 text-white shadow-lg">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold mb-6">
+          Popular Tools
+        </h2>
+        <p className="text-orange-100 mb-8">
+          PDFConvert.tech provides the most comprehensive PDF tools suite. Choose from 20+ tools to transform your documents instantly.
+        </p>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="flex items-start gap-3">
+            <span className="text-xl mt-1"></span>
+            <div>
+              <h3 className="font-semibold mb-1">Merge & Split</h3>
+              <p className="text-sm text-orange-100">Combine multiple PDFs or extract specific pages</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <span className="text-xl mt-1"></span>
+            <div>
+              <h3 className="font-semibold mb-1">Convert Formats</h3>
+              <p className="text-sm text-orange-100">PDF ↔ Word, Excel, PowerPoint, HTML, Images</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <span className="text-xl mt-1"></span>
+            <div>
+              <h3 className="font-semibold mb-1">Compress & Optimize</h3>
+              <p className="text-sm text-orange-100">Reduce file size while maintaining quality</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <span className="text-xl mt-1"></span>
+            <div>
+              <h3 className="font-semibold mb-1">Extract & Text</h3>
+              <p className="text-sm text-orange-100">Extract text, images, and metadata from PDFs</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <span className="text-xl mt-1"></span>
+            <div>
+              <h3 className="font-semibold mb-1">Security</h3>
+              <p className="text-sm text-orange-100">Password protect, watermark, and remove pages</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <span className="text-xl mt-1"></span>
+            <div>
+              <h3 className="font-semibold mb-1">Advanced OCR</h3>
+              <p className="text-sm text-orange-100">Recognize text from scanned PDFs</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-orange-400 text-center">
+          <p className="text-lg font-semibold">
+            Start converting your files now  absolutely free
+          </p>
+        </div>
+      </div>
     </div>
 
   </div>
