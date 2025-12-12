@@ -14,7 +14,7 @@ export default function AccountLayout({ children }: { children: any }) {
         <nav className="space-y-2">
           <AccountLink to="/account/profile" label="Profile" />
           <AccountLink to="/account/security" label="Security" />
-          <AccountLink to="/account/email" label="Email"
+          <AccountLink to="/account/email" label="Email" />
           <AccountLink to="/account/sessions" label="Sessions" />
           <AccountLink to="/account/danger" label="Danger Zone" />
         </nav>
