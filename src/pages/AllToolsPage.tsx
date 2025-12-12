@@ -265,6 +265,7 @@ function ToolDetailModal({ toolId, onBack }: ToolDetailProps) {
           </button>
           <Link
             to={tool.route}
+            onClick={() => window.scrollTo(0, 0)}
             className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:from-orange-600 hover:to-orange-700 transition-all text-center"
           >
             Try Now →

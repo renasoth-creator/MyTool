@@ -2,6 +2,10 @@
 
 import { Link } from "react-router-dom";
 
+const handleToolClick = () => {
+  window.scrollTo(0, 0);
+};
+
 export default function Footer() {
   return (
     <footer className="bg-gradient-to-b from-slate-900 to-black text-white mt-20 pt-16 pb-8">
@@ -28,11 +32,11 @@ export default function Footer() {
             Convert to PDF
           </h3>
           <ul className="space-y-2 text-gray-300 text-sm">
-            <li><Link to="/docx-pdf" className="hover:text-orange-400 transition-colors">DOCX to PDF</Link></li>
-            <li><Link to="/xlsx-pdf" className="hover:text-orange-400 transition-colors">XLSX to PDF</Link></li>
-            <li><Link to="/pptx-pdf" className="hover:text-orange-400 transition-colors">PPTX to PDF</Link></li>
-            <li><Link to="/html-to-pdf" className="hover:text-orange-400 transition-colors">HTML to PDF</Link></li>
-            <li><Link to="/image-to-pdf" className="hover:text-orange-400 transition-colors">Image to PDF</Link></li>
+            <li><Link to="/docx-pdf" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">DOCX to PDF</Link></li>
+            <li><Link to="/xlsx-pdf" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">XLSX to PDF</Link></li>
+            <li><Link to="/pptx-pdf" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">PPTX to PDF</Link></li>
+            <li><Link to="/html-to-pdf" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">HTML to PDF</Link></li>
+            <li><Link to="/image-to-pdf" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">Image to PDF</Link></li>
           </ul>
         </div>
 
@@ -42,11 +46,11 @@ export default function Footer() {
             PDF Tools
           </h3>
           <ul className="space-y-2 text-gray-300 text-sm">
-            <li><Link to="/merge" className="hover:text-orange-400 transition-colors">Merge PDF</Link></li>
-            <li><Link to="/split" className="hover:text-orange-400 transition-colors">Split PDF</Link></li>
-            <li><Link to="/compress" className="hover:text-orange-400 transition-colors">Compress PDF</Link></li>
-            <li><Link to="/protect-pdf" className="hover:text-orange-400 transition-colors">Protect PDF</Link></li>
-            <li><Link to="/pdf-watermark" className="hover:text-orange-400 transition-colors">Add Watermark</Link></li>
+            <li><Link to="/merge" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">Merge PDF</Link></li>
+            <li><Link to="/split" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">Split PDF</Link></li>
+            <li><Link to="/compress" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">Compress PDF</Link></li>
+            <li><Link to="/protect-pdf" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">Protect PDF</Link></li>
+            <li><Link to="/pdf-watermark" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">Add Watermark</Link></li>
           </ul>
         </div>
 
@@ -56,11 +60,11 @@ export default function Footer() {
             Convert from PDF
           </h3>
           <ul className="space-y-2 text-gray-300 text-sm">
-            <li><Link to="/pdf-docx" className="hover:text-orange-400 transition-colors">PDF to DOCX</Link></li>
-            <li><Link to="/pdf-to-excel" className="hover:text-orange-400 transition-colors">PDF to Excel</Link></li>
-            <li><Link to="/pdf-to-pptx" className="hover:text-orange-400 transition-colors">PDF to PPTX</Link></li>
-            <li><Link to="/pdf-to-images" className="hover:text-orange-400 transition-colors">PDF to Images</Link></li>
-            <li><Link to="/pdf-to-text" className="hover:text-orange-400 transition-colors">PDF to Text</Link></li>
+            <li><Link to="/pdf-docx" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">PDF to DOCX</Link></li>
+            <li><Link to="/pdf-to-excel" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">PDF to Excel</Link></li>
+            <li><Link to="/pdf-to-pptx" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">PDF to PPTX</Link></li>
+            <li><Link to="/pdf-to-images" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">PDF to Images</Link></li>
+            <li><Link to="/pdf-to-text" onClick={handleToolClick} className="hover:text-orange-400 transition-colors">PDF to Text</Link></li>
           </ul>
         </div>
 

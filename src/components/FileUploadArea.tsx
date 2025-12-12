@@ -433,9 +433,10 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
                 <a
                   key={l.url}
                   href={l.url}
+                  download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group"
+                  className="flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group cursor-pointer z-10 relative"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">📥</span>
@@ -457,7 +458,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
               </pre>
               <button
                 onClick={() => navigator.clipboard.writeText(extractedText)}
-                className="mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors"
+                className="mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors z-10 relative"
               >
                 📋 Copy to Clipboard
               </button>
