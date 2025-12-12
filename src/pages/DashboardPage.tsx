@@ -28,15 +28,15 @@ const DashboardPage: React.FC = () => {
         {/* Trust Badges */}
         <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm text-gray-600">
           <div className="flex items-center gap-2">
-            <span className="text-lg">🔒</span>
+            <span className="text-lg"></span>
             <span>256-bit Encrypted</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-lg">⚡</span>
+            <span className="text-lg"></span>
             <span>Instant Processing</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-lg">✨</span>
+            <span className="text-lg"></span>
             <span>No Watermarks</span>
           </div>
         </div>
@@ -157,7 +157,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Feature 1 */}
         <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-          <div className="text-4xl mb-4">🔒</div>
+          <div className="text-4xl mb-4"></div>
           <h3 className="font-bold text-slate-900 text-lg mb-2">Encrypted & Secure</h3>
           <p className="text-gray-600 text-sm leading-relaxed">
             256-bit SSL encryption. Files never stored permanently. Your privacy is guaranteed.
@@ -166,7 +166,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Feature 2 */}
         <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-          <div className="text-4xl mb-4">⚡</div>
+          <div className="text-4xl mb-4"></div>
           <h3 className="font-bold text-slate-900 text-lg mb-2">Lightning Fast</h3>
           <p className="text-gray-600 text-sm leading-relaxed">
             Instant processing with zero delays. Convert multiple files simultaneously.
@@ -175,7 +175,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Feature 3 */}
         <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-          <div className="text-4xl mb-4">🌍</div>
+          <div className="text-4xl mb-4"></div>
           <h3 className="font-bold text-slate-900 text-lg mb-2">Works Everywhere</h3>
           <p className="text-gray-600 text-sm leading-relaxed">
             Windows, macOS, Linux, iOS, Android. No installation required. Browser-based.
@@ -184,7 +184,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Feature 4 */}
         <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-          <div className="text-4xl mb-4">✨</div>
+          <div className="text-4xl mb-4"></div>
           <h3 className="font-bold text-slate-900 text-lg mb-2">100% Free</h3>
           <p className="text-gray-600 text-sm leading-relaxed">
             No watermarks, no hidden fees. Completely free and no signup required.
