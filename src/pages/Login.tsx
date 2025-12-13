@@ -1,11 +1,47 @@
-﻿
+﻿import { useState } from "react";
+import { Link } from "react-router-dom";
+import { BACKEND_URL } from "../config/backend";
+import Layout from "../components/Layout";
+import { useAuth } from "../context/AuthContext";
+import { Helmet } from "react-helmet";
+
+export default function Login() {
+  const { } = useAuth();
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending">("idle");
+
+  function update(k: string, v: string) {
+    setForm((p) => ({ ...p, [k]: v }));
+  }
+
+  async function handleLogin(e: any) {
+    e.preventDefault();
+    setError("");
+    setStatus("sending");
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (data.requires2FA) {
+        localStorage.setItem("2fa_email", form.email);
+        window.location.href = "/verify-2fa?email=" + form.email;
+        return;
+      }
+
+      if (!res.ok) throw new Error(data.error);
 
       localStorage.setItem("jwt", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       window.location.href = "/dashboard";
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : String(err);
-      setError(message || "Login failed");
+    } catch (err: any) {
+      setError(err.message);
       setStatus("idle");
     }
   }
@@ -130,3 +166,4 @@
     </Layout>
   );
 }
+
