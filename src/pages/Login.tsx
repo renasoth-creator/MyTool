@@ -1,6 +1,6 @@
 ﻿import { useState } from "react";
 import { Link } from "react-router-dom";
-import { BACKEND_URL, apiFetch } from "../config/backend";
+import { apiFetch } from "../config/backend";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
 import { Helmet } from "react-helmet";
