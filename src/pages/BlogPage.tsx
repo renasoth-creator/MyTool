@@ -185,7 +185,7 @@ const BlogPage: React.FC = () => {
 
               {/* Meta Information */}
               <div className="flex items-center justify-between text-xs text-gray-500">
-                <span className="font-medium">{post.readTime}</span>
+
               </div>
             </div>
           </article>
