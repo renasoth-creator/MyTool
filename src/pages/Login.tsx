@@ -1,6 +1,6 @@
 ﻿import { useState } from "react";
 import { Link } from "react-router-dom";
-import { BACKEND_URL } from "../config/backend";
+import { BACKEND_URL, apiFetch } from "../config/backend";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
 import { Helmet } from "react-helmet";
@@ -21,9 +21,8 @@ export default function Login() {
     setStatus("sending");
 
     try {
-      const res = await fetch(`${BACKEND_URL}/auth/login`, {
+      const res = await apiFetch(`/auth/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
@@ -35,13 +34,14 @@ export default function Login() {
         return;
       }
 
-      if (!res.ok) throw new Error(data.error);
+      if (!res.ok) throw new Error(data.error || 'Login failed');
 
       localStorage.setItem("jwt", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       window.location.href = "/dashboard";
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message || "Login failed");
       setStatus("idle");
     }
   }
@@ -166,4 +166,3 @@ export default function Login() {
     </Layout>
   );
 }
-

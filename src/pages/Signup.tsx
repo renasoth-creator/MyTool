@@ -1,7 +1,7 @@
 ﻿import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Layout from "../components/Layout";
-import { BACKEND_URL } from "../config/backend";
+import { apiFetch } from "../config/backend";
 import { Helmet } from "react-helmet";
 
 export default function Signup() {
@@ -26,19 +26,24 @@ export default function Signup() {
     setError(null);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/auth/signup`, {
+      const res = await apiFetch(`/auth/signup`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Signup failed");
+      const message = data?.error || (res.ok ? null : "Signup failed");
+      if (!res.ok) {
+        setStatus("error");
+        setError(message);
+        return;
+      }
 
       navigate("/verify-email?email=" + encodeURIComponent(form.email));
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus("error");
-      setError(err.message || "Signup failed");
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message || "Signup failed");
     }
   }
 
@@ -219,4 +224,3 @@ export default function Signup() {
     </Layout>
   );
 }
-
