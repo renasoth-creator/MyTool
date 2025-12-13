@@ -26,7 +26,7 @@ const DashboardPage: React.FC = () => {
         </p>
 
         {/* Trust Badges */}
-        <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm text-gray-600">
+        <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
           <div className="flex items-center gap-2">
             <span className="text-lg"></span>
             <span>256-bit Encrypted</span>
@@ -40,11 +40,6 @@ const DashboardPage: React.FC = () => {
             <span>No Watermarks</span>
           </div>
         </div>
-
-        {/* CTA Button */}
-        <a href="#tools-grid" className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-          Explore Tools →
-        </a>
       </header>
 
       {/* ================================
