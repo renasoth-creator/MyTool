@@ -5,12 +5,12 @@ import { tools } from "../config/pdfToolsConfig";
 
 
 const DashboardPage: React.FC = () => {
-    
+
      return (
       <Layout>
 
       {/* ================================
-          HERO HEADER - Enhanced
+          HERO HEADER - Enhanced SEO
       ================================= */}
       <header className="text-center mb-16">
         <div className="inline-block mb-4 px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold">
@@ -25,63 +25,63 @@ const DashboardPage: React.FC = () => {
           Fast, secure, and 100% free. Convert, merge, compress, and transform your PDFs instantly. Files auto-delete after 24 hours.
         </p>
 
-        {/* Trust Badges */}
+        {/* Trust Badges - Semantic structure */}
         <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <span className="text-lg"></span>
+          <div className="flex items-center gap-2" title="256-bit SSL Encryption for secure file transfer">
+            <span className="text-lg">🔒</span>
             <span>256-bit Encrypted</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-lg"></span>
+          <div className="flex items-center gap-2" title="Lightning-fast file processing on secure servers">
+            <span className="text-lg">⚡</span>
             <span>Instant Processing</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-lg"></span>
+          <div className="flex items-center gap-2" title="Your files are never watermarked">
+            <span className="text-lg">✓</span>
             <span>No Watermarks</span>
           </div>
         </div>
       </header>
 
       {/* ================================
-          TOOLS GRID (Orange hover cards)
+          TOOLS GRID - SEO Optimized
       ================================= */}
       <section className="mt-10" id="tools-grid">
+        <h2 className="sr-only">Popular PDF Conversion Tools</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-fr">
         {tools.map((tool) => (
             <ToolCard key={tool.id} tool={tool} />
           ))}
           
          </div>
-         {/*<div id="container-e3c7de1a3d73afa16c42563899da41ee" className="my-10"></div>*/}
-       
+
       </section>
 
       {/* Explore All Tools Button */}
       <div className="mt-12 text-center">
-        <a href="/all-tools" className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+        <a href="/all-tools" className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1" title="Explore all 20+ PDF conversion tools">
           Explore All Tools →
         </a>
       </div>
 
 
       {/*================================
-            HOW IT WORKS (Modern Professional Block)
+            HOW IT WORKS - Semantic Section
         =================================*/}
-<section className="mt-20 w-full">
+<section className="mt-20 w-full" aria-labelledby="how-it-works">
   <div className="rounded-3xl bg-gradient-to-br from-orange-50 to-amber-50 p-12 shadow-md border border-orange-100">
 
-    <h2 className="text-4xl font-bold text-slate-900 text-center mb-4">
+    <h2 id="how-it-works" className="text-4xl font-bold text-slate-900 text-center mb-4">
       How It Works
     </h2>
     <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
       Get your files converted in just three simple steps. Fast, secure, and hassle-free.
     </p>
 
-    <div className="grid gap-8 md:grid-cols-3">
+    <div className="grid gap-8 md:grid-cols-3" role="region" aria-label="Three step process">
 
       {/* Step 1 */}
       <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-orange-100 hover:shadow-lg transition-all duration-300">
-        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg">
+        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg" aria-label="Step 1">
           1
         </div>
         <div className="pt-4">
@@ -94,13 +94,13 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Arrow */}
-      <div className="hidden md:flex items-center justify-center">
+      <div className="hidden md:flex items-center justify-center" aria-hidden="true">
         <div className="text-3xl text-orange-400">→</div>
       </div>
 
       {/* Step 2 */}
       <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-orange-100 hover:shadow-lg transition-all duration-300">
-        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg">
+        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg" aria-label="Step 2">
           2
         </div>
         <div className="pt-4">
@@ -113,13 +113,13 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Arrow */}
-      <div className="hidden md:flex items-center justify-center">
+      <div className="hidden md:flex items-center justify-center" aria-hidden="true">
         <div className="text-3xl text-orange-400">→</div>
       </div>
 
       {/* Step 3 */}
       <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-orange-100 hover:shadow-lg transition-all duration-300">
-        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg">
+        <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg" aria-label="Step 3">
           3
         </div>
         <div className="pt-4">
@@ -137,22 +137,22 @@ const DashboardPage: React.FC = () => {
 
 
       {/* ================================
-    FEATURES SECTION - Professional Grid
+    FEATURES SECTION - SEO Optimized
 ================================= */}
-<section className="mt-20 w-full">
+<section className="mt-20 w-full" aria-labelledby="features-heading">
   <div className="space-y-8">
 
     {/* Features Grid */}
     <div>
-      <h2 className="text-4xl font-bold text-slate-900 mb-12 text-center">
+      <h2 id="features-heading" className="text-4xl font-bold text-slate-900 mb-12 text-center">
         Why Choose PDFConvert.tech?
       </h2>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4" role="region" aria-label="Key features and benefits">
 
         {/* Feature 1 */}
         <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-          <div className="text-4xl mb-4"></div>
+          <div className="text-4xl mb-4">🔐</div>
           <h3 className="font-bold text-slate-900 text-lg mb-2">Encrypted & Secure</h3>
           <p className="text-gray-600 text-sm leading-relaxed">
             256-bit SSL encryption. Files never stored permanently. Your privacy is guaranteed.
@@ -161,7 +161,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Feature 2 */}
         <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-          <div className="text-4xl mb-4"></div>
+          <div className="text-4xl mb-4">⚡</div>
           <h3 className="font-bold text-slate-900 text-lg mb-2">Lightning Fast</h3>
           <p className="text-gray-600 text-sm leading-relaxed">
             Instant processing with zero delays. Convert multiple files simultaneously.
@@ -170,7 +170,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Feature 3 */}
         <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-          <div className="text-4xl mb-4"></div>
+          <div className="text-4xl mb-4">🌐</div>
           <h3 className="font-bold text-slate-900 text-lg mb-2">Works Everywhere</h3>
           <p className="text-gray-600 text-sm leading-relaxed">
             Windows, macOS, Linux, iOS, Android. No installation required. Browser-based.
@@ -179,7 +179,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Feature 4 */}
         <div className="bg-white rounded-2xl p-6 border border-orange-100 hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-          <div className="text-4xl mb-4"></div>
+          <div className="text-4xl mb-4">💰</div>
           <h3 className="font-bold text-slate-900 text-lg mb-2">100% Free</h3>
           <p className="text-gray-600 text-sm leading-relaxed">
             No watermarks, no hidden fees. Completely free and no signup required.
@@ -199,9 +199,9 @@ const DashboardPage: React.FC = () => {
           PDFConvert.tech provides the most comprehensive PDF tools suite. Choose from 20+ tools to transform your documents instantly.
         </p>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2" role="region" aria-label="Tool categories">
           <div className="flex items-start gap-3">
-            <span className="text-xl mt-1"></span>
+            <span className="text-xl mt-1" aria-hidden="true">✨</span>
             <div>
               <h3 className="font-semibold mb-1">Merge & Split</h3>
               <p className="text-sm text-orange-100">Combine multiple PDFs or extract specific pages</p>
@@ -209,7 +209,7 @@ const DashboardPage: React.FC = () => {
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="text-xl mt-1"></span>
+            <span className="text-xl mt-1" aria-hidden="true">🔄</span>
             <div>
               <h3 className="font-semibold mb-1">Convert Formats</h3>
               <p className="text-sm text-orange-100">PDF ↔ Word, Excel, PowerPoint, HTML, Images</p>
@@ -217,7 +217,7 @@ const DashboardPage: React.FC = () => {
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="text-xl mt-1"></span>
+            <span className="text-xl mt-1" aria-hidden="true">📦</span>
             <div>
               <h3 className="font-semibold mb-1">Compress & Optimize</h3>
               <p className="text-sm text-orange-100">Reduce file size while maintaining quality</p>
@@ -225,7 +225,7 @@ const DashboardPage: React.FC = () => {
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="text-xl mt-1"></span>
+            <span className="text-xl mt-1" aria-hidden="true">📝</span>
             <div>
               <h3 className="font-semibold mb-1">Extract & Text</h3>
               <p className="text-sm text-orange-100">Extract text, images, and metadata from PDFs</p>
@@ -233,7 +233,7 @@ const DashboardPage: React.FC = () => {
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="text-xl mt-1"></span>
+            <span className="text-xl mt-1" aria-hidden="true">🔐</span>
             <div>
               <h3 className="font-semibold mb-1">Security</h3>
               <p className="text-sm text-orange-100">Password protect, watermark, and remove pages</p>
@@ -241,7 +241,7 @@ const DashboardPage: React.FC = () => {
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="text-xl mt-1"></span>
+            <span className="text-xl mt-1" aria-hidden="true">🤖</span>
             <div>
               <h3 className="font-semibold mb-1">Advanced OCR</h3>
               <p className="text-sm text-orange-100">Recognize text from scanned PDFs</p>
@@ -251,7 +251,7 @@ const DashboardPage: React.FC = () => {
 
         <div className="mt-8 pt-8 border-t border-orange-400 text-center">
           <p className="text-lg font-semibold">
-            Start converting your files now  absolutely free
+            Start converting your files now absolutely free
           </p>
         </div>
       </div>
@@ -265,3 +265,4 @@ const DashboardPage: React.FC = () => {
 };
 
 export default DashboardPage;
+
