@@ -432,13 +432,40 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
               {links.map((l) => (
                 <button
                   key={l.url}
-                  onClick={() => {
-                    const a = document.createElement('a');
-                    a.href = l.url;
-                    a.download = '';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
+                  onClick={async () => {
+                    try {
+                      // Fetch the file with proper headers
+                      const response = await fetch(l.url, {
+                        method: 'GET',
+                        headers: {
+                          'X-API-KEY': import.meta.env.VITE_API_KEY || ''
+                        }
+                      });
+
+                      if (!response.ok) {
+                        throw new Error(`Download failed: ${response.statusText}`);
+                      }
+
+                      // Get blob and create download
+                      const blob = await response.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = l.label.replace(/\s+/g, '_').toLowerCase() || 'download';
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                      window.URL.revokeObjectURL(url);
+                    } catch (err) {
+                      console.error('Download error:', err);
+                      // Fallback: try direct download
+                      const a = document.createElement('a');
+                      a.href = l.url;
+                      a.download = '';
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                    }
                   }}
                   className="w-full flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group cursor-pointer hover:bg-green-50"
                 >
