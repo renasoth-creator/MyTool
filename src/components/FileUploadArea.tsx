@@ -262,21 +262,9 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       case "image-to-pdf": 
       case "pdf-spreadsheet":{
         const data = await smartFetch("/image/to-pdf", { files: fileKeys }, "json");
-        console.log("=== IMAGE TO PDF DEBUG ===");
-        console.log("Full response:", JSON.stringify(data, null, 2));
-        console.log("Response keys:", Object.keys(data));
-        console.log("data.pdfUrl:", data.pdfUrl);
-        console.log("data.url:", data.url);
-        console.log("data.file:", data.file);
-        console.log("data.path:", data.path);
-
-        // Try multiple possible response structures
         const downloadUrl = data.pdfUrl || data.url || data.file || data.path;
-        console.log("Final download URL:", downloadUrl);
-        console.log("========================");
-
         if (!downloadUrl) {
-          throw new Error(`No download URL returned from backend. Response: ${JSON.stringify(data)}`);
+          throw new Error(`No download URL returned from backend.`);
         }
         setLinks([{ label: "Download PDF", url: downloadUrl }]);
         break;
@@ -445,39 +433,28 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
 
           {links.length > 0 && (
             <div className="space-y-3">
-              {links.map((l) => {
-                // Debug logging
-                console.log("Rendering download link:", {
-                  label: l.label,
-                  url: l.url,
-                  isValid: !!l.url && l.url.length > 0,
-                  isS3: l.url?.includes('s3') || l.url?.includes('amazonaws'),
-                });
-
-                return (
-                  <a
-                    key={l.url}
-                    href={l.url}
-                    download
-                    className="w-full flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group cursor-pointer hover:bg-green-50"
-                    onClick={(e) => {
-                      // If URL is valid, let the default behavior handle it
-                      if (!l.url) {
-                        e.preventDefault();
-                        alert('No download URL available');
-                      }
-                    }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">📥</span>
-                      <span className="font-semibold text-slate-800 group-hover:text-green-600 transition-colors">
-                        {l.label}
-                      </span>
-                    </div>
-                    <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
-                  </a>
-                );
-              })}
+              {links.map((l) => (
+                <a
+                  key={l.url}
+                  href={l.url}
+                  download
+                  className="w-full flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group cursor-pointer hover:bg-green-50"
+                  onClick={(e) => {
+                    if (!l.url) {
+                      e.preventDefault();
+                      alert('No download URL available');
+                    }
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">📥</span>
+                    <span className="font-semibold text-slate-800 group-hover:text-green-600 transition-colors">
+                      {l.label}
+                    </span>
+                  </div>
+                  <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              ))}
             </div>
           )}
 
