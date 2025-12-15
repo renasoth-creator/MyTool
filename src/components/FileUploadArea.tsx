@@ -262,7 +262,13 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       case "image-to-pdf": 
       case "pdf-spreadsheet":{
         const data = await smartFetch("/image/to-pdf", { files: fileKeys }, "json");
-        setLinks([{ label: "Download PDF", url: data.pdfUrl }]);
+        console.log("Image to PDF response:", data);
+        const downloadUrl = data.pdfUrl || data.url;
+        console.log("URL to download:", downloadUrl);
+        if (!downloadUrl) {
+          throw new Error("No download URL returned from backend");
+        }
+        setLinks([{ label: "Download PDF", url: downloadUrl }]);
         break;
       }
 
