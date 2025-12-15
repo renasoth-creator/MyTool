@@ -1,41 +1,53 @@
+# PDFConvert.tech Robots.txt
+# Controls search engine crawler access
+
+# Allow all user agents by default
 User-agent: *
 Allow: /
-Allow: /pdf-*
-Allow: /docx-*
-Allow: /xlsx-*
-Allow: /pptx-*
-Allow: /image-*
-Allow: /html-*
-Allow: /extract-*
-Allow: /merge
-Allow: /split
-Allow: /compress
-Allow: /protect-pdf
-Allow: /all-tools
-Allow: /blog
-Allow: /faq
-Allow: /contact
-Allow: /privacy
-Allow: /terms
 
-Disallow: /admin/
-Disallow: /api/
-Disallow: /temp/
-Disallow: /.git/
-Disallow: /node_modules/
+# Disallow private/admin pages
+Disallow: /dashboard
+Disallow: /account
+Disallow: /verify-email
+Disallow: /verify-2fa
+Disallow: /reset-password
+Disallow: /forgot-password
+Disallow: /email-verified
 
-Sitemap: https://pdfconvert.tech/sitemap.xml
-
+# Allow specific search engines with faster crawl
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
-# Rate limiting for crawlers
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+# Disallow bad bots
 User-agent: MJ12bot
-Crawl-delay: 10
+Disallow: /
 
 User-agent: AhrefsBot
-Crawl-delay: 10
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://pdfconvert.tech/sitemap.xml
+
+# Request rate (optional, used by some bots)
+Request-rate: 30/1m
+
+# Comment: PDFConvert.tech - Free PDF Tools Suite
+# All public tool pages are crawlable for SEO
+# Private user pages are protected from indexing
 

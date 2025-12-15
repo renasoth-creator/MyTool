@@ -1,88 +1,226 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<!-- Main pages -->
-	<url>
-		<loc>https://pdfconvert.tech/</loc>
-		<priority>1.0</priority>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/terms</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/privacy</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/cookies</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/faq</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/blog</loc>
-	</url>
+  <!-- Homepage -->
+  <url>
+    <loc>https://pdfconvert.tech/</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
 
-	<!-- Tools -->
-	<url>
-		<loc>https://pdfconvert.tech/merge</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/split</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/compress</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/image-to-pdf</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-spreadsheet</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-to-text</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/docx-pdf</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/xlsx-pdf</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pptx-pdf</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/html-to-pdf</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/protect-pdf</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-docx</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-to-images</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/extract-images</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-to-pptx</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-to-excel</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-remove-pages</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-reorder-pages</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-watermark</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf-ocr</loc>
-	</url>
-	<url>
-		<loc>https://pdfconvert.tech/pdf/to-html</loc>
-	</url>
+  <!-- Main Pages -->
+  <url>
+    <loc>https://pdfconvert.tech/blog</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/faq</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/contact</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Tool Pages - PDF Merging & Splitting -->
+  <url>
+    <loc>https://pdfconvert.tech/merge</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/split</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Tool Pages - Compression & Optimization -->
+  <url>
+    <loc>https://pdfconvert.tech/compress</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Tool Pages - Image Conversion -->
+  <url>
+    <loc>https://pdfconvert.tech/image-to-pdf</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-to-images</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/extract-images</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Tool Pages - Text Extraction & OCR -->
+  <url>
+    <loc>https://pdfconvert.tech/pdf-to-text</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-ocr</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Tool Pages - Word Document Conversion -->
+  <url>
+    <loc>https://pdfconvert.tech/docx-pdf</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-docx</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Tool Pages - Excel Conversion -->
+  <url>
+    <loc>https://pdfconvert.tech/xlsx-pdf</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-to-excel</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-spreadsheet</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Tool Pages - PowerPoint Conversion -->
+  <url>
+    <loc>https://pdfconvert.tech/pptx-pdf</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-to-pptx</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Tool Pages - HTML Conversion -->
+  <url>
+    <loc>https://pdfconvert.tech/html-to-pdf</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf/to-html</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Tool Pages - PDF Security & Manipulation -->
+  <url>
+    <loc>https://pdfconvert.tech/protect-pdf</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-remove-pages</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-reorder-pages</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/pdf-watermark</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Policy Pages -->
+  <url>
+    <loc>https://pdfconvert.tech/terms</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/privacy</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/cookies</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Authentication Pages (Lower Priority) -->
+  <url>
+    <loc>https://pdfconvert.tech/login</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfconvert.tech/signup</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
+
