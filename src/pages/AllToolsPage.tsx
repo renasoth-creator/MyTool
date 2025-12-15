@@ -288,7 +288,7 @@ const AllToolsPage: React.FC = () => {
 
       {/* Header */}
       <div className="mb-12">
-        <Link to="/" className="text-orange-600 hover:text-orange-700 font-semibold mb-4 inline-block">
+        <Link to="/" onClick={() => window.scrollTo(0, 0)} className="text-orange-600 hover:text-orange-700 font-semibold mb-4 inline-block">
           ← Back to Home
         </Link>
         <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">

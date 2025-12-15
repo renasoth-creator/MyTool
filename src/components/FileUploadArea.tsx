@@ -323,7 +323,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
           onChange={handleChange}
         />
         <div className="h-16 w-16 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 text-white flex items-center justify-center text-3xl shadow-lg mb-4">
-          📤
+          ▲
         </div>
         <p className="text-lg font-semibold text-slate-800">
           Click to upload or drag & drop
@@ -370,7 +370,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
           </p>
           {files.map((f) => (
             <div key={f.name} className="text-sm text-slate-700 ml-4 mb-2 flex items-center">
-              <span className="text-orange-500 mr-2">📄</span>
+              <span className="text-orange-500 mr-2">■</span>
               {f.name} • {(f.size / 1024 / 1024).toFixed(2)} MB
             </div>
           ))}
@@ -447,7 +447,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
                   }}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">📥</span>
+                    <span className="text-2xl">►</span>
                     <span className="font-semibold text-slate-800 group-hover:text-green-600 transition-colors">
                       {l.label}
                     </span>
@@ -468,7 +468,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
                 onClick={() => navigator.clipboard.writeText(extractedText)}
                 className="mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors z-10 relative"
               >
-                📋 Copy to Clipboard
+                Copy to Clipboard
               </button>
             </div>
           )}

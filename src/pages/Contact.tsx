@@ -100,7 +100,7 @@ export default function Contact() {
           HERO HEADER - Enhanced
       ================================= */}
       <header className="text-center mb-12">
-        <Link to="/" className="text-orange-600 hover:text-orange-700 font-semibold mb-4 inline-block">
+        <Link to="/" onClick={() => window.scrollTo(0, 0)} className="text-orange-600 hover:text-orange-700 font-semibold mb-4 inline-block">
           ← Back to Home
         </Link>
 

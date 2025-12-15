@@ -19,7 +19,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
 
         {/* LEFT — LOGO */}
-        <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <LogoSplitAnimate />
           <span className="text-lg font-bold text-slate-900 hidden sm:inline">
             PDFConvert<span className="text-orange-500">.tech</span>
@@ -147,6 +147,7 @@ function MobileNavLink({ to, label }: { to: string; label: string }) {
   return (
     <Link
       to={to}
+      onClick={() => window.scrollTo(0, 0)}
       className="block w-full py-2 text-slate-700 font-medium hover:text-[#ff7a1a]"
     >
       {label}
@@ -162,6 +163,7 @@ function NavItem({ to, label }: { to: string; label: string }) {
     <NavLink
       to={to}
       end
+      onClick={() => window.scrollTo(0, 0)}
       className={({ isActive }) =>
         `
           px-4 py-2 rounded-xl text-sm font-medium transition-all
@@ -307,6 +309,7 @@ function ConvertDropdown() {
             <p className="text-xs text-slate-500">Need more tools?</p>
             <Link
               to="/all-tools"
+              onClick={() => window.scrollTo(0, 0)}
               className="
                 inline-flex items-center gap-2 px-4 py-2 rounded-xl
                 bg-gradient-to-r from-orange-500 via-orange-500 to-orange-600 text-white
@@ -332,6 +335,7 @@ function MegaLink({ to, label }: { to: string; label: string }) {
   return (
     <Link
       to={to}
+      onClick={() => window.scrollTo(0, 0)}
       className="
         block w-full px-3 py-2 rounded-lg text-xs font-semibold
         text-slate-700 bg-white/50

@@ -15,9 +15,15 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
     return IconComponent ? <IconComponent size={24} /> : null;
   };
 
+  // Scroll to top when clicking tool
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <Link
       to={tool.route}
+      onClick={handleClick}
       className="
         block rounded-2xl bg-[#FDFDFF]
         border border-gray-200
