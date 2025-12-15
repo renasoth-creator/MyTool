@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import { Helmet } from "react-helmet";
+import { useState } from "react";
 
 const BlogPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");

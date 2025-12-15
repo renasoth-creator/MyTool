@@ -438,7 +438,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
                   key={l.url}
                   href={l.url}
                   download
-                  className="w-full flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group cursor-pointer hover:bg-green-50"
+                  className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 border-0 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer transform hover:scale-105 active:scale-95"
                   onClick={(e) => {
                     if (!l.url) {
                       e.preventDefault();
@@ -447,12 +447,12 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
                   }}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">►</span>
-                    <span className="font-semibold text-slate-800 group-hover:text-green-600 transition-colors">
+                    <span className="text-2xl text-white">📥</span>
+                    <span className="font-bold text-white group-hover:brightness-110 transition-all">
                       {l.label}
                     </span>
                   </div>
-                  <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
+                  <span className="text-xl text-white group-hover:translate-x-2 transition-transform font-bold">→</span>
                 </a>
               ))}
             </div>
@@ -466,9 +466,9 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
               </pre>
               <button
                 onClick={() => navigator.clipboard.writeText(extractedText)}
-                className="mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors z-10 relative"
+                className="mt-3 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
               >
-                Copy to Clipboard
+                📋 Copy to Clipboard
               </button>
             </div>
           )}

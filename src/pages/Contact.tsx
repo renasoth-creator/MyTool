@@ -6,7 +6,6 @@ import { BACKEND_URL } from "../config/backend";
 import Layout from "../components/Layout";
 import Popup from "../components/Popup";
 import { Helmet } from "react-helmet";
-
 // Let TypeScript know global grecaptcha exists:
 declare const grecaptcha: any;
 
