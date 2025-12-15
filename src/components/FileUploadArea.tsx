@@ -430,13 +430,17 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
           {links.length > 0 && (
             <div className="space-y-3">
               {links.map((l) => (
-                <a
+                <button
                   key={l.url}
-                  href={l.url}
-                  download
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group cursor-pointer z-10 relative"
+                  onClick={() => {
+                    const a = document.createElement('a');
+                    a.href = l.url;
+                    a.download = true;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                  }}
+                  className="w-full flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group cursor-pointer hover:bg-green-50"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">📥</span>
@@ -445,7 +449,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
                     </span>
                   </div>
                   <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
-                </a>
+                </button>
               ))}
             </div>
           )}
