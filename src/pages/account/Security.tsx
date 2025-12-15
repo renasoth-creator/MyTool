@@ -213,7 +213,7 @@ export default function Security() {
         {/* Header Card */}
         <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8">
           <div className="flex items-start gap-4">
-            <div className="text-4xl">🔐</div>
+            <div className="text-4xl"></div>
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-slate-900">Security Settings</h1>
               <p className="text-slate-600 mt-1">Manage your password, two-factor authentication, and active sessions</p>
@@ -234,7 +234,7 @@ export default function Security() {
         {/* PASSWORD SECTION */}
         <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8 space-y-6">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-2xl">🔑</span>
+            <span className="text-2xl"></span>
             <h2 className="text-xl font-bold text-slate-900">Change Password</h2>
           </div>
 
@@ -265,7 +265,7 @@ export default function Security() {
             </div>
 
             <button className="w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
-              🔄 Update Password
+               Update Password
             </button>
           </form>
         </div>
@@ -273,14 +273,14 @@ export default function Security() {
         {/* TWO-FACTOR AUTH SECTION */}
         <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8 space-y-6">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-2xl">📱</span>
+            <span className="text-2xl"></span>
             <h2 className="text-xl font-bold text-slate-900">Two-Factor Authentication</h2>
             <span className={`ml-auto px-3 py-1 rounded-full text-sm font-semibold ${
               user?.twoFactorEnabled 
                 ? "bg-green-100 text-green-700" 
                 : "bg-yellow-100 text-yellow-700"
             }`}>
-              {user?.twoFactorEnabled ? "✓ Enabled" : "⚠ Disabled"}
+              {user?.twoFactorEnabled ? "✓ Enabled" : " Disabled"}
             </span>
           </div>
 
@@ -297,7 +297,7 @@ export default function Security() {
                 onClick={start2FA}
                 className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
               >
-                🔐 Enable Two-Factor Authentication
+                 Enable Two-Factor Authentication
               </button>
             </div>
           )}
@@ -328,7 +328,7 @@ export default function Security() {
               onClick={disable2FA}
               className="w-full px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
             >
-              ❌ Disable Two-Factor Authentication
+               Disable Two-Factor Authentication
             </button>
           )}
         </div>
@@ -336,7 +336,7 @@ export default function Security() {
         {/* SESSIONS SECTION */}
         <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8 space-y-6">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-2xl">🖥️</span>
+            <span className="text-2xl"></span>
             <h2 className="text-xl font-bold text-slate-900">Active Sessions</h2>
           </div>
 
@@ -354,7 +354,7 @@ export default function Security() {
                 <div key={session.token} className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-slate-100 transition">
                   <div>
                     <p className="font-semibold text-slate-900">
-                      {session.isCurrent ? "📍 This Device" : `🌐 ${session.ipAddress || "Unknown"}`}
+                      {session.isCurrent ? " This Device" : ` ${session.ipAddress || "Unknown"}`}
                     </p>
                     <p className="text-sm text-slate-600">Last active: {new Date(session.lastActivity).toLocaleDateString()}</p>
                   </div>
@@ -371,7 +371,7 @@ export default function Security() {
                 onClick={revokeAll}
                 className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
               >
-                🚪 Sign Out All Sessions
+                 Sign Out All Sessions
               </button>
             </div>
           )}
@@ -380,7 +380,7 @@ export default function Security() {
         {/* Security Tips */}
         <div className="bg-purple-50 border-2 border-purple-200 rounded-2xl p-6">
           <div className="flex gap-3">
-            <span className="text-2xl">💡</span>
+            <span className="text-2xl"></span>
             <div>
               <h3 className="font-bold text-purple-900">Security Tips</h3>
               <ul className="text-sm text-purple-800 mt-2 space-y-1 ml-4 list-disc">
