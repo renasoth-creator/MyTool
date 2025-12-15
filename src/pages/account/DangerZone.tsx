@@ -41,7 +41,9 @@ export default function DangerZone() {
         {/* Header Card */}
         <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8">
           <div className="flex items-start gap-4">
-            <div className="text-4xl">⚠️</div>
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+              <span className="text-2xl font-bold text-red-600">!</span>
+            </div>
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-slate-900">Danger Zone</h1>
               <p className="text-slate-600 mt-1">Irreversible account actions - proceed with caution</p>
@@ -58,7 +60,9 @@ export default function DangerZone() {
         {/* Delete Account Section */}
         <div className="bg-red-50 border-2 border-red-300 rounded-2xl shadow-md p-8 space-y-6">
           <div className="flex items-start gap-4">
-            <span className="text-4xl">🗑️</span>
+            <div className="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center">
+              <span className="text-2xl">X</span>
+            </div>
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-red-900">Delete Account Permanently</h2>
               <p className="text-red-700 mt-2">This action cannot be undone. All your data will be permanently deleted.</p>
@@ -70,12 +74,12 @@ export default function DangerZone() {
               onClick={() => setShowConfirm(true)}
               className="w-full px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
             >
-              🗑️ Delete My Account
+              Delete My Account
             </button>
           ) : (
             <form className="space-y-4" onSubmit={deleteAccount}>
               <div className="p-4 bg-red-100 border border-red-400 rounded-xl">
-                <p className="font-bold text-red-900 mb-2">⚠️ Final Confirmation</p>
+                <p className="font-bold text-red-900 mb-2">Final Confirmation</p>
                 <p className="text-sm text-red-800">
                   This will permanently delete your account and all associated data. This action cannot be reversed.
                 </p>
@@ -98,7 +102,7 @@ export default function DangerZone() {
                   type="submit"
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
                 >
-                  ✓ Yes, Delete My Account
+                  Yes, Delete My Account
                 </button>
                 <button
                   type="button"
@@ -118,7 +122,7 @@ export default function DangerZone() {
         {/* Warning Box */}
         <div className="bg-orange-50 border-2 border-orange-200 rounded-2xl p-6">
           <div className="flex gap-3">
-            <span className="text-2xl">🔔</span>
+            <div className="w-8 h-8 bg-orange-200 rounded-lg flex items-center justify-center text-orange-700 font-bold text-sm">!</div>
             <div>
               <h3 className="font-bold text-orange-900">Before You Delete</h3>
               <ul className="text-sm text-orange-800 mt-2 space-y-1 ml-4 list-disc">
@@ -134,7 +138,7 @@ export default function DangerZone() {
         {/* Alternative Actions */}
         <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6">
           <div className="flex gap-3">
-            <span className="text-2xl">💡</span>
+            <div className="w-8 h-8 bg-blue-200 rounded-lg flex items-center justify-center text-blue-700 font-bold text-sm">?</div>
             <div>
               <h3 className="font-bold text-blue-900">Other Options</h3>
               <p className="text-sm text-blue-800 mt-2">If you're having issues with your account, consider:</p>
@@ -150,3 +154,4 @@ export default function DangerZone() {
     </AccountLayout>
   );
 }
+

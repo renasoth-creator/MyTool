@@ -54,7 +54,9 @@ export default function Sessions() {
         {/* Header Card */}
         <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8">
           <div className="flex items-start gap-4">
-            <div className="text-4xl">🖥️</div>
+            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
+              <span className="text-2xl font-bold text-purple-600">D</span>
+            </div>
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-slate-900">Active Sessions</h1>
               <p className="text-slate-600 mt-1">Manage devices that are logged into your account</p>
@@ -66,7 +68,7 @@ export default function Sessions() {
         <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8">
           {loading ? (
             <div className="text-center py-12">
-              <div className="animate-spin text-3xl mb-3">⏳</div>
+              <div className="text-3xl mb-3">⏳</div>
               <p className="text-slate-600">Loading your sessions...</p>
             </div>
           ) : sessions.length === 0 ? (
@@ -83,7 +85,7 @@ export default function Sessions() {
                 >
                   <div className="flex-1">
                     <p className="font-semibold text-slate-900 flex items-center gap-2">
-                      <span>💻</span>
+                      <span className="w-6 h-6 bg-slate-300 rounded flex items-center justify-center text-xs">C</span>
                       {s.userAgent || "Unknown Device"}
                     </p>
                     <p className="text-sm text-slate-600 mt-1">IP Address: <span className="font-mono">{s.ip || "Unknown"}</span></p>
@@ -96,7 +98,7 @@ export default function Sessions() {
                     className="ml-4 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg font-medium transition whitespace-nowrap"
                     onClick={() => revokeSession(s.token)}
                   >
-                    🚪 Logout
+                    Logout
                   </button>
                 </div>
               ))}
@@ -110,14 +112,14 @@ export default function Sessions() {
             onClick={revokeAll}
             className="w-full px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
           >
-            🚪 Sign Out All Sessions
+            Sign Out All Sessions
           </button>
         )}
 
         {/* Info Box */}
         <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6">
           <div className="flex gap-3">
-            <span className="text-2xl">ℹ️</span>
+            <div className="w-8 h-8 bg-blue-200 rounded-lg flex items-center justify-center text-blue-700 font-bold text-sm">i</div>
             <div>
               <h3 className="font-bold text-blue-900">Session Management</h3>
               <ul className="text-sm text-blue-800 mt-2 space-y-1 ml-4 list-disc">

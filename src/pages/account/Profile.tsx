@@ -43,7 +43,7 @@ export default function Profile() {
     if (data.user) {
       localStorage.setItem("user", JSON.stringify(data.user));
     }
-    setStatus("✅ Profile updated successfully!");
+    setStatus("Profile updated successfully!");
     setTimeout(() => setStatus(""), 3000);
   }
 
@@ -53,7 +53,9 @@ export default function Profile() {
         {/* Header Card */}
         <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8">
           <div className="flex items-start gap-4">
-            <div className="text-4xl">👤</div>
+            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
+              <span className="text-2xl font-bold text-orange-600">P</span>
+            </div>
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-slate-900">Personal Profile</h1>
               <p className="text-slate-600 mt-1">Update your profile information and preferences</p>
@@ -64,7 +66,7 @@ export default function Profile() {
         {/* Status Message */}
         {status && (
           <div className={`p-4 rounded-xl border-2 ${
-            status.includes("✅") 
+            status.includes("successfully") 
               ? "bg-green-50 border-green-200 text-green-700" 
               : "bg-red-50 border-red-200 text-red-700"
           }`}>
@@ -77,8 +79,7 @@ export default function Profile() {
 
           {/* Email Display */}
           <div>
-            <label className="block text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
-              <span>📧</span>
+            <label className="block text-sm font-semibold text-slate-900 mb-2">
               Email Address
             </label>
             <div className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-600 font-medium">
@@ -89,8 +90,7 @@ export default function Profile() {
 
           {/* Name Input */}
           <div>
-            <label className="block text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
-              <span>👤</span>
+            <label className="block text-sm font-semibold text-slate-900 mb-2">
               Full Name
             </label>
             <input
@@ -105,8 +105,7 @@ export default function Profile() {
 
           {/* Phone Input */}
           <div>
-            <label className="block text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
-              <span>📱</span>
+            <label className="block text-sm font-semibold text-slate-900 mb-2">
               Phone Number
             </label>
             <input
@@ -124,9 +123,8 @@ export default function Profile() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-slate-400 disabled:to-slate-400 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 disabled:scale-100 flex items-center justify-center gap-2"
+              className="w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-slate-400 disabled:to-slate-400 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 disabled:scale-100"
             >
-              <span>{isLoading ? "💾" : "✓"}</span>
               {isLoading ? "Saving..." : "Save Changes"}
             </button>
           </div>
@@ -135,7 +133,7 @@ export default function Profile() {
         {/* Info Box */}
         <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6">
           <div className="flex gap-3">
-            <span className="text-2xl">ℹ️</span>
+            <div className="text-xl font-bold text-blue-600">i</div>
             <div>
               <h3 className="font-bold text-blue-900">Profile Tips</h3>
               <ul className="text-sm text-blue-800 mt-2 space-y-1 ml-4 list-disc">
@@ -150,3 +148,4 @@ export default function Profile() {
     </AccountLayout>
   );
 }
+

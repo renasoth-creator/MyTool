@@ -10,7 +10,7 @@ export default function AccountLayout({ children }: { children: any }) {
       <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-3xl">⚙️</span>
+            <span className="text-3xl font-bold">⚙</span>
             <h1 className="text-4xl font-extrabold">Account Settings</h1>
           </div>
           <p className="text-slate-300 mt-2">Manage your profile, security, and preferences</p>
@@ -25,16 +25,16 @@ export default function AccountLayout({ children }: { children: any }) {
           <aside className="lg:col-span-1">
             <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-6 sticky top-24">
               <h2 className="text-lg font-bold mb-6 text-slate-900 flex items-center gap-2">
-                <span className="text-xl">📋</span>
+                <span className="text-xl">≡</span>
                 Menu
               </h2>
 
               <nav className="space-y-2">
-                <AccountLink to="/account/profile" label="👤 Profile" icon="Profile Settings" />
-                <AccountLink to="/account/security" label="🔐 Security" icon="Password & Auth" />
-                <AccountLink to="/account/email" label="📧 Email" icon="Email Address" />
-                <AccountLink to="/account/sessions" label="📱 Sessions" icon="Active Sessions" />
-                <AccountLink to="/account/danger" label="⚠️ Danger Zone" icon="Delete Account" />
+                <AccountLink to="/account/profile" label="Profile" icon="Personal Information" />
+                <AccountLink to="/account/security" label="Security" icon="Password & Authentication" />
+                <AccountLink to="/account/email" label="Email" icon="Email Address" />
+                <AccountLink to="/account/sessions" label="Sessions" icon="Active Sessions" />
+                <AccountLink to="/account/danger" label="Danger Zone" icon="Delete Account" />
               </nav>
 
               <div className="border-t border-slate-200 mt-6 pt-6">
@@ -45,7 +45,7 @@ export default function AccountLayout({ children }: { children: any }) {
                   }}
                   className="w-full px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
                 >
-                  <span>🚪</span>
+                  <span>›</span>
                   Log Out
                 </button>
               </div>
@@ -71,7 +71,7 @@ function AccountLink({ to, label, icon }: { to: string; label: string; icon: str
       className={({ isActive }) =>
         `block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
           isActive
-            ? "bg-gradient-to-r from-orange-100 to-orange-50 text-[#ff7a1a] border-l-4 border-[#ff7a1a] shadow-sm"
+            ? "bg-gradient-to-r from-orange-100 to-orange-50 text-orange-700 border-l-4 border-orange-500 shadow-sm"
             : "text-slate-700 hover:bg-slate-100 border-l-4 border-transparent hover:border-orange-300"
         }`
       }
@@ -82,3 +82,4 @@ function AccountLink({ to, label, icon }: { to: string; label: string; icon: str
     </NavLink>
   );
 }
+
