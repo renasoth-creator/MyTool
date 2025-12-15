@@ -84,36 +84,35 @@ export default function Security() {
       → FULL LOGOUT
   ------------------------------------------ */
   async function revokeAll() {
-  try {
-    const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
-      method: "POST",
-      headers: { Authorization: "Bearer " + token },
-    });
+    try {
+      const res = await fetch(`${BACKEND_URL}/auth/sessions/revoke-all`, {
+        method: "POST",
+        headers: { Authorization: "Bearer " + token },
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    // Server explicitly says to logout
-    if (data.forceLogout) {
-      setUser(null);
-      setToken(null);
-      localStorage.removeItem("jwt");
-      localStorage.removeItem("user");
-      window.location.href = "/login";
-      return;
+      // Server explicitly says to logout
+      if (data.forceLogout) {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+
+        return;
+      }
+    } catch (err) {
+      console.warn("Revoke all error", err);
     }
 
-  } catch (err) {
-    console.warn("Revoke all error", err);
+    // Fallback safety logout
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
   }
-
-  // Fallback safety logout
-  setUser(null);
-  setToken(null);
-  localStorage.removeItem("jwt");
-  localStorage.removeItem("user");
-  window.location.href = "/login";
-}
-
 
   /* -----------------------------------------
       UPDATE PASSWORD
@@ -209,145 +208,192 @@ export default function Security() {
 
   return (
     <AccountLayout>
-      <h1 className="text-2xl font-bold mb-6">Security</h1>
+      <div className="space-y-6">
 
-      {status && <p className="text-green-600 mb-3">{status}</p>}
+        {/* Header Card */}
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8">
+          <div className="flex items-start gap-4">
+            <div className="text-4xl">🔐</div>
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-slate-900">Security Settings</h1>
+              <p className="text-slate-600 mt-1">Manage your password, two-factor authentication, and active sessions</p>
+            </div>
+          </div>
+        </div>
 
-      <section className="space-y-6">
+        {status && (
+          <div className={`p-4 rounded-xl border-2 ${
+            status.includes("✔") 
+              ? "bg-green-50 border-green-200 text-green-700" 
+              : "bg-red-50 border-red-200 text-red-700"
+          }`}>
+            <div className="font-semibold">{status}</div>
+          </div>
+        )}
 
-        {/* PASSWORD */}
-        <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
-          <h2 className="text-lg font-bold">Password</h2>
+        {/* PASSWORD SECTION */}
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8 space-y-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">🔑</span>
+            <h2 className="text-xl font-bold text-slate-900">Change Password</h2>
+          </div>
 
-          <form className="space-y-3" onSubmit={updatePassword}>
-            <input
-              type="password"
-              className="w-full border px-3 py-2 rounded"
-              placeholder="Current password"
-              value={currentPw}
-              onChange={(e) => setCurrentPw(e.target.value)}
-            />
+          <form className="space-y-4" onSubmit={updatePassword}>
+            <div>
+              <label className="block text-sm font-semibold text-slate-900 mb-2">Current Password</label>
+              <input
+                type="password"
+                className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all"
+                placeholder="Enter your current password"
+                value={currentPw}
+                onChange={(e) => setCurrentPw(e.target.value)}
+                required
+              />
+            </div>
 
-            <input
-              type="password"
-              className="w-full border px-3 py-2 rounded"
-              placeholder="New password"
-              value={newPw}
-              onChange={(e) => setNewPw(e.target.value)}
-            />
+            <div>
+              <label className="block text-sm font-semibold text-slate-900 mb-2">New Password</label>
+              <input
+                type="password"
+                className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all"
+                placeholder="Enter your new password"
+                value={newPw}
+                onChange={(e) => setNewPw(e.target.value)}
+                required
+              />
+              <p className="text-xs text-slate-500 mt-1">Password must be at least 8 characters</p>
+            </div>
 
-            <button className="bg-[#ff7a1a] text-white px-4 py-2 rounded-lg">
-              Update Password
+            <button className="w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
+              🔄 Update Password
             </button>
           </form>
         </div>
 
-        {/* TWO-FACTOR AUTH */}
-        <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
-          <h2 className="text-lg font-bold">Two-Factor Authentication</h2>
+        {/* TWO-FACTOR AUTH SECTION */}
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8 space-y-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">📱</span>
+            <h2 className="text-xl font-bold text-slate-900">Two-Factor Authentication</h2>
+            <span className={`ml-auto px-3 py-1 rounded-full text-sm font-semibold ${
+              user?.twoFactorEnabled 
+                ? "bg-green-100 text-green-700" 
+                : "bg-yellow-100 text-yellow-700"
+            }`}>
+              {user?.twoFactorEnabled ? "✓ Enabled" : "⚠ Disabled"}
+            </span>
+          </div>
 
           {twoFAStatus && (
-            <p className="text-green-600 text-sm mb-2">{twoFAStatus}</p>
-          )}
-
-          {user?.twoFactorEnabled ? (
-            <>
-              <p className="text-sm text-slate-600">2FA is enabled.</p>
-              <button
-                onClick={disable2FA}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg"
-              >
-                Disable 2FA
-              </button>
-            </>
-          ) : (
-            <>
-              <p className="text-sm text-slate-600">
-                Enable 2FA to require email verification on login.
-              </p>
-
-              {twoFAStep === "idle" && (
-                <button
-                  onClick={start2FA}
-                  className="px-4 py-2 bg-[#ff7a1a] text-white rounded-lg"
-                >
-                  Enable 2FA
-                </button>
-              )}
-
-              {twoFAStep === "code" && (
-                <form className="space-y-3" onSubmit={confirm2FA}>
-                  <input
-                    type="text"
-                    maxLength={7}
-                    className="w-full border px-3 py-2 rounded tracking-widest"
-                    placeholder="Enter 7-digit code"
-                    value={twoFACode}
-                    onChange={(e) => setTwoFACode(e.target.value)}
-                  />
-
-                  <button className="px-4 py-2 bg-[#ff7a1a] text-white rounded-lg">
-                    Confirm 2FA
-                  </button>
-                </form>
-              )}
-            </>
-          )}
-        </div>
-
-        {/* ACTIVE SESSIONS */}
-        <div className="p-6 bg-white border rounded-2xl shadow space-y-4">
-          <h2 className="text-lg font-bold">Active Sessions</h2>
-
-          {sessionStatus && (
-            <p className="text-red-600 text-sm">{sessionStatus}</p>
-          )}
-
-          {sessions.length === 0 && (
-            <p className="text-sm text-slate-500">No active sessions found.</p>
-          )}
-
-          {sessions.map((s, i) => (
-            <div
-              key={i}
-              className="border p-3 rounded-lg flex justify-between items-center"
-            >
-              <div>
-                <p className="font-medium text-sm">{s.userAgent}</p>
-                <p className="text-xs text-slate-500">IP: {s.ip}</p>
-                <p className="text-xs text-slate-400">
-                  Last Active: {new Date(s.lastActive).toLocaleString()}
-                </p>
-
-                {s.isCurrent && (
-                  <p className="text-xs text-green-600 font-semibold">
-                    This Device
-                  </p>
-                )}
-              </div>
-
-              {!s.isCurrent && (
-                <button
-                  onClick={() => revokeSession(s.token)}
-                  className="text-red-600 text-sm hover:underline"
-                >
-                  Logout
-                </button>
-              )}
+            <div className="p-3 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 text-sm">
+              {twoFAStatus}
             </div>
-          ))}
+          )}
 
-          {sessions.length > 1 && (
+          {twoFAStep === "idle" && !user?.twoFactorEnabled && (
+            <div className="space-y-4">
+              <p className="text-slate-600">Add an extra layer of security to your account with two-factor authentication.</p>
+              <button
+                onClick={start2FA}
+                className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
+              >
+                🔐 Enable Two-Factor Authentication
+              </button>
+            </div>
+          )}
+
+          {twoFAStep === "code" && (
+            <form className="space-y-4" onSubmit={confirm2FA}>
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Verification Code</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all text-center text-2xl tracking-widest"
+                  placeholder="000000"
+                  value={twoFACode}
+                  onChange={(e) => setTwoFACode(e.target.value)}
+                  maxLength={6}
+                  required
+                />
+                <p className="text-xs text-slate-500 mt-1">Check your email for the code</p>
+              </div>
+              <button className="w-full px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
+                ✓ Verify Code
+              </button>
+            </form>
+          )}
+
+          {user?.twoFactorEnabled && twoFAStep === "idle" && (
             <button
-              onClick={revokeAll}
-              className="bg-red-500 w-full text-white py-2 rounded-lg mt-3"
+              onClick={disable2FA}
+              className="w-full px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
             >
-              Logout All Sessions
+              ❌ Disable Two-Factor Authentication
             </button>
           )}
         </div>
 
-      </section>
+        {/* SESSIONS SECTION */}
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-8 space-y-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">🖥️</span>
+            <h2 className="text-xl font-bold text-slate-900">Active Sessions</h2>
+          </div>
+
+          {sessionStatus && (
+            <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+              {sessionStatus}
+            </div>
+          )}
+
+          {sessions.length === 0 ? (
+            <p className="text-slate-600">No active sessions found.</p>
+          ) : (
+            <div className="space-y-3">
+              {sessions.map((session: any) => (
+                <div key={session.token} className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-slate-100 transition">
+                  <div>
+                    <p className="font-semibold text-slate-900">
+                      {session.isCurrent ? "📍 This Device" : `🌐 ${session.ipAddress || "Unknown"}`}
+                    </p>
+                    <p className="text-sm text-slate-600">Last active: {new Date(session.lastActivity).toLocaleDateString()}</p>
+                  </div>
+                  <button
+                    onClick={() => revokeSession(session.token)}
+                    className="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg font-medium transition"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+
+              <button
+                onClick={revokeAll}
+                className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
+              >
+                🚪 Sign Out All Sessions
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Security Tips */}
+        <div className="bg-purple-50 border-2 border-purple-200 rounded-2xl p-6">
+          <div className="flex gap-3">
+            <span className="text-2xl">💡</span>
+            <div>
+              <h3 className="font-bold text-purple-900">Security Tips</h3>
+              <ul className="text-sm text-purple-800 mt-2 space-y-1 ml-4 list-disc">
+                <li>Use a strong, unique password with at least 12 characters</li>
+                <li>Enable two-factor authentication for maximum security</li>
+                <li>Regularly review your active sessions</li>
+                <li>Sign out of sessions you don't recognize</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </AccountLayout>
   );
 }
+
