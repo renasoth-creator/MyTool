@@ -435,7 +435,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
                   onClick={() => {
                     const a = document.createElement('a');
                     a.href = l.url;
-                    a.download = true;
+                    a.download = '';
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
