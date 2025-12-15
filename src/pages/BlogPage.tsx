@@ -202,9 +202,6 @@ const BlogPage: React.FC = () => {
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
             <h3 className="text-xl font-bold text-slate-900 mb-3">Getting Started</h3>
             <p className="text-gray-700 text-sm mb-4">Learn the basics of PDF conversion and management with our beginner-friendly guides.</p>
-            <Link to="/all-tools" className="text-orange-600 hover:text-orange-700 font-semibold text-sm inline-block">
-              Explore Tools
-            </Link>
           </div>
 
           <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">

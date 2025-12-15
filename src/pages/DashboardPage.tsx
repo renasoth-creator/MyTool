@@ -56,13 +56,6 @@ const DashboardPage: React.FC = () => {
 
       </section>
 
-      {/* Explore All Tools Button */}
-      <div className="mt-12 text-center">
-        <a href="/all-tools" className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1" title="Explore all 20+ PDF conversion tools">
-          Explore All Tools →
-        </a>
-      </div>
-
 
       {/*================================
             HOW IT WORKS - Semantic Section

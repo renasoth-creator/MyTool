@@ -1,12 +1,47 @@
 // src/components/Footer.tsx
 
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { BACKEND_URL } from "../config/backend";
 
 const handleToolClick = () => {
   window.scrollTo(0, 0);
 };
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [subscribeStatus, setSubscribeStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleSubscribe(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!email || !email.includes("@")) {
+      setSubscribeStatus("error");
+      setTimeout(() => setSubscribeStatus("idle"), 3000);
+      return;
+    }
+
+    setSubscribeStatus("loading");
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) throw new Error("Subscription failed");
+
+      setSubscribeStatus("success");
+      setEmail("");
+      setTimeout(() => setSubscribeStatus("idle"), 3000);
+    } catch (err) {
+      console.error("Subscribe error:", err);
+      setSubscribeStatus("error");
+      setTimeout(() => setSubscribeStatus("idle"), 3000);
+    }
+  }
+
   return (
     <footer className="bg-gradient-to-b from-slate-900 to-black text-white mt-20 pt-16 pb-8">
 
@@ -82,6 +117,45 @@ export default function Footer() {
           </ul>
         </div>
 
+      </div>
+
+      {/* DIVIDER */}
+      <div className="border-t border-gray-700 my-8"></div>
+
+      {/* NEWSLETTER SUBSCRIBE SECTION */}
+      <div className="max-w-7xl mx-auto px-6 mb-12">
+        <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-8 md:p-12 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Stay Updated</h2>
+          <p className="text-orange-100 mb-6 max-w-2xl mx-auto">
+            Subscribe to our newsletter and get the latest PDF tools tips, updates, and exclusive features delivered to your inbox.
+          </p>
+
+          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 px-4 py-3 rounded-lg text-slate-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-300"
+              disabled={subscribeStatus === "loading"}
+            />
+            <button
+              type="submit"
+              disabled={subscribeStatus === "loading"}
+              className="px-8 py-3 bg-white text-orange-600 font-bold rounded-lg hover:bg-orange-50 transition-colors disabled:opacity-50"
+            >
+              {subscribeStatus === "loading" ? "Subscribing..." : "Subscribe"}
+            </button>
+          </form>
+
+          {subscribeStatus === "success" && (
+            <p className="text-white text-sm mt-3">✓ Thanks for subscribing!</p>
+          )}
+
+          {subscribeStatus === "error" && (
+            <p className="text-red-200 text-sm mt-3">Please enter a valid email address</p>
+          )}
+        </div>
       </div>
 
       {/* DIVIDER */}
