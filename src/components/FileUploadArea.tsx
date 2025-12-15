@@ -430,43 +430,11 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
           {links.length > 0 && (
             <div className="space-y-3">
               {links.map((l) => (
-                <button
+                <a
                   key={l.url}
-                  onClick={async () => {
-                    try {
-                      // Fetch the file with proper headers
-                      const response = await fetch(l.url, {
-                        method: 'GET',
-                        headers: {
-                          'X-API-KEY': import.meta.env.VITE_API_KEY || ''
-                        }
-                      });
-
-                      if (!response.ok) {
-                        throw new Error(`Download failed: ${response.statusText}`);
-                      }
-
-                      // Get blob and create download
-                      const blob = await response.blob();
-                      const url = window.URL.createObjectURL(blob);
-                      const a = document.createElement('a');
-                      a.href = url;
-                      a.download = l.label.replace(/\s+/g, '_').toLowerCase() || 'download';
-                      document.body.appendChild(a);
-                      a.click();
-                      document.body.removeChild(a);
-                      window.URL.revokeObjectURL(url);
-                    } catch (err) {
-                      console.error('Download error:', err);
-                      // Fallback: try direct download
-                      const a = document.createElement('a');
-                      a.href = l.url;
-                      a.download = '';
-                      document.body.appendChild(a);
-                      a.click();
-                      document.body.removeChild(a);
-                    }
-                  }}
+                  href={l.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full flex items-center justify-between p-4 bg-white border border-green-200 rounded-xl hover:shadow-md transition-all duration-300 group cursor-pointer hover:bg-green-50"
                 >
                   <div className="flex items-center gap-3">
@@ -476,7 +444,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
                     </span>
                   </div>
                   <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
-                </button>
+                </a>
               ))}
             </div>
           )}
