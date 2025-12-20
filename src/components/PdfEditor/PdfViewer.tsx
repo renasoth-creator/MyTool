@@ -32,6 +32,7 @@ export default function PdfViewer({
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const [color, setColor] = useState('#FFA500');
+  const [loadError, setLoadError] = useState<string>('');
 
   // Draw annotations on canvas
   const drawAnnotations = (context: CanvasRenderingContext2D) => {
@@ -91,13 +92,31 @@ export default function PdfViewer({
 
   // Load PDF document
   useEffect(() => {
+    if (!pdfUrl) {
+      setLoadError('');
+      setPdf(null);
+      return;
+    }
+
     const loadPdf = async () => {
       try {
-        const loadedPdf = await pdfjsLib.getDocument(pdfUrl).promise;
+        console.log('Loading PDF from:', pdfUrl);
+        setLoadError('');
+
+        // Try to load with CORS headers
+        const loadingTask = pdfjsLib.getDocument({
+          url: pdfUrl,
+          withCredentials: false,
+        });
+
+        const loadedPdf = await loadingTask.promise;
+        console.log('PDF loaded successfully, pages:', loadedPdf.numPages);
         setPdf(loadedPdf);
         onTotalPagesChange(loadedPdf.numPages);
       } catch (err) {
         console.error('Error loading PDF:', err);
+        setLoadError(`Failed to load PDF: ${err instanceof Error ? err.message : 'Unknown error'}`);
+        setPdf(null);
       }
     };
 
@@ -185,7 +204,26 @@ export default function PdfViewer({
 
   return (
     <div className="flex flex-col h-full bg-gray-100">
+      {/* Error Display */}
+      {loadError && (
+        <div className="bg-red-50 border border-red-200 text-red-800 px-6 py-4">
+          <p className="font-semibold">Error loading PDF</p>
+          <p className="text-sm">{loadError}</p>
+        </div>
+      )}
+
+      {/* Loading State */}
+      {!pdf && !loadError && (
+        <div className="flex-1 flex items-center justify-center bg-gray-100">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading PDF...</p>
+          </div>
+        </div>
+      )}
+
       {/* Controls */}
+      {pdf && (
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between flex-wrap gap-4">
         <div className="flex items-center gap-4">
           <input
@@ -233,8 +271,10 @@ export default function PdfViewer({
           </button>
         </div>
       </div>
+      )}
 
       {/* Canvas Container */}
+      {pdf && (
       <div
         ref={containerRef}
         className="flex-1 overflow-auto flex items-center justify-center p-4 bg-gray-100"
@@ -250,6 +290,7 @@ export default function PdfViewer({
           }`}
         />
       </div>
+      )}
     </div>
   );
 }
