@@ -1,6 +1,7 @@
 
 
 # Logs
+.env
 .vs/
 logs
 *.log

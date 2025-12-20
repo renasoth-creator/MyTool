@@ -75,7 +75,9 @@ export default function PdfEditor() {
     try {
       const response = await fetch(`${BACKEND_URL}/pdf-editor/save`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           pdfUrl,
           fileName,
