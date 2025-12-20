@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import type { Annotation } from '../../pages/PdfEditor';
 
 // Set up PDF.js worker
@@ -26,48 +27,11 @@ export default function PdfViewer({
 }: PdfViewerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [pdf, setPdf] = useState<any>(null);
+  const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [scale, setScale] = useState(1);
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const [color, setColor] = useState('#FFA500');
-
-  // Load PDF document
-  useEffect(() => {
-    const loadPdf = async () => {
-      try {
-        const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
-        setPdf(pdf);
-        onTotalPagesChange(pdf.numPages);
-      } catch (err) {
-        console.error('Error loading PDF:', err);
-      }
-    };
-
-    loadPdf();
-  }, [pdfUrl, onTotalPagesChange]);
-
-  // Render page with annotations
-  useEffect(() => {
-    if (!pdf || !canvasRef.current) return;
-
-    const renderPage = async () => {
-      const page = await pdf.getPage(currentPage);
-      const viewport = page.getViewport({ scale });
-
-      const canvas = canvasRef.current!;
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-
-      const context = canvas.getContext('2d')!;
-      await page.render({ canvasContext: context, viewport }).promise;
-
-      // Draw annotations
-      drawAnnotations(context);
-    };
-
-    renderPage();
-  }, [pdf, currentPage, scale, annotations]);
 
   // Draw annotations on canvas
   const drawAnnotations = (context: CanvasRenderingContext2D) => {
@@ -82,14 +46,15 @@ export default function PdfViewer({
           context.fillRect(annotation.x, annotation.y, annotation.width || 100, annotation.height || 30);
           break;
 
-        case 'circle':
+        case 'circle': {
           context.strokeStyle = annotation.color || '#FFA500';
           context.lineWidth = 2;
-          const radius = Math.sqrt((annotation.width || 0) ** 2 + (annotation.height || 0) ** 2) / 2;
+          const circleRadius = Math.sqrt((annotation.width || 0) ** 2 + (annotation.height || 0) ** 2) / 2;
           context.beginPath();
-          context.arc(annotation.x, annotation.y, radius, 0, 2 * Math.PI);
+          context.arc(annotation.x, annotation.y, circleRadius, 0, 2 * Math.PI);
           context.stroke();
           break;
+        }
 
         case 'line':
           context.strokeStyle = annotation.color || '#FFA500';
@@ -124,6 +89,43 @@ export default function PdfViewer({
     });
   };
 
+  // Load PDF document
+  useEffect(() => {
+    const loadPdf = async () => {
+      try {
+        const loadedPdf = await pdfjsLib.getDocument(pdfUrl).promise;
+        setPdf(loadedPdf);
+        onTotalPagesChange(loadedPdf.numPages);
+      } catch (err) {
+        console.error('Error loading PDF:', err);
+      }
+    };
+
+    loadPdf();
+  }, [pdfUrl, onTotalPagesChange]);
+
+  // Render page with annotations
+  useEffect(() => {
+    if (!pdf || !canvasRef.current) return;
+
+    const renderPage = async () => {
+      const page = await pdf.getPage(currentPage);
+      const viewport = page.getViewport({ scale });
+
+      const canvas = canvasRef.current!;
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      const context = canvas.getContext('2d')!;
+      await page.render({ canvas, viewport }).promise;
+
+      // Draw annotations
+      drawAnnotations(context);
+    };
+
+    renderPage();
+  }, [pdf, currentPage, scale, annotations, drawAnnotations]);
+
   // Handle mouse events for annotations
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (currentTool === 'select') return;
@@ -156,7 +158,7 @@ export default function PdfViewer({
     };
 
     const annotation: Omit<Annotation, 'id'> = {
-      type: currentTool as any,
+      type: currentTool as 'text' | 'highlight' | 'circle' | 'line' | 'freehand',
       page: currentPage,
       x: Math.min(startPos.x, endPos.x),
       y: Math.min(startPos.y, endPos.y),
