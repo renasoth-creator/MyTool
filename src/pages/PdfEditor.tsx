@@ -131,13 +131,13 @@ export default function PdfEditor() {
       {/* In Development Banner */}
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 pointer-events-none">
         <div className="bg-white rounded-2xl shadow-2xl p-12 text-center max-w-md pointer-events-auto">
-          <div className="text-6xl mb-4">🚀</div>
+          <div className="text-6xl mb-4"></div>
           <h1 className="text-3xl font-bold text-slate-900 mb-2">In Development</h1>
           <p className="text-gray-600 text-lg mb-4">
             The PDF Editor is currently being developed and will be available soon.
           </p>
           <p className="text-sm text-gray-500">
-            We're working hard to bring you an amazing editing experience. Check back tomorrow!
+            We're working hard to bring you an amazing editing experience. Check back soon!
           </p>
         </div>
       </div>
