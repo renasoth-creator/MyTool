@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 import type { Annotation } from '../../pages/PdfEditor';
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min?url';
 
-// Set up PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+// Set up PDF.js worker from local file
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 interface PdfViewerProps {
   pdfUrl: string;
