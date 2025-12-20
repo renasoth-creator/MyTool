@@ -43,7 +43,7 @@ export default function PdfEditor() {
     formData.append('file', file);
 
     try {
-      const response = await fetch(`${BACKEND_URL}/pdf-editor/upload`, {
+      const response = await fetch(`${BACKEND_URL}/api/pdf-editor/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -73,7 +73,7 @@ export default function PdfEditor() {
 
     setStatus('saving');
     try {
-      const response = await fetch(`${BACKEND_URL}/pdf-editor/save`, {
+      const response = await fetch(`${BACKEND_URL}/api/pdf-editor/save`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
