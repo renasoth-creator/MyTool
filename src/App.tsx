@@ -25,6 +25,7 @@ import ResetPassword from "./pages/ResetPassword";
  import FaqPage from "./pages/FaqPage";
  import BlogPage from "./pages/BlogPage";
  import Contact from "./pages/Contact";
+ import PdfEditor from "./pages/PdfEditor";
  //import ConversionHistory from "./pages/ConversionHistory";
 
 
@@ -71,6 +72,7 @@ const App: React.FC = () => {
       <Route path="/faq" element={<FaqPage />} />
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/pdf-editor" element={<PdfEditor />} />
 
 
       {/* DEFAULT ROUTE */}

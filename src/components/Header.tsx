@@ -42,6 +42,7 @@ export default function Header() {
           <NavItem to="/split" label="Split" />
           <NavItem to="/protect-pdf" label="Protect" />
           <NavItem to="/compress" label="Compress" />
+          <NavItem to="/pdf-editor" label="Edit PDF" />
         </nav>
 
         {/* DESKTOP AUTH BUTTONS */}
@@ -97,6 +98,7 @@ export default function Header() {
           <MobileNavLink to="/split" label="Split" />
           <MobileNavLink to="/protect-pdf" label="Protect" />
           <MobileNavLink to="/compress" label="Compress" />
+          <MobileNavLink to="/pdf-editor" label="Edit PDF" />
 
           {/* MOBILE TOOLS CATEGORY */}
           <details className="bg-white border rounded-lg p-3">
