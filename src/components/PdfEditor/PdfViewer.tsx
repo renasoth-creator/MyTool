@@ -3,6 +3,7 @@ import * as pdfjsLib from 'pdfjs-dist';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 import type { Annotation } from '../../pages/PdfEditor';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min?url';
+import { BACKEND_URL } from '../../config/backend';
 
 // Set up PDF.js worker from local file
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
@@ -101,12 +102,17 @@ export default function PdfViewer({
 
     const loadPdf = async () => {
       try {
-        console.log('Loading PDF from:', pdfUrl);
+        console.log('Loading PDF via proxy');
         setLoadError('');
 
-        // Try to load with CORS headers
+        // Use backend proxy to avoid CORS issues with S3
+        const proxiedUrl = `${BACKEND_URL}/api/pdf-editor/proxy?url=${encodeURIComponent(pdfUrl)}`;
+
+        console.log('Proxied URL:', proxiedUrl.substring(0, 100) + '...');
+
+        // Try to load with proxy URL
         const loadingTask = pdfjsLib.getDocument({
-          url: pdfUrl,
+          url: proxiedUrl,
           withCredentials: false,
         });
 
