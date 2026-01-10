@@ -70,20 +70,7 @@ export default function Header() {
                 Log out
               </button>
             </>
-          ) : (
-            <>
-              <Link to="/login" className="hover:text-[#ff7a1a] text-slate-700">
-                Sign In
-              </Link>
-
-              <Link
-                to="/signup"
-                className="px-5 py-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-orange-500/50 transition-all duration-300 hover:-translate-y-0.5"
-              >
-                Sign Up
-              </Link>
-            </>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -129,12 +116,7 @@ export default function Header() {
                   Log out
                 </button>
               </>
-            ) : (
-              <>
-                <MobileNavLink to="/login" label="Sign In" />
-                <MobileNavLink to="/signup" label="Sign Up" />
-              </>
-            )}
+            ) : null}
           </div>
         </div>
       )}

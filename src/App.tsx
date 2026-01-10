@@ -6,10 +6,6 @@ import DashboardPage from "./pages/DashboardPage";
 import ToolPage from "./pages/ToolPage";
 import { tools } from "./config/pdfToolsConfig";
 
-import Signup from "./pages/Signup";
-import VerifyEmail from "./pages/VerifyEmail";
-import EmailVerified from "./pages/EmailVerified";
-import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
 import AccountSettings from "./pages/AccountSettings";
@@ -43,12 +39,6 @@ const App: React.FC = () => {
           element={<ToolPage toolId={tool.id} />}
         />
       ))}
-
-      {/* AUTH ROUTES */}
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/verify-email" element={<VerifyEmail />} />
-      <Route path="/email-verified" element={<EmailVerified />} />
-      <Route path="/login" element={<Login />} />
 
       {/* DASHBOARD */}
       <Route path="/dashboard" element={<Dashboard />} />
