@@ -112,11 +112,11 @@ export default function Footer() {
             Company
           </h3>
           <ul className="space-y-2 text-gray-300 text-sm">
-            <li><Link to="/faq" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">FAQ</Link></li>
-            <li><Link to="/blog" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">Blog</Link></li>
-            <li><Link to="/contact" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">Contact</Link></li>
-            <li><Link to="/terms" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">Terms</Link></li>
             <li><Link to="/privacy" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">Privacy</Link></li>
+            <li><Link to="/terms" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">Terms</Link></li>
+            <li><Link to="/contact" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">Contact</Link></li>
+            <li><Link to="/blog" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">Blog</Link></li>
+            <li><Link to="/faq" onClick={() => window.scrollTo(0, 0)} className="hover:text-orange-400 transition-colors">FAQ</Link></li>
           </ul>
         </div>
 
