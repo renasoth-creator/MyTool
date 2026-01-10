@@ -150,6 +150,30 @@ export default function DangerZone() {
             </div>
           </div>
         </div>
+
+        {/* Donate Section */}
+        <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-2xl p-8">
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-amber-300 to-amber-400 rounded-full flex items-center justify-center text-2xl flex-shrink-0">
+              ❤️
+            </div>
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold text-amber-900 mb-2">Support Our Project</h2>
+              <p className="text-amber-800 mb-4">
+                Love PDFConvert.tech? Consider supporting our work to help us improve and add new features.
+              </p>
+              <button
+                onClick={() => window.open('https://paypal.me/renas93', '_blank')}
+                className="w-full px-6 py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 text-lg"
+              >
+                Donate via PayPal
+              </button>
+              <p className="text-sm text-amber-700 mt-3 text-center">
+                Every contribution helps us keep the service running and free for everyone
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </AccountLayout>
   );

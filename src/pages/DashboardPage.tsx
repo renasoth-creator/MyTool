@@ -47,6 +47,25 @@ const DashboardPage: React.FC = () => {
             <strong>Privacy Guaranteed:</strong> Your files are never stored permanently on our servers. All uploaded documents are automatically and permanently deleted within 24 hours. No data tracking. No personal information collected.
           </p>
         </div>
+
+        {/* Donate Section */}
+        <div className="mt-8 p-8 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg border-2 border-amber-300 max-w-2xl mx-auto">
+          <div className="flex items-start gap-4">
+            <div className="text-3xl flex-shrink-0">❤️</div>
+            <div className="text-left flex-1">
+              <h3 className="font-bold text-amber-900 text-lg mb-2">Support Our Project</h3>
+              <p className="text-amber-800 text-sm mb-4">
+                Love PDFConvert.tech? Consider supporting our work to help us improve and add new features.
+              </p>
+              <button
+                onClick={() => window.open('https://paypal.me/renas93', '_blank')}
+                className="px-6 py-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 text-sm"
+              >
+                Donate via PayPal
+              </button>
+            </div>
+          </div>
+        </div>
       </header>
 
       {/* ================================
