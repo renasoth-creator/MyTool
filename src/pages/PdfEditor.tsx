@@ -90,9 +90,9 @@ export default function PdfEditor() {
       const data = await response.json();
       setStatus('saved');
 
-      // Download the edited PDF
+      // Download the edited PDF with the filename from backend
       setTimeout(() => {
-        downloadFile(data.downloadUrl, `edited_${fileName}`);
+        downloadFile(data.url, data.fileName || `edited_${fileName}`);
         setStatus('idle');
       }, 1500);
     } catch (err) {
@@ -104,10 +104,29 @@ export default function PdfEditor() {
 
   // Download file helper
   const downloadFile = (url: string, filename: string) => {
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    link.click();
+    // Use fetch to download with proper headers handling
+    fetch(url)
+      .then(response => {
+        if (!response.ok) throw new Error('Download failed');
+        return response.blob();
+      })
+      .then(blob => {
+        // Create blob with PDF MIME type
+        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+        const blobUrl = URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = filename.endsWith('.pdf') ? filename : `${filename}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+      })
+      .catch(err => {
+        console.error('Download error:', err);
+        setErrorMsg('Failed to download PDF');
+        setStatus('error');
+      });
   };
 
   // Add annotation
