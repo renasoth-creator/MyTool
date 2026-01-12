@@ -15,6 +15,13 @@ interface PdfViewerProps {
   currentPage: number;
   onPageChange: (page: number) => void;
   onTotalPagesChange: (total: number) => void;
+  textStyle?: {
+    bold: boolean;
+    italic: boolean;
+    fontSize: number;
+    fontFamily: string;
+    color: string;
+  };
 }
 
 export default function PdfViewer({
@@ -25,6 +32,7 @@ export default function PdfViewer({
   currentPage,
   onPageChange,
   onTotalPagesChange,
+  textStyle, // Used in drawAnnotations for text styling
 }: PdfViewerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,6 +42,8 @@ export default function PdfViewer({
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const [color, setColor] = useState('#FFA500');
   const [loadError, setLoadError] = useState<string>('');
+  const [selectionBox, setSelectionBox] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
+  const [draggingAnnotationId, setDraggingAnnotationId] = useState<string | null>(null);
 
   // Draw annotations on canvas
   const drawAnnotations = (context: CanvasRenderingContext2D) => {
@@ -82,8 +92,13 @@ export default function PdfViewer({
 
         case 'text':
           context.fillStyle = annotation.color || '#000000';
-          context.font = '14px Arial';
-          context.fillText(annotation.content || '', annotation.x, annotation.y);
+          const fontSize = annotation.fontSize || 14;
+          let fontStyle = '';
+          if (annotation.italic) fontStyle += 'italic ';
+          if (annotation.bold) fontStyle += 'bold ';
+          const fontFamily = annotation.fontFamily || 'Arial';
+          context.font = `${fontStyle}${fontSize}px ${fontFamily}`;
+          context.fillText(annotation.content || '', annotation.x, annotation.y + fontSize);
           break;
       }
 
@@ -145,7 +160,7 @@ export default function PdfViewer({
     };
 
     renderPage();
-  }, [pdf, currentPage, scale, annotations, drawAnnotations]);
+  }, [pdf, currentPage, scale, annotations, drawAnnotations, textStyle]);
 
   // Handle mouse events for annotations
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -154,20 +169,67 @@ export default function PdfViewer({
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
 
-    setIsDrawing(true);
-    setStartPos({
+    const pos = {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
-    });
+    };
+
+    // Check if clicking on existing text annotation for dragging (future feature)
+    if (currentTool === 'select') {
+      const textAnnotations = annotations.filter(a => a.type === 'text' && a.page === currentPage);
+      for (const ann of textAnnotations) {
+        const fontSize = ann.fontSize || 14;
+        const textWidth = (ann.content || '').length * (fontSize * 0.6);
+        if (pos.x >= ann.x && pos.x <= ann.x + textWidth &&
+            pos.y >= ann.y - fontSize && pos.y <= ann.y) {
+          setDraggingAnnotationId(ann.id);
+          return;
+        }
+      }
+    }
+
+    setIsDrawing(true);
+    setStartPos(pos);
+
+    if (currentTool === 'highlight') {
+      setSelectionBox(null);
+    }
   };
 
-  const handleMouseMove = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    const currentPos = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+
+    // Handle dragging text (feature for future enhancement)
+    if (draggingAnnotationId && !isDrawing) {
+      // Dragging logic would go here - requires parent component state update
+      return;
+    }
+
     if (!isDrawing || currentTool === 'select') return;
 
-    // Real-time preview would go here
+    // Show selection box for highlight
+    if (currentTool === 'highlight') {
+      setSelectionBox({
+        x: Math.min(startPos.x, currentPos.x),
+        y: Math.min(startPos.y, currentPos.y),
+        width: Math.abs(currentPos.x - startPos.x),
+        height: Math.abs(currentPos.y - startPos.y),
+      });
+    }
   };
 
   const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (draggingAnnotationId) {
+      setDraggingAnnotationId(null);
+      return;
+    }
+
     if (!isDrawing) return;
 
     const rect = canvasRef.current?.getBoundingClientRect();
@@ -194,6 +256,9 @@ export default function PdfViewer({
         annotation.content = text;
         onAddAnnotation(annotation);
       }
+    } else if (currentTool === 'highlight') {
+      onAddAnnotation(annotation);
+      setSelectionBox(null);
     } else if (currentTool === 'freehand') {
       annotation.path = [startPos, endPos];
       onAddAnnotation(annotation);
@@ -279,18 +344,36 @@ export default function PdfViewer({
       {pdf && (
       <div
         ref={containerRef}
-        className="flex-1 overflow-auto flex items-center justify-center p-4 bg-gray-100"
+        className="flex-1 overflow-auto flex items-center justify-center p-4 bg-gray-100 relative"
       >
-        <canvas
-          ref={canvasRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={() => setIsDrawing(false)}
-          className={`bg-white shadow-lg rounded-lg ${
-            currentTool !== 'select' ? 'cursor-crosshair' : 'cursor-default'
-          }`}
-        />
+        <div className="relative">
+          <canvas
+            ref={canvasRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={() => {
+              setIsDrawing(false);
+              setSelectionBox(null);
+            }}
+            className={`bg-white shadow-lg rounded-lg ${
+              currentTool !== 'select' ? 'cursor-crosshair' : 'cursor-grab'
+            }`}
+          />
+          {/* Selection Box Overlay */}
+          {selectionBox && currentTool === 'highlight' && (
+            <div
+              className="absolute border-2 border-orange-500 bg-orange-100 bg-opacity-30"
+              style={{
+                left: `${selectionBox.x}px`,
+                top: `${selectionBox.y}px`,
+                width: `${selectionBox.width}px`,
+                height: `${selectionBox.height}px`,
+                pointerEvents: 'none',
+              }}
+            />
+          )}
+        </div>
       </div>
       )}
     </div>

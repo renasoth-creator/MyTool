@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
 import PdfViewer from '../components/PdfEditor/PdfViewer';
 import AnnotationToolbar from '../components/PdfEditor/AnnotationToolbar';
+import TextToolbar from '../components/PdfEditor/TextToolbar';
 import { ChevronLeft, Save } from 'lucide-react';
 import Popup from '../components/Popup';
 import { BACKEND_URL } from '../config/backend';
@@ -20,6 +21,10 @@ export interface Annotation {
   content?: string;
   path?: Array<{ x: number; y: number }>;
   opacity?: number;
+  bold?: boolean;
+  italic?: boolean;
+  fontSize?: number;
+  fontFamily?: string;
 }
 
 export default function PdfEditor() {
@@ -32,6 +37,15 @@ export default function PdfEditor() {
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error' | 'uploading'>('idle');
   const [errorMsg, setErrorMsg] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Text styling state
+  const [textStyle, setTextStyle] = useState({
+    bold: false,
+    italic: false,
+    fontSize: 14,
+    fontFamily: 'Arial',
+    color: '#000000',
+  });
 
   // Handle PDF file upload
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,7 +146,11 @@ export default function PdfEditor() {
   // Add annotation
   const addAnnotation = (annotation: Omit<Annotation, 'id'>) => {
     const id = `ann_${Date.now()}_${Math.random()}`;
-    setAnnotations([...annotations, { ...annotation, id }]);
+    // Add text styling if it's a text annotation
+    const annotationWithStyle = annotation.type === 'text'
+      ? { ...annotation, ...textStyle }
+      : annotation;
+    setAnnotations([...annotations, { ...annotationWithStyle, id }]);
   };
 
   // Clear all annotations
@@ -254,6 +272,13 @@ export default function PdfEditor() {
               annotationCount={annotations.length}
             />
 
+            {/* Text Toolbar */}
+            <TextToolbar
+              isVisible={currentTool === 'text'}
+              textStyle={textStyle}
+              onStyleChange={(newStyle) => setTextStyle({ ...textStyle, ...newStyle })}
+            />
+
             {/* PDF Viewer */}
             <div className="flex-1 overflow-auto bg-gray-100">
               <PdfViewer
@@ -264,6 +289,7 @@ export default function PdfEditor() {
                 currentPage={currentPage}
                 onPageChange={setCurrentPage}
                 onTotalPagesChange={setTotalPages}
+                textStyle={textStyle}
               />
             </div>
           </div>
