@@ -47,6 +47,9 @@ export default function PdfEditor() {
     color: '#000000',
   });
 
+  // Popup state for development notice
+  const [showDevNotice, setShowDevNotice] = useState(true);
+
   // Handle PDF file upload
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -183,16 +186,27 @@ export default function PdfEditor() {
         />
       )}
 
+      {/* Development Notice Popup */}
+      {showDevNotice && (
+        <Popup
+          type="info"
+          title="PDF Editor - In Development"
+          message="The text styling and highlight features are still being refined. Some advanced features will be available soon. Basic annotations (text, highlight, circle, line, draw) are fully functional!"
+          onClose={() => setShowDevNotice(false)}
+        />
+      )}
+
       {/* Header Navigation */}
-      <div className="mb-8">
+      <div className="mb-8 flex items-center justify-between">
         <Link
           to="/"
           onClick={() => window.scrollTo(0, 0)}
-          className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold mb-4"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg"
         >
           <ChevronLeft size={20} />
           Back to Home
         </Link>
+        <div className="text-sm font-medium text-gray-600">PDF Editor</div>
       </div>
 
       {/* Main Editor Container */}
